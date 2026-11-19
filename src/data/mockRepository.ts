@@ -6,6 +6,7 @@ import { DEMO_TODAY } from "@/config/demo";
 import { addDays } from "@/lib/date";
 import { deriveRiderMetrics, type RiderRecords } from "./derive";
 import { riderRecordsFrom, type FixtureSet } from "./fixtureSet";
+import { buildIncomeStatement } from "./statement";
 import type { Repository, ShareGrantInput } from "./repository";
 import type { Application, SettlementCapture, ShareGrant } from "./types";
 
@@ -91,6 +92,11 @@ export const mockRepository: Repository = {
   async getRiderMetrics(riderId) {
     const records = recordsOf(riderId);
     return records ? deriveRiderMetrics(records, DEMO_TODAY) : null;
+  },
+
+  async getIncomeStatement(riderId) {
+    const records = recordsOf(riderId);
+    return records ? buildIncomeStatement(records, DEMO_TODAY) : null;
   },
 
   async listPartners() {

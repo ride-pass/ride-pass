@@ -4,6 +4,7 @@
 
 import type { RiderMetrics, RiderRecords } from "./derive";
 import { mockRepository } from "./mockRepository";
+import type { IncomeStatement } from "./statement";
 import type {
   Application,
   Partner,
@@ -25,6 +26,8 @@ export interface Repository {
   getRiderRecords(riderId: string): Promise<RiderRecords | null>;
   /** 4-4 계산값. 기준일은 DEMO_TODAY */
   getRiderMetrics(riderId: string): Promise<RiderMetrics | null>;
+  /** 수입 명세서 (최근 30일, 급여명세서 형식) */
+  getIncomeStatement(riderId: string): Promise<IncomeStatement | null>;
 
   listPartners(): Promise<Partner[]>;
   getPartner(partnerId: string): Promise<Partner | null>;
@@ -55,6 +58,7 @@ export const {
   getRider,
   getRiderRecords,
   getRiderMetrics,
+  getIncomeStatement,
   listPartners,
   getPartner,
   listApplications,
