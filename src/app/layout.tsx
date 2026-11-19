@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { DemoProvider } from "@/components/demo/DemoProvider";
-import { APP_ICON_PATH, APP_NAME } from "@/config/brand";
+import { APP_ICON_PATH, APP_NAME, APPLE_ICON_PATH } from "@/config/brand";
 import "./globals.css";
 
 // Pretendard (SIL OFL 1.1, src/app/fonts/Pretendard-LICENSE.txt)
@@ -14,7 +14,7 @@ const pretendard = localFont({
 
 export const metadata: Metadata = {
   title: APP_NAME,
-  icons: { icon: APP_ICON_PATH, apple: APP_ICON_PATH },
+  icons: { icon: APP_ICON_PATH, apple: APPLE_ICON_PATH },
 };
 
 export const viewport: Viewport = {
