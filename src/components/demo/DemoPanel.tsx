@@ -47,6 +47,7 @@ export function DemoPanel() {
       });
     }
     await submitApplication(demo.riderId, ENTRY_PARTNER_ID);
+    demo.bumpData();
   };
 
   const go = async (step: number, href: string) => {

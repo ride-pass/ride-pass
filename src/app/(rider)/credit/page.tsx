@@ -16,12 +16,13 @@ import { getRiderCreditView, type ReadinessFactor, type ReadinessMark, type Ride
 
 export default function CreditPage() {
   const t = useT();
-  const { riderId, stage } = useDemo();
+  const { riderId, stage, dataVersion } = useDemo();
   const [view, setView] = useState<RiderCreditView | null>(null);
 
   useEffect(() => {
     getRiderCreditView(riderId, stage).then(setView);
-  }, [riderId, stage]);
+    // dataVersion: 조작판 초기화(재촬영 취소 등) 뒤 다시 읽는다
+  }, [riderId, stage, dataVersion]);
 
   return (
     <div className="flex flex-1 flex-col">
