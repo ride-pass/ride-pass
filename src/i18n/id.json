@@ -1,3 +1,70 @@
 {
-  "_todo": "TODO: 원어민 검수 — 아직 검수 전인 문구가 있다"
+  "_todo": "TODO: 원어민 검수 — 아직 검수 전인 문구가 있다",
+  "credit": {
+    "readiness": {
+      "title": "Kesiapan Kredit",
+      "summary": "Kesiapan kredit: {met} dari 5 faktor terpenuhi"
+    },
+    "marks": {
+      "met": "Terpenuhi",
+      "partial": "Cukup",
+      "unmet": "Kurang"
+    },
+    "factors": {
+      "repayment": "Riwayat Pembayaran",
+      "stability": "Stabilitas Penghasilan",
+      "verifiedIncome": "Penghasilan Terverifikasi",
+      "incomeLevel": "Tingkat Penghasilan",
+      "continuity": "Kontinuitas Kerja",
+      "dataQuality": "Keandalan Data"
+    },
+    "grades": {
+      "A": "Sangat Baik",
+      "B": "Baik",
+      "C": "Cukup",
+      "D": "Perlu Perhatian",
+      "E": "Berisiko"
+    },
+    "reasons": {
+      "INCOME_VERIFICATION_NEEDED": "Perlu verifikasi penghasilan: layar setoran tidak cocok dengan mutasi rekening",
+      "SLIK_DELINQUENT": "Ada catatan tunggakan di lembaga keuangan",
+      "REPAY_ON_TIME": "Pembayaran selalu tepat waktu",
+      "REPAY_LATE": "Ada pembayaran yang terlambat atau terlewat",
+      "REPAY_NO_HISTORY": "Belum ada riwayat pembayaran, dihitung netral",
+      "INCOME_STABLE": "Penghasilan stabil setiap bulan",
+      "INCOME_VOLATILE": "Penghasilan berubah-ubah setiap bulan",
+      "DEPOSIT_MATCHED": "Jumlah setoran cocok dengan mutasi rekening",
+      "DEPOSIT_MISMATCH": "Selisih besar antara setoran dan mutasi rekening",
+      "INCOME_HIGH": "Penghasilan bersih bulanan mencukupi",
+      "INCOME_LOW": "Penghasilan bersih bulanan masih rendah",
+      "LONG_HISTORY": "Sudah lama bekerja secara konsisten",
+      "SHORT_HISTORY": "Masa kerja masih singkat",
+      "DATA_RELIABLE": "Dokumen jelas dan tanpa tanda suntingan",
+      "DATA_UNRELIABLE": "Ada dokumen yang buram atau mencurigakan"
+    },
+    "repaymentSources": {
+      "rental": "Pembayaran sewa",
+      "slik": "Laporan SLIK",
+      "telecom": "Tagihan pulsa"
+    },
+    "actions": {
+      "ADD_REPAYMENT_RECORDS": "Unggah tagihan pulsa atau laporan SLIK untuk membangun riwayat pembayaran",
+      "PAY_ON_TIME": "Bayar tepat waktu untuk memperbaiki riwayat pembayaran",
+      "KEEP_STEADY_INCOME": "Bekerja dengan ritme yang sama tiap bulan menaikkan stabilitas penghasilan",
+      "UPLOAD_BANK_STATEMENT": "Unggah mutasi rekening untuk menaikkan penghasilan terverifikasi",
+      "ADD_ALL_APP_SETTLEMENTS": "Unggah juga layar setoran dari aplikasi lain agar penghasilan tercatat lengkap",
+      "KEEP_ACTIVE": "Tetap aktif tanpa jeda untuk menaikkan kontinuitas kerja",
+      "RETAKE_CLEAR_PHOTO": "Foto ulang layar setoran di tempat yang terang",
+      "KEEP_UPLOADING": "Unggah layar setoran minimal 60 hari agar bisa dinilai"
+    },
+    "holds": {
+      "title": "Penilaian Ditunda",
+      "NEED_RETAKE": "Foto terakhir buram dan tidak terbaca",
+      "NEED_MORE_HISTORY": "Riwayat kurang dari 60 hari"
+    },
+    "badge": {
+      "pka_licensed_feature": "Fitur setelah izin PKA"
+    },
+    "disclaimer": "Model hipotesis untuk demo · belum divalidasi dengan data pembayaran nyata · keputusan ada di tangan mitra"
+  }
 }

@@ -4,6 +4,7 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { DEMO_TODAY } from "@/config/demo";
+import { evaluateCredit } from "@/credit/engine";
 import { deriveRiderMetrics } from "@/data/derive";
 import { FIXTURE_FILES, riderRecordsFrom } from "@/data/fixtureSet";
 import { formatRupiah } from "@/lib/format";
@@ -34,10 +35,13 @@ function main() {
   for (const rider of fx.riders) {
     const m = deriveRiderMetrics(riderRecordsFrom(fx, rider));
     const rate = m.depositMatchRate === null ? "-" : m.depositMatchRate.toFixed(2);
+    const credit = evaluateCredit(m);
+    const creditText =
+      credit.status === "scored" ? `${credit.score}(${credit.grade})` : `보류(${credit.holds.join(",")})`;
     console.log(
       `  ${rider.id.padEnd(8)} 월 순수입 ${formatRupiah(m.monthlyNet).padStart(13)}` +
         ` · 활동 ${m.consecutiveActiveMonths}개월 · 입금 일치 ${rate}` +
-        ` · 활동일 ${m.activeDays30}/30 · 앱 ${m.platformCount30}개`,
+        ` · 활동일 ${m.activeDays30}/30 · 앱 ${m.platformCount30}개 · 신용도 ${creditText}`,
     );
   }
   for (const name of FIXTURE_FILES) console.log(`  ${name}.json: ${fx[name].length}건`);

@@ -1,13 +1,22 @@
 // 생성된 더미 데이터가 CLAUDE.md 4-2 페르소나 표와 맞는지 확인한다 (4-6 생성 후 검증).
 // 범위를 벗어나면 데이터를 고친다. 계산 규칙(derive)이나 엔진을 데이터에 맞춰 고치지 않는다.
-// TODO(4번 작업): 신용도 엔진이 생기면 예상 신용도·등급 검사를 추가한다.
 
 import { DEMO_TODAY } from "@/config/demo";
+import { evaluateCredit, type Grade } from "@/credit/engine";
 import { deriveRiderMetrics, DEPOSIT_MISMATCH_THRESHOLD, MONTH_DAYS } from "@/data/derive";
 import { riderRecordsFrom, type FixtureSet } from "@/data/fixtureSet";
 import { addDays, isWithin, type IsoDate } from "@/lib/date";
 
 const TOLERANCE = 0.1;
+
+/** 4-2 표의 예상 신용도. hold = 재촬영 전에는 평가 보류여야 한다 (그 뒤 범위는 재촬영 후 기준) */
+export const CREDIT_EXPECTATIONS: Record<string, { min: number; max: number; grade: Grade; holdFirst?: boolean }> = {
+  "r-budi": { min: 820, max: 890, grade: "A" },
+  "r-siti": { min: 720, max: 790, grade: "B" },
+  "r-agus": { min: 500, max: 549, grade: "D" },
+  "r-dewi": { min: 840, max: 900, grade: "A" },
+  "r-rizky": { min: 700, max: 790, grade: "B", holdFirst: true },
+};
 
 interface Expectation {
   /** 최근 30일 정산 순수입 목표 */
@@ -110,6 +119,30 @@ export function checkFixtures(fx: FixtureSet, today: IsoDate = DEMO_TODAY): stri
     }
     if (m.historyDays < 60) problems.push(`${tag} 기록이 ${m.historyDays}일로 60일 미만`);
     if (m.editFlags.length) problems.push(`${tag} 위변조 신호가 없어야 한다: ${m.editFlags.join(", ")}`);
+  }
+
+  // 4-6 생성 후 검증 (2): 엔진이 낸 신용도가 4-2 표의 예상 범위와 등급에 드는가
+  for (const rider of fx.riders) {
+    const exp = CREDIT_EXPECTATIONS[rider.id];
+    if (!exp) continue;
+    const tag = `${rider.id}:`;
+    const records = riderRecordsFrom(fx, rider);
+    const before = evaluateCredit(deriveRiderMetrics(records, today));
+    if (exp.holdFirst && before.status !== "hold") {
+      problems.push(`${tag} 재촬영 전에는 평가 보류여야 한다`);
+    }
+    const retaken = {
+      ...records,
+      captures: records.captures.map((c) => fx.retakes.find((r) => r.id === c.id) ?? c),
+    };
+    const credit = exp.holdFirst ? evaluateCredit(deriveRiderMetrics(retaken, today)) : before;
+    if (credit.status !== "scored") {
+      problems.push(`${tag} 신용도가 나오지 않았다 (${credit.holds.join(", ")})`);
+    } else if (credit.score < exp.min || credit.score > exp.max || credit.grade !== exp.grade) {
+      problems.push(
+        `${tag} 신용도 ${credit.score}(${credit.grade})가 예상 ${exp.min}~${exp.max}(${exp.grade}) 밖`,
+      );
+    }
   }
 
   for (const retake of fx.retakes) {

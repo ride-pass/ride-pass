@@ -1,1 +1,69 @@
-{}
+{
+  "credit": {
+    "readiness": {
+      "title": "신용 준비도",
+      "summary": "신용 준비도: 5개 요인 중 {met}개 충족"
+    },
+    "marks": {
+      "met": "충족",
+      "partial": "보통",
+      "unmet": "부족"
+    },
+    "factors": {
+      "repayment": "상환 이력",
+      "stability": "소득 안정성",
+      "verifiedIncome": "검증된 소득",
+      "incomeLevel": "소득 수준",
+      "continuity": "활동 연속성",
+      "dataQuality": "데이터 신뢰도"
+    },
+    "grades": {
+      "A": "매우 좋음",
+      "B": "좋음",
+      "C": "보통",
+      "D": "주의",
+      "E": "위험"
+    },
+    "reasons": {
+      "INCOME_VERIFICATION_NEEDED": "소득 검증 필요: 정산 화면과 입금 내역이 맞지 않습니다",
+      "SLIK_DELINQUENT": "금융기관 연체 기록이 있습니다",
+      "REPAY_ON_TIME": "납부를 제때 해 왔습니다",
+      "REPAY_LATE": "늦거나 빠진 납부가 있습니다",
+      "REPAY_NO_HISTORY": "상환 이력이 없어 중립으로 반영했습니다",
+      "INCOME_STABLE": "달마다 수입이 고릅니다",
+      "INCOME_VOLATILE": "달마다 수입 차이가 큽니다",
+      "DEPOSIT_MATCHED": "정산 금액이 입금 내역과 맞습니다",
+      "DEPOSIT_MISMATCH": "정산 금액과 입금 내역 차이가 큽니다",
+      "INCOME_HIGH": "월 순수입이 충분합니다",
+      "INCOME_LOW": "월 순수입이 적은 편입니다",
+      "LONG_HISTORY": "오래 꾸준히 일해 왔습니다",
+      "SHORT_HISTORY": "활동 기간이 아직 짧습니다",
+      "DATA_RELIABLE": "올린 자료가 선명하고 수정 흔적이 없습니다",
+      "DATA_UNRELIABLE": "올린 자료에 흐리거나 의심스러운 부분이 있습니다"
+    },
+    "repaymentSources": {
+      "rental": "렌털 납부",
+      "slik": "SLIK 확인서",
+      "telecom": "통신요금 납부"
+    },
+    "actions": {
+      "ADD_REPAYMENT_RECORDS": "통신요금 납부 내역이나 SLIK 확인서를 올리면 상환 이력이 생깁니다",
+      "PAY_ON_TIME": "납부일을 지키면 상환 이력이 좋아집니다",
+      "KEEP_STEADY_INCOME": "매달 비슷하게 일하면 소득 안정성이 올라갑니다",
+      "UPLOAD_BANK_STATEMENT": "입금 계좌 내역을 올리면 검증된 소득이 올라갑니다",
+      "ADD_ALL_APP_SETTLEMENTS": "일하는 다른 앱의 정산 화면도 올리면 소득 수준이 정확해집니다",
+      "KEEP_ACTIVE": "공백 없이 계속 활동하면 활동 연속성이 올라갑니다",
+      "RETAKE_CLEAR_PHOTO": "정산 화면을 밝은 곳에서 다시 찍어 주세요",
+      "KEEP_UPLOADING": "정산 화면을 60일 이상 올리면 평가할 수 있습니다"
+    },
+    "holds": {
+      "title": "평가 보류",
+      "NEED_RETAKE": "최근 촬영이 흐려서 읽을 수 없습니다",
+      "NEED_MORE_HISTORY": "기록이 60일보다 짧습니다"
+    },
+    "badge": {
+      "pka_licensed_feature": "PKA 인가 후 제공 기능"
+    },
+    "disclaimer": "시연용 가설 모델 · 실제 상환 데이터로 검증 전 · 승인 여부는 제휴사가 결정"
+  }
+}
