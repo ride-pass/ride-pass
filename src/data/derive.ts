@@ -9,6 +9,8 @@ import type {
   RentalPayment,
   Rider,
   SettlementCapture,
+  SlikReport,
+  TelecomBill,
 } from "./types";
 
 /** "한 달" = 기준일부터 거꾸로 끊은 30일 단위 */
@@ -19,12 +21,16 @@ export const ACTIVITY_GAP_DAYS = 15;
 export const DEPOSIT_MISMATCH_THRESHOLD = 0.85;
 /** 입금은 정산 다음 날 들어온다 */
 export const DEPOSIT_LAG_DAYS = 1;
+/** 통신요금 정시 납부율을 보는 기간: 최근 6개월 (30일 단위) */
+export const TELECOM_WINDOW_DAYS = MONTH_DAYS * 6;
 
 export interface RiderRecords {
   rider: Rider;
   captures: SettlementCapture[];
   deposits: Deposit[];
   rentalPayments: RentalPayment[];
+  slikReports: SlikReport[];
+  telecomBills: TelecomBill[];
 }
 
 export interface RiderMetrics {
@@ -56,6 +62,16 @@ export interface RiderMetrics {
   editFlags: string[];
   /** 렌털사 화면에 띄울 경고 코드. amount_mismatch가 있으면 맨 앞 */
   warnings: string[];
+  /** 가장 최근 SLIK 확인서의 최악 콜렉터빌리티 (1~5). 확인서가 없으면 null */
+  slikKolektibilitas: SlikReport["worstKolektibilitas"] | null;
+  /** 가장 최근 SLIK 확인서의 남은 대출·할부 건수. 확인서가 없으면 null */
+  slikActiveFacilities: number | null;
+  /** 가장 최근 SLIK 확인서를 읽은 신뢰도. 확인서가 없으면 null */
+  slikParseConfidence: number | null;
+  /** 최근 6개월 통신요금 정시 납부율 (0~1). 기록이 없으면 null */
+  telecomOnTimeRate: number | null;
+  /** 최근 6개월 통신요금 납부 건수 */
+  telecomBillCount: number;
 }
 
 interface DayRange {
@@ -153,6 +169,15 @@ function depositMatch(
   return Math.min(1, deposited / settled);
 }
 
+function latestSlik(reports: SlikReport[]): SlikReport | undefined {
+  return [...reports].sort(
+    (a, b) =>
+      a.reportDate.localeCompare(b.reportDate) ||
+      a.uploadedAt.localeCompare(b.uploadedAt) ||
+      a.id.localeCompare(b.id),
+  ).at(-1);
+}
+
 function latestCapture(captures: SettlementCapture[]): SettlementCapture | undefined {
   return [...captures].sort((a, b) =>
     a.periodDate === b.periodDate
@@ -170,6 +195,10 @@ export function deriveRiderMetrics(
   const captures = records.captures.filter((c) => c.periodDate <= today);
   const deposits = records.deposits.filter((d) => d.date <= today);
   const rentals = records.rentalPayments.filter((p) => p.dueDate <= today);
+  const slik = latestSlik(records.slikReports.filter((r) => r.reportDate <= today));
+  const telecomStart = addDays(today, -(TELECOM_WINDOW_DAYS - 1));
+  const telecom = records.telecomBills.filter((b) => isWithin(b.dueDate, telecomStart, today));
+  const telecomOnTime = telecom.filter((b) => b.paidDate !== null && b.paidDate <= b.dueDate);
 
   const last30 = monthBlock(today, 0);
   const captures30 = captures.filter((c) => isWithin(c.periodDate, last30.start, last30.end));
@@ -201,5 +230,10 @@ export function deriveRiderMetrics(
     historyDays: firstRecord ? diffDays(firstRecord, today) + 1 : 0,
     editFlags,
     warnings: unique([...(mismatch ? ["amount_mismatch"] : []), ...editFlags]),
+    slikKolektibilitas: slik?.worstKolektibilitas ?? null,
+    slikActiveFacilities: slik?.activeFacilities ?? null,
+    slikParseConfidence: slik?.parseConfidence ?? null,
+    telecomOnTimeRate: telecom.length ? telecomOnTime.length / telecom.length : null,
+    telecomBillCount: telecom.length,
   };
 }

@@ -59,12 +59,35 @@ export interface Partner {
   type: PartnerType;
 }
 
+// 기사가 직접 올린 SLIK 확인서(iDeb) 한 건. 원본은 가상 샘플 PDF
+export interface SlikReport {
+  id: string;
+  riderId: string;
+  reportDate: string;         // 확인서 발급일
+  uploadedAt: string;
+  filePath: string;           // public/samples/ideb-*.pdf (가상)
+  worstKolektibilitas: 1 | 2 | 3 | 4 | 5; // 1 = 정상, 2 = 1~90일 연체, 5 = 180일 초과 연체
+  activeFacilities: number;   // 현재 남은 대출·할부 건수
+  parseConfidence: number;    // 0~1. 0.7 미만이면 다시 올리기 요청
+}
+
+// 통신요금(후불 요금제) 월 납부 한 건
+export interface TelecomBill {
+  id: string;
+  riderId: string;
+  providerLabel: string;      // "통신사 E" (가상)
+  month: string;              // "2026-10"
+  dueDate: string;
+  paidDate: string | null;
+  amount: number;
+}
+
 // 기사가 "이곳에 보여 주겠다"고 동의한 기록
 export interface ShareGrant {
   id: string;
   riderId: string;
   partnerId: string;
-  items: ("income" | "activity" | "rental_history" | "bank_account")[];
+  items: ("income" | "activity" | "rental_history" | "bank_account" | "slik_report" | "telecom_bills")[];
   grantedAt: string;
   expiresAt: string;          // grantedAt + 30일
   revokedAt: string | null;

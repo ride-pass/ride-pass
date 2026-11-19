@@ -7,6 +7,8 @@ import type {
   RentalPayment,
   Rider,
   SettlementCapture,
+  SlikReport,
+  TelecomBill,
 } from "./types";
 
 const TODAY = "2026-11-19";
@@ -82,6 +84,37 @@ function records(partial: Partial<RiderRecords> & { firstActiveDate?: string }):
     captures: partial.captures ?? [],
     deposits: partial.deposits ?? [],
     rentalPayments: partial.rentalPayments ?? [],
+    slikReports: partial.slikReports ?? [],
+    telecomBills: partial.telecomBills ?? [],
+  };
+}
+
+function slik(
+  reportDate: string,
+  worstKolektibilitas: SlikReport["worstKolektibilitas"],
+  activeFacilities = 1,
+): SlikReport {
+  return {
+    id: `s-${++seq}`,
+    riderId: "r-test",
+    reportDate,
+    uploadedAt: reportDate,
+    filePath: "/samples/ideb-test.pdf",
+    worstKolektibilitas,
+    activeFacilities,
+    parseConfidence: 0.95,
+  };
+}
+
+function bill(dueDate: string, paidDate: string | null): TelecomBill {
+  return {
+    id: `t-${++seq}`,
+    riderId: "r-test",
+    providerLabel: "통신사 E",
+    month: dueDate.slice(0, 7),
+    dueDate,
+    paidDate,
+    amount: 75000,
   };
 }
 
@@ -265,5 +298,51 @@ describe("OCR 신뢰도 · 기록 일수 · 위변조 신호", () => {
     const m = derive(records({}));
     expect(m.avgOcrConfidence).toBeNull();
     expect(m.latestOcrConfidence).toBeNull();
+  });
+});
+
+describe("SLIK 확인서", () => {
+  it("없으면 null", () => {
+    const m = derive(records({}));
+    expect(m.slikKolektibilitas).toBeNull();
+    expect(m.slikActiveFacilities).toBeNull();
+    expect(m.slikParseConfidence).toBeNull();
+  });
+
+  it("가장 최근 발급분을 쓴다. 기준일 이후 발급분은 무시한다", () => {
+    const m = derive(
+      records({
+        slikReports: [slik(ago(60), 3, 2), slik(ago(7), 1, 1), slik(addDays(TODAY, 1), 5, 4)],
+      }),
+    );
+    expect(m.slikKolektibilitas).toBe(1);
+    expect(m.slikActiveFacilities).toBe(1);
+    expect(m.slikParseConfidence).toBe(0.95);
+  });
+});
+
+describe("통신요금 정시 납부율 (최근 6개월)", () => {
+  it("없으면 null", () => {
+    const m = derive(records({}));
+    expect(m.telecomOnTimeRate).toBeNull();
+    expect(m.telecomBillCount).toBe(0);
+  });
+
+  it("6개월(180일) 안의 납기만 세고, 늦음·미납은 정시가 아니다", () => {
+    const m = derive(
+      records({
+        telecomBills: [
+          bill(ago(10), ago(10)),
+          bill(ago(40), ago(41)),
+          bill(ago(70), ago(68)), // 이틀 늦음
+          bill(ago(100), null), // 미납
+          bill(ago(179), ago(179)),
+          bill(ago(180), ago(180)), // 기간 밖
+          bill(addDays(TODAY, 5), null), // 아직 납기 전
+        ],
+      }),
+    );
+    expect(m.telecomBillCount).toBe(5);
+    expect(m.telecomOnTimeRate).toBeCloseTo(3 / 5, 10);
   });
 });
