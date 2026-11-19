@@ -26,10 +26,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="ko" className={`${pretendard.variable} h-full antialiased`}>
       <body className="min-h-full font-sans">
-        {/* 모바일 화면 우선: Figma 기준 390px 폭의 앱 프레임 */}
-        <div className="relative mx-auto flex min-h-dvh w-full max-w-[390px] flex-col bg-canvas">
-          <DemoProvider>{children}</DemoProvider>
-        </div>
+        {/* 화면 틀은 화면 묶음마다 정한다: 기사 화면은 PhoneFrame(390px), 렌털사 업무 화면은 전체 폭 */}
+        <DemoProvider>{children}</DemoProvider>
       </body>
     </html>
   );

@@ -14,6 +14,7 @@ import { Card } from "@/components/ui/Card";
 import { DemoNote } from "@/components/ui/DemoNote";
 import { QrCode } from "@/components/ui/QrCode";
 import { StepBar } from "@/components/ui/StepBar";
+import { ScreenSkeleton } from "@/components/ui/Skeleton";
 import { APP_NAME } from "@/config/brand";
 import { getIncomeStatement } from "@/data/repository";
 import type { IncomeStatement } from "@/data/statement";
@@ -28,7 +29,7 @@ export default function IncomeStatementPage() {
     getIncomeStatement(riderId).then(setS);
   }, [riderId]);
 
-  if (!s) return null;
+  if (!s) return <ScreenSkeleton />;
   const date = (iso: string) => formatDate(iso, lang);
 
   return (

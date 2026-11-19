@@ -1,15 +1,9 @@
-"use client";
+// 기사 앱 화면 묶음. 휴대폰 틀(노트북에서는 휴대폰 모양) 안에 그린다.
+// 화면이 바뀌면 맨 위에서 시작하는 처리도 PhoneFrame이 한다.
 
-// 기사 앱 화면 묶음. 다른 화면으로 넘어가면 맨 위에서 시작한다
-// (앞 화면의 스크롤 위치가 남아 긴 화면 중간부터 보이는 일을 막는다).
-
-import { usePathname } from "next/navigation";
-import { useEffect, type ReactNode } from "react";
+import type { ReactNode } from "react";
+import { PhoneFrame } from "@/components/shell/PhoneFrame";
 
 export default function RiderLayout({ children }: { children: ReactNode }) {
-  const pathname = usePathname();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-  return <>{children}</>;
+  return <PhoneFrame>{children}</PhoneFrame>;
 }

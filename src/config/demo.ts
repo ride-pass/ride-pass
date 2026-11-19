@@ -4,3 +4,6 @@ export const DEMO_TODAY = "2026-11-19";
 
 // 더미 데이터 생성(scripts/seed.ts)의 고정 시드 (CLAUDE.md 4-6).
 export const SEED = 20261119;
+
+// 노트북 시연용 휴대폰 틀의 상태 표시줄 시각 (PhoneFrame). 현재 시각을 쓰지 않는다.
+export const DEMO_CLOCK = "9:41";

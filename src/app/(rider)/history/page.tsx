@@ -12,7 +12,9 @@ import { Badge } from "@/components/ui/Badge";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { IconTile } from "@/components/ui/IconTile";
+import { Sheet } from "@/components/ui/Sheet";
 import { TabBar } from "@/components/ui/TabBar";
+import { useToast } from "@/components/ui/Toast";
 import { DEMO_TODAY } from "@/config/demo";
 import { listApplications, listPartners, listShareGrants, revokeShareGrant } from "@/data/repository";
 import type { Application, Partner, ShareGrant } from "@/data/types";
@@ -32,7 +34,8 @@ export default function HistoryPage() {
   const [partners, setPartners] = useState<Partner[]>([]);
   const [grants, setGrants] = useState<ShareGrant[]>([]);
   const [apps, setApps] = useState<Application[]>([]);
-  const [confirming, setConfirming] = useState<string | null>(null);
+  const [confirming, setConfirming] = useState<ShareGrant | null>(null);
+  const toast = useToast();
 
   const load = useCallback(
     () =>
@@ -60,6 +63,7 @@ export default function HistoryPage() {
     await revokeShareGrant(g.id);
     setConfirming(null);
     bumpData();
+    toast(t("history.revokedToast", { partner: name(g.partnerId) }), "success");
   };
 
   return (
@@ -109,28 +113,29 @@ export default function HistoryPage() {
                 </p>
               ) : null}
               {state === "active" ? (
-                confirming === g.id ? (
-                  <div className="flex flex-col gap-2 rounded-2xl bg-danger-soft p-3">
-                    <p className="text-sm">{t("history.confirm", { partner: name(g.partnerId) })}</p>
-                    <div className="grid grid-cols-2 gap-2">
-                      <Button variant="secondary" onClick={() => setConfirming(null)}>
-                        {t("history.cancel")}
-                      </Button>
-                      <Button variant="danger" onClick={() => revoke(g)}>
-                        {t("history.revoke")}
-                      </Button>
-                    </div>
-                  </div>
-                ) : (
-                  <Button variant="secondary" onClick={() => setConfirming(g.id)} icon={<RotateCcw className="size-4" aria-hidden />}>
-                    {t("history.revokeStart")}
-                  </Button>
-                )
+                <Button variant="secondary" onClick={() => setConfirming(g)} icon={<RotateCcw className="size-4" aria-hidden />}>
+                  {t("history.revokeStart")}
+                </Button>
               ) : null}
             </Card>
           );
         })}
       </main>
+      <Sheet open={confirming !== null} onClose={() => setConfirming(null)} title={t("history.revokeStart")}>
+        {confirming ? (
+          <div className="flex flex-col gap-4">
+            <p className="text-sm">{t("history.confirm", { partner: name(confirming.partnerId) })}</p>
+            <div className="grid grid-cols-2 gap-2">
+              <Button variant="secondary" onClick={() => setConfirming(null)}>
+                {t("history.cancel")}
+              </Button>
+              <Button variant="danger" onClick={() => revoke(confirming)}>
+                {t("history.revoke")}
+              </Button>
+            </div>
+          </div>
+        ) : null}
+      </Sheet>
       <TabBar />
     </div>
   );

@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { TabBar } from "@/components/ui/TabBar";
+import { ScreenSkeleton } from "@/components/ui/Skeleton";
 import { APP_NAME, LOGO_HEIGHT, LOGO_PATH, LOGO_WIDTH } from "@/config/brand";
 import { getRiderCreditView, type RiderCreditView } from "@/credit/riderView";
 import type { RiderMetrics } from "@/data/derive";
@@ -47,7 +48,7 @@ export default function HomePage() {
     // dataVersion: 조작판 초기화·재촬영 뒤 다시 읽는다
   }, [riderId, stage, dataVersion]);
 
-  if (!rider || !metrics || !statement || !credit) return null;
+  if (!rider || !metrics || !statement || !credit) return <ScreenSkeleton />;
   const matched = metrics.depositMatchRate !== null && metrics.depositMatchRate >= 0.85;
 
   return (
