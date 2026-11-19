@@ -3,8 +3,8 @@
 // 시연 조작판 (CLAUDE.md 4-8). 주소 뒤에 ?demo=1을 붙이면 화면 구석에 열린다.
 // 페르소나 바꾸기, 허가 단계 A ↔ C, 처음 상태로, 시연 단계로 바로 가기.
 
-import { ChevronDown, RotateCcw, SlidersHorizontal, X } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { ChevronDown, Columns2, RotateCcw, SlidersHorizontal, X } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { LicenseStage } from "@/config/licenseStage";
 import { createShareGrant, listRiders, listShareGrants, submitApplication } from "@/data/repository";
@@ -24,10 +24,15 @@ export const DEMO_STEPS: { step: number; href: string }[] = [
 
 const STAGES: LicenseStage[] = ["A", "C"];
 
+/** 분할 보기 화면 주소. 왼쪽 기사 폰, 오른쪽 렌털사 화면 */
+export const SPLIT_PATH = "/demo/split";
+
 export function DemoPanel() {
   const t = useT();
   const router = useRouter();
+  const pathname = usePathname();
   const demo = useDemo();
+  const inSplit = pathname === SPLIT_PATH;
   const [open, setOpen] = useState(false);
   const [riders, setRiders] = useState<Rider[]>([]);
 
@@ -50,14 +55,19 @@ export function DemoPanel() {
     demo.bumpData();
   };
 
+  // 분할 보기에서는 이 화면을 떠나지 않고 해당 쪽 iframe만 옮긴다 (7단계는 렌털사 쪽, 나머지는 기사 폰)
   const go = async (step: number, href: string) => {
     if (step === 7) await ensureSubmitted();
-    router.push(href);
+    if (inSplit) demo.navigateFrame(step === 7 ? "partner" : "rider", href);
+    else router.push(href);
   };
 
   const reset = async () => {
     await demo.reset();
-    router.push("/partner/apply");
+    if (inSplit) {
+      demo.navigateFrame("rider", "/partner/apply");
+      demo.navigateFrame("partner", "/partner/applicants");
+    } else router.push("/partner/apply");
   };
 
   if (!open) {
@@ -136,8 +146,17 @@ export function DemoPanel() {
 
       <button
         type="button"
-        onClick={reset}
+        onClick={() => router.push(inSplit ? "/home" : SPLIT_PATH)}
         className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-xl bg-white/10 py-2 text-xs font-semibold hover:bg-white/20"
+      >
+        <Columns2 className="size-3.5" aria-hidden />
+        {inSplit ? t("demo.splitExit") : t("demo.split")}
+      </button>
+
+      <button
+        type="button"
+        onClick={reset}
+        className="mt-2 flex w-full items-center justify-center gap-1.5 rounded-xl bg-white/10 py-2 text-xs font-semibold hover:bg-white/20"
       >
         <RotateCcw className="size-3.5" aria-hidden />
         {t("demo.reset")}

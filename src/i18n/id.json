@@ -340,7 +340,11 @@
       "7": "Layar mitra rental",
       "8": "Daftar cek KUR"
     },
-    "reset": "Kembali ke awal"
+    "reset": "Kembali ke awal",
+    "split": "Tampilan terbagi (HP + mitra)",
+    "splitExit": "Tutup tampilan terbagi",
+    "splitRider": "HP pengemudi",
+    "splitPartner": "Layar staf mitra"
   },
   "creditPage": {
     "header": "Status kreditku",
@@ -391,7 +395,9 @@
     "noConsent": "Pengemudi belum membagikan data ke mitra rental ini.",
     "approve": "Setujui",
     "reject": "Tolak",
-    "decisionNote": "Keputusan persetujuan ada di mitra rental."
+    "decisionNote": "Keputusan persetujuan ada di mitra rental.",
+    "approvedToast": "Pengajuan {name} disetujui. Notifikasi dikirim ke aplikasi pengemudi.",
+    "rejectedToast": "Pengajuan {name} ditolak. Notifikasi dikirim ke aplikasi pengemudi."
   },
   "kur": {
     "header": "Persiapan KUR",
@@ -526,6 +532,18 @@
     "cancel": "Batal",
     "revoke": "Tarik",
     "revokedNote": "Ditarik pada {date}. Tempat ini tidak bisa melihat data lagi.",
-    "revokedToast": "Izin data untuk {partner} sudah ditarik."
+    "revokedToast": "Izin data untuk {partner} sudah ditarik.",
+    "viewed": "Dilihat pada {date}",
+    "notViewed": "Belum dilihat",
+    "daysLeft": "sisa {n} hari"
+  },
+  "notices": {
+    "title": "Notifikasi",
+    "empty": "Belum ada notifikasi. Kalau tempat yang kamu beri akses melihat datamu atau memproses pengajuanmu, kabarnya muncul di sini.",
+    "viewed": "{partner} telah melihat slip penghasilanmu",
+    "approved": "{partner} menyetujui pengajuanmu",
+    "rejected": "{partner} menolak pengajuanmu",
+    "bellUnread": "{n} notifikasi belum dibaca",
+    "unread": "Belum dibaca"
   }
 }

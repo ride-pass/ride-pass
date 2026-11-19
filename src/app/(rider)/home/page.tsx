@@ -6,7 +6,7 @@
 // "안전 운행 점수", 「맞춤 제휴 혜택」 상품 카드, "소액 대출"·"보험 할인"·"오토바이 할부" 타일은 넣지 않는다.
 // 바로 가기 타일은 하단 탭·각 카드의 링크와 겹쳐서 뺐다.
 
-import { ChevronRight, Lightbulb, TriangleAlert } from "lucide-react";
+import { Bell, ChevronRight, Lightbulb, TriangleAlert } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -29,6 +29,7 @@ import {
   getRiderMetrics,
   getRiderRecords,
   listApplications,
+  listNotices,
   listPartners,
   listShareGrants,
 } from "@/data/repository";
@@ -64,6 +65,7 @@ export default function HomePage() {
   const [statement, setStatement] = useState<IncomeStatement | null>(null);
   const [credit, setCredit] = useState<RiderCreditView | null>(null);
   const [feed, setFeed] = useState<Feed | null>(null);
+  const [unread, setUnread] = useState(0);
 
   useEffect(() => {
     getRider(riderId).then(setRider);
@@ -71,6 +73,7 @@ export default function HomePage() {
     getRiderActivity(riderId).then(setActivity);
     getIncomeStatement(riderId).then(setStatement);
     getRiderCreditView(riderId, stage).then(setCredit);
+    listNotices(riderId).then((ns) => setUnread(ns.filter((n) => !n.read).length));
     (async () => {
       const [records, partners, grants] = await Promise.all([getRiderRecords(riderId), listPartners(), listShareGrants(riderId)]);
       const apps = (await Promise.all(partners.map((p) => listApplications(p.id)))).flat().filter((a) => a.riderId === riderId);
@@ -87,7 +90,21 @@ export default function HomePage() {
     <div className="flex flex-1 flex-col">
       <header className="flex items-center justify-between px-4 pt-4">
         <Image src={LOGO_PATH} alt={APP_NAME} width={LOGO_WIDTH} height={LOGO_HEIGHT} priority className="h-auto w-28" />
-        <LangToggle />
+        <div className="flex items-center gap-2">
+          <Link
+            href="/notifications"
+            aria-label={unread ? t("notices.bellUnread", { n: unread }) : t("notices.title")}
+            className="relative grid size-9 place-items-center rounded-full active:bg-lavender"
+          >
+            <Bell className="size-5" aria-hidden />
+            {unread ? (
+              <span className="absolute -top-0.5 -right-0.5 grid min-w-4 place-items-center rounded-full bg-danger px-1 text-[11px] leading-4 font-bold text-white tabular-nums">
+                {unread}
+              </span>
+            ) : null}
+          </Link>
+          <LangToggle />
+        </div>
       </header>
       <main className="flex flex-col gap-4 px-4 pt-4 pb-6">
         <div className="flex items-center gap-3">
