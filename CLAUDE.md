@@ -80,7 +80,7 @@
 - 이유: 렌털사 같은 "기타 당사자"에게 점수를 주는 것도 PKA 업무로 볼 수 있다(POJK 29/2024, 팀 조사 「규제, 오토바이 회사 추가조사」 6-2). A단계에서 엔진은 **내부 검증용으로만** 돈다(파일럿에서 실제 납부 결과와 비교).
 
 - 시연 조작판(4-8)에서 A ↔ C를 바꿔 보여 줄 수 있다. 발표 메시지: "오늘은 사실 리포트로 시작하고, 인가를 받으면 같은 엔진으로 신용도를 제공합니다."
-- 기사 화면 코드는 신용 엔진(`src/credit/engine.ts`)을 직접 import하지 않는다. `src/credit/riderView.ts`의 `getRiderCreditView()`만 부르고, 이 함수가 단계에 맞는 형태로만 돌려준다. `.eslintrc`의 `no-restricted-imports`로 막는다.
+- 기사 화면 코드는 신용 엔진(`src/credit/engine.ts`)을 직접 import하지 않는다. `src/credit/riderView.ts`의 `getRiderCreditView()`만 부르고, 이 함수가 단계에 맞는 형태로만 돌려준다. `eslint.config.mjs`의 `no-restricted-imports`로 막는다.
 - 어느 단계에서도 신용도와 함께 금리·한도·승인 여부를 보여 주지 않는다. 신용도는 판단 근거이고, 결정은 렌털사·금융사가 한다.
 
 ---
@@ -302,7 +302,7 @@ fixture에 저장하지 않고 항상 위 원본에서 계산한다.
 
 **발표에서 말할 것:** 가중치는 가설이다. 1단계 파일럿에서 렌털사의 실제 납부 결과와 비교해(KS·Gini) 고친다. 이 순서 자체가 "현실 진입 전략"이다.
 
-**기사 화면 코드(`src/app/(rider)/**`)는 `engine.ts`와 `partnerView.ts`를 import할 수 없다.** `.eslintrc`의 `no-restricted-imports`로 막고, 이 규칙을 끄지 않는다.
+**기사 화면 코드(`src/app/(rider)/**`)는 `engine.ts`와 `partnerView.ts`를 import할 수 없다.** `eslint.config.mjs`의 `no-restricted-imports`로 막고, 이 규칙을 끄지 않는다.
 
 ### 4-6. 생성 규칙 (`scripts/seed.ts`)
 
@@ -402,7 +402,7 @@ scripts/seed.ts         # 더미 데이터 생성 + 검증
 ## 6. 디자인
 
 - **Figma:** 「라이드패스 UI 초안」 페이지가 기준이다. 레이아웃·색·아이콘은 따르되, **문구는 2절이 Figma보다 우선**한다.
-- **색:** 남색 `#19172A`("Trail"), 보라 `#4935A8`("cred"), 라임 `#C7F36B`(강조 점). 박성원 님 최종 로고 파일 「(최종)브랜드_Trailcred_로고」 기준이며 `tailwind.config`의 토큰으로만 쓴다. 화면 코드에 hex를 직접 쓰지 않는다. 로고는 팀 드라이브의 SVG(`Trailcred_logo`, `Trailcred_app_icon` 등)만 쓴다.
+- **색:** 남색 `#19172A`("Trail"), 보라 `#4935A8`("cred"), 라임 `#C7F36B`(강조 점). 박성원 님 최종 로고 파일 「(최종)브랜드_Trailcred_로고」 기준이며 `src/app/globals.css`의 `@theme` 토큰(Tailwind 4)으로만 쓴다. 바탕 Base `#F7F6F1`, 연보라 Soft `#E9E5FA`는 Figma 색 변수 기준. 화면 코드에 hex를 직접 쓰지 않는다. 로고는 팀 드라이브의 SVG(`Trailcred_logo`, `Trailcred_app_icon` 등)만 쓴다.
 - **Figma 초안에서 다르게 구현할 것:**
 
 | Figma 화면 | 구현 시 변경 |

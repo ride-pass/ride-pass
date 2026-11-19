@@ -2,17 +2,16 @@
 
 /* 색은 이 토큰으로만 쓴다. 화면 코드에 hex를 직접 쓰지 않는다 (CLAUDE.md 6절). */
 @theme {
-  /* 브랜드 3색: 「Trailcred 로고」 브랜드 확정안 (2026-11-19) */
-  --color-brand-purple: #4935a8; /* "cred" 글자, 주요 버튼 */
-  --color-brand-navy: #19172a; /* "Trail" 글자, 본문 */
-  --color-brand-lime: #c7f36b; /* 강조 점, 완료 표시 */
+  /* Figma 색 변수 (팀 공유, 2026-11-20): Primary · Accent · Base · Text · Soft */
+  --color-brand-purple: #4935a8; /* Primary — "cred" 글자, 주요 버튼 */
+  --color-brand-lime: #c7f36b; /* Accent — 강조 점, 완료 표시 */
+  --color-canvas: #f7f6f1; /* Base — 화면 바탕 (크림) */
+  --color-brand-navy: #19172a; /* Text — "Trail" 글자, 본문 */
+  --color-lavender: #e9e5fa; /* Soft — 아이콘 타일, 강조 카드 바탕 */
 
-  /* 보조색: Figma 초안 캡처에서 뽑은 근사값.
-     TODO: Figma 변수 목록을 받으면 정확한 값으로 교체 */
-  --color-canvas: #f7f6f2; /* 화면 바탕 (크림) */
+  /* 아래는 Figma 변수에 없는 값. 위 5색에서 맞춰 만든 보조값 */
   --color-surface: #ffffff; /* 카드 */
-  --color-lavender: #eeebfa; /* 아이콘 타일, 강조 카드 바탕 */
-  --color-lavender-strong: #dcd6f5; /* 눌림, 선택 테두리 */
+  --color-lavender-strong: #d7d0f5; /* 눌림, 선택 테두리 (Soft를 한 단계 진하게) */
   --color-line: #e8e6e0; /* 구분선, 입력칸 테두리 */
   --color-muted: #6e6c78; /* 보조 글자 */
   --color-lime-ink: #3f5a0f; /* 라임 바탕 위 글자 */

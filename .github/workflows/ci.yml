@@ -1,0 +1,32 @@
+# PR마다 CLAUDE.md 8절 체크리스트의 자동 검사(lint·test·build)를 돌린다.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Test (신용도 엔진 페르소나 범위, fixture 일치, i18n 키)
+        run: npm test
+      - name: Build
+        run: npm run build

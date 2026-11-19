@@ -81,8 +81,9 @@ export default function HomePage() {
               </p>
             </div>
           </div>
-          <div className="flex items-center justify-between gap-3">
-            <span className="min-w-0 truncate rounded-full bg-white/10 px-3 py-1 font-mono text-[10px] whitespace-nowrap">{statement.issueNo}</span>
+          {/* 인니어처럼 버튼 글자가 길면 발급번호 아래로 내려간다 (발급번호는 자르지 않는다) */}
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <span className="rounded-full bg-white/10 px-3 py-1 font-mono text-[11px] whitespace-nowrap">{statement.issueNo}</span>
             <Link href="/certificate" className="shrink-0 rounded-2xl bg-brand-lime px-4 py-2.5 text-center text-sm font-bold text-lime-ink">
               {t("home.viewStatement")}
             </Link>
