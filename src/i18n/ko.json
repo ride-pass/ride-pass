@@ -251,7 +251,16 @@
     "next": "수입 명세서 만들기",
     "demo": "시연용: 가상 정산 화면을 찍는 연출입니다. 실제 카메라는 쓰지 않습니다.",
     "frontCam": "전면 카메라",
-    "backCam": "후면 카메라"
+    "backCam": "후면 카메라",
+    "searching": "정산 화면을 찾는 중…",
+    "locked": "정산 화면을 찾았습니다",
+    "steps": {
+      "date": "날짜 찾는 중…",
+      "net": "금액 읽는 중…",
+      "trips": "건수 확인 중…"
+    },
+    "confidence": "인식 신뢰도 {n}%",
+    "confidenceLow": "인식 신뢰도 {n}% · 기준 {min}% 미만"
   },
   "statement": {
     "header": "수입 명세서",
