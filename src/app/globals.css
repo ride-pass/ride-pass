@@ -19,6 +19,11 @@
   --color-danger: #d14343; /* 경고 */
   --color-danger-soft: #fdecec;
 
+  /* 가상 앱 정산 화면의 브랜드 색 (실제 플랫폼 색을 흉내 내지 않는 임의 값) */
+  --color-platform-a: #2f6f8f; /* 호출 앱 A */
+  --color-platform-b: #b8572a; /* 배달 앱 B */
+  --color-platform-c: #5b6b2f; /* 호출 앱 C */
+
   --font-sans: var(--font-pretendard), system-ui, sans-serif;
 
   --breakpoint-app: 390px; /* Figma 기준 화면 폭 */
