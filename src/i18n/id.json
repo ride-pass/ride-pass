@@ -302,6 +302,52 @@
     "until": "Berlaku sampai",
     "items": "Data yang dikirim",
     "decision": "Keputusan persetujuan ada di tangan penerima.",
-    "backToStart": "Kembali ke awal"
+    "backToStart": "Kembali ke awal",
+    "toCredit": "Lihat status kreditku"
+  },
+  "demo": {
+    "open": "Panel demo",
+    "title": "Panel demo",
+    "close": "Tutup",
+    "persona": "Tokoh demo",
+    "scenes": {
+      "r-budi": "Demo utama",
+      "r-siti": "Tanpa riwayat bayar",
+      "r-agus": "Mutasi tidak cocok",
+      "r-dewi": "Selalu tepat waktu",
+      "r-rizky": "Foto ulang"
+    },
+    "stage": "Tahap izin",
+    "stages": {
+      "A": "A · Sekarang (sebelum izin)",
+      "C": "C · Setelah izin PKA"
+    },
+    "jump": "Langsung ke langkah demo",
+    "steps": {
+      "1": "Pengajuan mitra rental",
+      "2": "Masuk",
+      "3": "Persetujuan",
+      "4": "Foto",
+      "5": "Slip penghasilan",
+      "6": "Status kredit",
+      "7": "Layar mitra rental",
+      "8": "Daftar cek KUR"
+    },
+    "reset": "Kembali ke awal"
+  },
+  "creditPage": {
+    "header": "Status kreditku",
+    "aNote": "Skor angka tidak ditampilkan. Kami hanya memberi tahu faktor mana yang sudah cukup dan apa yang bisa dilengkapi.",
+    "factorsTitle": "Status per faktor",
+    "improveTitle": "Cara memperbaikinya",
+    "reasonsTitle": "Alasan skor ini",
+    "goRetake": "Foto ulang sekarang",
+    "toKur": "Cek syarat KUR"
+  },
+  "placeholder": {
+    "kurTitle": "Daftar cek KUR",
+    "kurBody": "Langkah 8 (daftar cek KUR) dibuat setelah syarat resmi dipastikan.",
+    "applicantsTitle": "Layar mitra rental",
+    "applicantsBody": "Langkah 7 (layar mitra rental) dibuat di tahap berikutnya."
   }
 }
