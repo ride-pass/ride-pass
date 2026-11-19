@@ -345,8 +345,48 @@
   },
   "placeholder": {
     "kurTitle": "KUR 체크리스트",
-    "kurBody": "8단계(KUR 체크리스트)는 공식 조건을 확인한 뒤 만듭니다.",
-    "applicantsTitle": "렌털사 확인 화면",
-    "applicantsBody": "7단계(렌털사 확인 화면)는 다음 작업에서 만듭니다."
+    "kurBody": "8단계(KUR 체크리스트)는 공식 조건을 확인한 뒤 만듭니다."
+  },
+  "warnings": {
+    "amount_mismatch": "정산·입금 불일치",
+    "duplicate_image": "같은 사진 중복",
+    "edited_image": "수정 흔적"
+  },
+  "applicants": {
+    "demoLabel": "가상 렌털사 직원 화면 (시연용)",
+    "title": "신청자 확인",
+    "summary": "신청 {n}건 · 경고 {w}건",
+    "stageA": "A단계: 기사가 직접 건넨 사실 리포트만 보입니다. 점수·등급은 제공하지 않습니다.",
+    "stageC": "C단계(PKA 인가 후): 사실 리포트에 신용도·등급·이유를 더해 보여 줍니다.",
+    "submitted": "{date} 신청",
+    "status": {
+      "pending": "대기",
+      "approved": "승인",
+      "rejected": "거절"
+    },
+    "factsTitle": "사실 리포트 (기사가 공유한 항목)",
+    "notShared": "공유 안 함",
+    "none": "자료 없음",
+    "facts": {
+      "income": "월 순수입",
+      "incomeValue": "{net} (3개월 평균 {avg})",
+      "deposit": "입금 대조",
+      "depositOk": "일치 (일치율 {rate})",
+      "depositBad": "불일치 (일치율 {rate})",
+      "activity": "활동",
+      "activityValue": "30일 중 {days}일 · 앱 {apps}개 · {months}개월 연속",
+      "rental": "렌털 납부",
+      "rateValue": "정시 {rate} · {n}건",
+      "slik": "SLIK",
+      "slikValue": "콜렉터빌리티 {kol} ({label}) · 남은 {n}건",
+      "telecom": "통신요금",
+      "telecomValue": "정시 {rate} · {n}개월"
+    },
+    "creditTitle": "신용도",
+    "sharedUntil": "{date}까지 볼 수 있음 (기사가 언제든 철회 가능)",
+    "noConsent": "기사가 아직 이 렌털사에 자료를 공유하지 않았습니다.",
+    "approve": "승인",
+    "reject": "거절",
+    "decisionNote": "승인 여부는 렌털사가 정합니다."
   }
 }

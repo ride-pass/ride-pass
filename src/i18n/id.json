@@ -346,8 +346,48 @@
   },
   "placeholder": {
     "kurTitle": "Daftar cek KUR",
-    "kurBody": "Langkah 8 (daftar cek KUR) dibuat setelah syarat resmi dipastikan.",
-    "applicantsTitle": "Layar mitra rental",
-    "applicantsBody": "Langkah 7 (layar mitra rental) dibuat di tahap berikutnya."
+    "kurBody": "Langkah 8 (daftar cek KUR) dibuat setelah syarat resmi dipastikan."
+  },
+  "warnings": {
+    "amount_mismatch": "Setoran & mutasi tidak cocok",
+    "duplicate_image": "Foto duplikat",
+    "edited_image": "Ada tanda suntingan"
+  },
+  "applicants": {
+    "demoLabel": "Contoh layar staf mitra rental (demo)",
+    "title": "Cek pemohon",
+    "summary": "{n} pengajuan · {w} peringatan",
+    "stageA": "Tahap A: hanya laporan fakta yang diserahkan pengemudi. Skor dan peringkat tidak diberikan.",
+    "stageC": "Tahap C (setelah izin PKA): laporan fakta ditambah skor kredit, peringkat, dan alasan.",
+    "submitted": "Diajukan {date}",
+    "status": {
+      "pending": "Menunggu",
+      "approved": "Disetujui",
+      "rejected": "Ditolak"
+    },
+    "factsTitle": "Laporan fakta (data yang dibagikan pengemudi)",
+    "notShared": "Tidak dibagikan",
+    "none": "Tidak ada data",
+    "facts": {
+      "income": "Penghasilan bersih",
+      "incomeValue": "{net} (rata-rata 3 bulan {avg})",
+      "deposit": "Pencocokan mutasi",
+      "depositOk": "Cocok ({rate})",
+      "depositBad": "Tidak cocok ({rate})",
+      "activity": "Aktivitas",
+      "activityValue": "{days} dari 30 hari · {apps} aplikasi · {months} bulan berturut-turut",
+      "rental": "Bayar sewa",
+      "rateValue": "Tepat waktu {rate} · {n} kali",
+      "slik": "SLIK",
+      "slikValue": "Kolektibilitas {kol} ({label}) · {n} aktif",
+      "telecom": "Tagihan pulsa",
+      "telecomValue": "Tepat waktu {rate} · {n} bulan"
+    },
+    "creditTitle": "Skor kredit",
+    "sharedUntil": "Bisa dilihat sampai {date} (pengemudi bisa menarik izin kapan saja)",
+    "noConsent": "Pengemudi belum membagikan data ke mitra rental ini.",
+    "approve": "Setujui",
+    "reject": "Tolak",
+    "decisionNote": "Keputusan persetujuan ada di mitra rental."
   }
 }

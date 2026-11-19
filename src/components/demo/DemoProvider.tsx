@@ -31,6 +31,9 @@ interface DemoContextValue extends DemoState {
   setPhone(phone: string): void;
   /** 주소에 ?demo=1이 있으면 true. 새로고침 전까지 유지 */
   panelEnabled: boolean;
+  /** 조작판이 저장소 데이터를 바꿀 때마다 1씩 오른다. 화면은 이 값이 바뀌면 다시 읽는다 */
+  dataVersion: number;
+  bumpData(): void;
   /** 신청·동의·재촬영 상태까지 처음으로 */
   reset(): Promise<void>;
 }
@@ -57,11 +60,14 @@ export function DemoProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<DemoState>(initial);
   const patch = useCallback((p: Partial<DemoState>) => setState((s) => ({ ...s, ...p })), []);
   const panelEnabled = useSyncExternalStore(subscribeNever, readDemoFlag, () => false);
+  const [dataVersion, setDataVersion] = useState(0);
 
   const value = useMemo<DemoContextValue>(
     () => ({
       ...state,
       panelEnabled,
+      dataVersion,
+      bumpData: () => setDataVersion((v) => v + 1),
       setRiderId: (riderId) => patch({ riderId }),
       setLang: (lang) => patch({ lang }),
       setStage: (stage) => patch({ stage }),
@@ -70,9 +76,10 @@ export function DemoProvider({ children }: { children: ReactNode }) {
       reset: async () => {
         await resetDemoState();
         setState(initial);
+        setDataVersion((v) => v + 1);
       },
     }),
-    [state, patch, panelEnabled],
+    [state, patch, panelEnabled, dataVersion],
   );
 
   return (
