@@ -2,6 +2,7 @@
 // 지금은 fixture를 읽는 mockRepository를 쓴다. 실제 API로 바꿀 때는 이 파일의 구현 연결만 바꾼다 (4-10).
 // 모든 함수는 비동기다. 나중에 네트워크 호출로 바뀌어도 화면 코드는 그대로다.
 
+import { browserChannel, withDemoSync } from "./demoSync";
 import type { RiderActivity, RiderMetrics, RiderRecords } from "./derive";
 import { mockRepository } from "./mockRepository";
 import type { IncomeStatement } from "./statement";
@@ -12,6 +13,23 @@ import type {
   SettlementCapture,
   ShareGrant,
 } from "./types";
+
+/**
+ * 기사 앱 알림: 기관이 신청서를 열람했거나 승인·거절했다.
+ * 원본 기록(4-3 계약)이 아니라 시연 중에 생기는 상태라 types.ts가 아니라 여기에 둔다. 메모리에만 있다.
+ */
+export interface RiderNotice {
+  id: string;
+  /** 생긴 순서 (1부터). 같은 날 안의 순서를 정한다 */
+  seq: number;
+  riderId: string;
+  partnerId: string;
+  applicationId: string;
+  kind: "viewed" | "approved" | "rejected";
+  /** 생긴 날 (시연에서는 항상 DEMO_TODAY) */
+  at: string;
+  read: boolean;
+}
 
 export interface ShareGrantInput {
   riderId: string;
@@ -38,8 +56,13 @@ export interface Repository {
   listApplications(partnerId: string): Promise<Application[]>;
   /** 기사가 신청을 제출한다. 같은 곳에 대기 중인 신청이 있으면 그것을 돌려준다 */
   submitApplication(riderId: string, partnerId: string): Promise<Application>;
-  /** 렌털사가 승인·거절한다 */
+  /** 렌털사가 승인·거절한다. 결과가 바뀌면 기사 앱 알림이 생긴다 */
   setApplicationStatus(applicationId: string, status: Application["status"]): Promise<Application>;
+  /** 기관이 신청서(공유된 자료)를 열었다. 같은 신청서는 처음 한 번만 알림이 생긴다 */
+  recordApplicationView(applicationId: string): Promise<void>;
+  /** 기사 앱 알림 (최근 것 먼저) */
+  listNotices(riderId: string): Promise<RiderNotice[]>;
+  markNoticesRead(riderId: string): Promise<void>;
 
   listShareGrants(riderId: string): Promise<ShareGrant[]>;
   /** 기사의 동의 기록. 기간은 오늘부터 30일 */
@@ -53,7 +76,13 @@ export interface Repository {
   resetDemoState(): Promise<void>;
 }
 
-export const repository: Repository = mockRepository;
+// 분할 보기(기사 폰 + 렌털사 화면)에서 두 화면의 메모리 상태를 맞춘다 (demoSync.ts). 실제 API로 바꾸면 빼도 된다.
+const synced = withDemoSync(mockRepository, browserChannel());
+
+export const repository: Repository = synced.repository;
+
+/** 다른 화면(분할 보기의 반대쪽)이 상태를 바꿨을 때 부른다. DemoProvider가 듣고 화면을 다시 읽게 한다 */
+export const onRemoteDataChange = synced.onRemoteChange;
 
 export const {
   listRiders,
@@ -67,6 +96,9 @@ export const {
   listApplications,
   submitApplication,
   setApplicationStatus,
+  recordApplicationView,
+  listNotices,
+  markNoticesRead,
   listShareGrants,
   createShareGrant,
   revokeShareGrant,

@@ -339,7 +339,11 @@
       "7": "렌털사 확인 화면",
       "8": "KUR 체크리스트"
     },
-    "reset": "처음 상태로"
+    "reset": "처음 상태로",
+    "split": "분할 보기 (기사 폰 + 렌털사 화면)",
+    "splitExit": "분할 보기 끝내기",
+    "splitRider": "기사 휴대폰",
+    "splitPartner": "렌털사 직원 화면"
   },
   "creditPage": {
     "header": "내 신용 상태",
@@ -390,7 +394,9 @@
     "noConsent": "기사가 아직 이 렌털사에 자료를 공유하지 않았습니다.",
     "approve": "승인",
     "reject": "거절",
-    "decisionNote": "승인 여부는 렌털사가 정합니다."
+    "decisionNote": "승인 여부는 렌털사가 정합니다.",
+    "approvedToast": "{name} 님 신청을 승인했습니다. 기사 앱에 알림이 갑니다.",
+    "rejectedToast": "{name} 님 신청을 거절했습니다. 기사 앱에 알림이 갑니다."
   },
   "kur": {
     "header": "KUR 신청 준비",
@@ -525,6 +531,18 @@
     "cancel": "취소",
     "revoke": "철회하기",
     "revokedNote": "{date}에 철회했습니다. 이제 이곳은 자료를 볼 수 없습니다.",
-    "revokedToast": "{partner}에 보여 주기를 철회했습니다."
+    "revokedToast": "{partner}에 보여 주기를 철회했습니다.",
+    "viewed": "{date}에 열람함",
+    "notViewed": "아직 열람하지 않음",
+    "daysLeft": "{n}일 남음"
+  },
+  "notices": {
+    "title": "알림",
+    "empty": "아직 알림이 없습니다. 내 자료를 보여 준 곳에서 열람하거나 신청을 처리하면 여기에 알려 드립니다.",
+    "viewed": "{partner}에서 내 수입 명세서를 열람했습니다",
+    "approved": "{partner}에서 신청을 승인했습니다",
+    "rejected": "{partner}에서 신청을 거절했습니다",
+    "bellUnread": "알림 {n}개 안 읽음",
+    "unread": "안 읽음"
   }
 }

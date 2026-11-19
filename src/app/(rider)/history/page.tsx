@@ -4,7 +4,7 @@
 // 어디에 무엇을 언제까지 보여 줬는지, 렌털사가 어떻게 처리했는지 보고, 언제든 철회한다.
 // 철회하면 그 기관 화면에서 바로 자료가 보이지 않는다 (partnerView가 유효한 동의만 본다).
 
-import { Building2, RotateCcw, ShieldOff } from "lucide-react";
+import { Building2, Eye, RotateCcw, ShieldOff } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { useDemo, useT } from "@/components/demo/DemoProvider";
 import { AppHeader } from "@/components/ui/AppHeader";
@@ -16,8 +16,9 @@ import { Sheet } from "@/components/ui/Sheet";
 import { TabBar } from "@/components/ui/TabBar";
 import { useToast } from "@/components/ui/Toast";
 import { DEMO_TODAY } from "@/config/demo";
-import { listApplications, listPartners, listShareGrants, revokeShareGrant } from "@/data/repository";
+import { listApplications, listNotices, listPartners, listShareGrants, revokeShareGrant, type RiderNotice } from "@/data/repository";
 import type { Application, Partner, ShareGrant } from "@/data/types";
+import { diffDays } from "@/lib/date";
 import { formatDate } from "@/lib/format";
 
 type GrantState = "active" | "revoked" | "expired";
@@ -34,14 +35,20 @@ export default function HistoryPage() {
   const [partners, setPartners] = useState<Partner[]>([]);
   const [grants, setGrants] = useState<ShareGrant[]>([]);
   const [apps, setApps] = useState<Application[]>([]);
+  const [notices, setNotices] = useState<RiderNotice[]>([]);
   const [confirming, setConfirming] = useState<ShareGrant | null>(null);
   const toast = useToast();
 
   const load = useCallback(
     () =>
       listPartners().then(async (ps) => {
-        const [gs, all] = await Promise.all([listShareGrants(riderId), Promise.all(ps.map((p) => listApplications(p.id)))]);
+        const [gs, all, ns] = await Promise.all([
+          listShareGrants(riderId),
+          Promise.all(ps.map((p) => listApplications(p.id))),
+          listNotices(riderId),
+        ]);
         setPartners(ps);
+        setNotices(ns);
         setGrants(gs.sort((a, b) => b.grantedAt.localeCompare(a.grantedAt)));
         setApps(all.flat().filter((a) => a.riderId === riderId));
       }),
@@ -90,10 +97,21 @@ export default function HistoryPage() {
                   <p className="font-bold">{name(g.partnerId)}</p>
                   <p className="text-xs text-muted">
                     {t("history.period", { from: formatDate(g.grantedAt, lang), to: formatDate(g.expiresAt, lang) })}
+                    {state === "active" ? ` · ${t("history.daysLeft", { n: diffDays(DEMO_TODAY, g.expiresAt) })}` : ""}
                   </p>
                 </div>
                 <Badge tone={state === "active" ? "lime" : "neutral"}>{t(`history.state.${state}`)}</Badge>
               </div>
+              {/* 기관이 내 자료를 열람했는지 (열람 기록은 기관이 신청서를 펼칠 때 남는다) */}
+              {(() => {
+                const viewed = notices.find((n) => n.kind === "viewed" && n.partnerId === g.partnerId);
+                return (
+                  <p className="flex items-center gap-2 text-sm text-muted">
+                    <Eye className="size-4 shrink-0" aria-hidden />
+                    {viewed ? t("history.viewed", { date: formatDate(viewed.at, lang) }) : t("history.notViewed")}
+                  </p>
+                );
+              })()}
               {app ? (
                 <p className="rounded-xl bg-canvas px-3 py-2 text-sm">
                   {t("history.appStatus")} <span className="font-semibold">{t(`applicants.status.${app.status}`)}</span>

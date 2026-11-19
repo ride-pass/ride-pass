@@ -11,7 +11,8 @@ import { useEffect, useRef, type ReactNode } from "react";
 import { ToastProvider } from "@/components/ui/Toast";
 import { StatusBar } from "./StatusBar";
 
-export function PhoneFrame({ children }: { children: ReactNode }) {
+/** watchers: 화면이 바뀌어도 다시 만들지 않는 보이지 않는 요소 (예: 새 알림 토스트) */
+export function PhoneFrame({ children, watchers }: { children: ReactNode; watchers?: ReactNode }) {
   const pathname = usePathname();
   const scroller = useRef<HTMLDivElement>(null);
 
@@ -26,6 +27,7 @@ export function PhoneFrame({ children }: { children: ReactNode }) {
         <StatusBar />
         <div ref={scroller} className="flex flex-1 flex-col md:min-h-0 md:overflow-y-auto md:overscroll-contain md:[scrollbar-width:none]">
           <ToastProvider>
+            {watchers}
             <div key={pathname} className="flex flex-1 flex-col motion-safe:animate-screen-in">
               {children}
             </div>

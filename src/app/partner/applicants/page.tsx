@@ -10,8 +10,9 @@ import { useCallback, useEffect, useState } from "react";
 import { ENTRY_PARTNER_ID, useDemo, useT } from "@/components/demo/DemoProvider";
 import { LangToggle } from "@/components/demo/LangToggle";
 import { Badge } from "@/components/ui/Badge";
+import { useToast } from "@/components/ui/Toast";
 import { listApplicantReports, type ApplicantRow, type FactReport, type PartnerCredit } from "@/credit/partnerView";
-import { getPartner, listRiders, setApplicationStatus } from "@/data/repository";
+import { getPartner, listRiders, recordApplicationView, setApplicationStatus } from "@/data/repository";
 import type { Application, Partner, Rider } from "@/data/types";
 import { formatDate, formatRupiah } from "@/lib/format";
 
@@ -39,9 +40,20 @@ export default function ApplicantsPage() {
     load();
   }, [load]);
 
+  const toast = useToast();
+
   const decide = async (app: Application, status: Application["status"]) => {
     await setApplicationStatus(app.id, status);
     await load();
+    toast(t(status === "approved" ? "applicants.approvedToast" : "applicants.rejectedToast", { name: riderName(app.riderId) }), "success");
+  };
+
+  /** 신청서를 펼친다. 기사가 공유한 자료가 보이면 열람 기록을 남긴다 (기사 앱 제출 이력·알림에 보인다) */
+  const toggle = (row: ApplicantRow) => {
+    const id = row.application.id;
+    if (open === id) return setOpen(null);
+    setOpen(id);
+    if (row.report.status === "shared") recordApplicationView(id);
   };
 
   const warnings = rows.filter((r) => r.report.status === "shared" && r.report.facts.warnings.length > 0).length;
@@ -75,7 +87,7 @@ export default function ApplicantsPage() {
               <button
                 type="button"
                 aria-expanded={expanded}
-                onClick={() => setOpen(expanded ? null : application.id)}
+                onClick={() => toggle({ application, report })}
                 className="flex w-full items-center gap-3 p-4 text-left"
               >
                 <span className="grid size-10 shrink-0 place-items-center rounded-full bg-lavender font-bold text-brand-purple">
