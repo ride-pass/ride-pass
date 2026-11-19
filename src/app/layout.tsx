@@ -1,16 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
+import { DemoProvider } from "@/components/demo/DemoProvider";
 import { APP_ICON_PATH, APP_NAME } from "@/config/brand";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+// Pretendard (SIL OFL 1.1, src/app/fonts/Pretendard-LICENSE.txt)
+const pretendard = localFont({
+  src: "./fonts/PretendardVariable.woff2",
+  variable: "--font-pretendard",
+  weight: "45 920",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -25,14 +24,11 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="ko"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    <html lang="ko" className={`${pretendard.variable} h-full antialiased`}>
       <body className="min-h-full font-sans">
         {/* 모바일 화면 우선: Figma 기준 390px 폭의 앱 프레임 */}
-        <div className="mx-auto flex min-h-dvh w-full max-w-[390px] flex-col bg-white">
-          {children}
+        <div className="relative mx-auto flex min-h-dvh w-full max-w-[390px] flex-col bg-canvas">
+          <DemoProvider>{children}</DemoProvider>
         </div>
       </body>
     </html>

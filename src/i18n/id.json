@@ -66,5 +66,70 @@
       "pka_licensed_feature": "Fitur setelah izin PKA"
     },
     "disclaimer": "Model hipotesis untuk demo · belum divalidasi dengan data pembayaran nyata · keputusan ada di tangan mitra"
+  },
+  "common": {
+    "back": "Kembali",
+    "next": "Lanjut",
+    "prev": "Sebelumnya",
+    "skip": "Lewati",
+    "start": "Mulai",
+    "comingSoon": "Segera hadir",
+    "demoOnly": "Layar ini untuk demo"
+  },
+  "apply": {
+    "demoLabel": "Contoh layar pengajuan mitra rental (demo)",
+    "title": "Pengajuan Sewa Motor Listrik",
+    "progress": "Formulir 2/3 · Unggah dokumen",
+    "applicantTitle": "Data pemohon",
+    "nameLabel": "Nama",
+    "phoneLabel": "Nomor HP",
+    "filled": "Sudah diisi",
+    "docsTitle": "Dokumen yang diperlukan",
+    "docId": "KTP",
+    "docIdStatus": "Sudah diunggah",
+    "docIncome": "Bukti penghasilan",
+    "docIncomeStatus": "Diperlukan",
+    "incomeHint": "Dari aplikasi mana pun kamu bekerja, cukup foto layar setoran untuk membuat slip penghasilan dan langsung mengirimkannya.",
+    "cta": "Kirim slip penghasilan lewat {app}",
+    "notice": "{app} adalah layanan terpisah dari mitra rental ini. Data hanya ditunjukkan ke tempat yang kamu pilih."
+  },
+  "onboarding": {
+    "slide1Chip": "Cukup foto layar setoran dari aplikasi mana pun",
+    "slide1Title": "Dari aplikasi mana pun, penghasilanmu jadi slip",
+    "slide1Body": "Tidak perlu menghubungkan akun aplikasi. Foto layar setoran, lalu kami buatkan slip penghasilan seperti slip gaji.",
+    "slide2Chip": "Bisa ditarik kapan saja",
+    "slide2Title": "Datamu hanya untuk tempat yang kamu pilih",
+    "slide2Body": "Kamu sendiri yang menentukan apa, untuk siapa, dan berapa lama data ditunjukkan. Izin bisa ditarik kapan saja.",
+    "slide3Chip": "Keputusan persetujuan ada di tiap mitra",
+    "slide3Title": "Satu slip penghasilan untuk pengajuan sewa dan cicilan",
+    "slide3Body": "Siapkan bukti penghasilan untuk mitra rental dan cicilan sekaligus, lengkap dengan penghasilan yang sudah dicocokkan dengan mutasi rekening.",
+    "haveAccount": "Sudah punya akun?",
+    "login": "Masuk"
+  },
+  "login": {
+    "header": "Mulai dengan nomor HP",
+    "title": "Masuk atau daftar",
+    "body": "Masukkan nomor HP yang terdaftar di aplikasi tempat kamu bekerja.",
+    "phoneLabel": "Nomor HP",
+    "placeholder": "812-0000-0101",
+    "infoTitle": "Info verifikasi",
+    "infoBody": "Kami akan mengirim kode 4 digit ke nomor ini.",
+    "submit": "Kirim kode",
+    "demo": "Demo: akhiran 0101–0105 memilih tokoh demo. Nomor apa pun bisa masuk."
+  },
+  "verify": {
+    "header": "Verifikasi kode",
+    "title": "Masukkan kode",
+    "body": "Masukkan 4 digit kode yang dikirim lewat SMS.",
+    "change": "Ubah",
+    "resend": "Kirim ulang kode",
+    "submit": "Verifikasi dan lanjut",
+    "delete": "Hapus",
+    "warning": "{app} tidak pernah meminta kode verifikasi lewat telepon. Jangan berikan kepada siapa pun.",
+    "demo": "Demo: 4 digit angka apa pun bisa masuk."
+  },
+  "placeholder": {
+    "consentTitle": "Persetujuan",
+    "consentBody": "Layar langkah 3 (persetujuan) dibuat di tahap berikutnya."
   }
 }
