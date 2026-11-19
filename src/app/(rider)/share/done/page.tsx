@@ -85,6 +85,7 @@ export default function ShareDonePage() {
         <p className="text-center text-sm text-muted">{t("done.decision")}</p>
       </main>
       <BottomBar>
+        <ButtonLink href="/credit">{t("done.toCredit")}</ButtonLink>
         <ButtonLink href="/partner/apply" variant="secondary">
           {t("done.backToStart")}
         </ButtonLink>
