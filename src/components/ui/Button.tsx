@@ -11,7 +11,7 @@ const VARIANT: Record<Variant, string> = {
 };
 
 const BASE =
-  "inline-flex w-full items-center justify-center gap-2 rounded-2xl px-5 py-4 text-base font-semibold transition disabled:cursor-not-allowed";
+  "inline-flex w-full items-center justify-center gap-2 rounded-2xl px-5 py-4 text-base font-semibold transition duration-150 active:scale-[0.98] disabled:cursor-not-allowed disabled:active:scale-100";
 
 interface Common {
   variant?: Variant;

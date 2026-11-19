@@ -10,6 +10,7 @@ import { AppHeader } from "@/components/ui/AppHeader";
 import { ButtonLink } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { TabBar } from "@/components/ui/TabBar";
+import { ScreenSkeleton } from "@/components/ui/Skeleton";
 import { buildKurChecklist, kurSummary, type KurGroup, type KurItem, type KurStatus } from "@/data/kur";
 import { getRiderMetrics, getRiderRecords } from "@/data/repository";
 
@@ -37,7 +38,7 @@ export default function KurPage() {
     // dataVersion: 조작판 초기화 뒤 다시 읽는다
   }, [riderId, dataVersion]);
 
-  if (!items) return null;
+  if (!items) return <ScreenSkeleton />;
   const summary = kurSummary(items);
   const needsUpload = items.some((i) => i.status === "needs_upload");
 

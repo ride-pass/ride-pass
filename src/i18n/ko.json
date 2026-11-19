@@ -73,7 +73,9 @@
     "skip": "건너뛰기",
     "start": "시작하기",
     "comingSoon": "준비 중",
-    "demoOnly": "시연용 화면입니다"
+    "demoOnly": "시연용 화면입니다",
+    "close": "닫기",
+    "loading": "불러오는 중"
   },
   "apply": {
     "demoLabel": "가상 렌털사 신청 화면 (시연용)",
@@ -502,6 +504,7 @@
     "confirm": "{partner}에 보여 주던 자료를 지금 철회할까요? 철회하면 그곳에서 바로 볼 수 없습니다.",
     "cancel": "취소",
     "revoke": "철회하기",
-    "revokedNote": "{date}에 철회했습니다. 이제 이곳은 자료를 볼 수 없습니다."
+    "revokedNote": "{date}에 철회했습니다. 이제 이곳은 자료를 볼 수 없습니다.",
+    "revokedToast": "{partner}에 보여 주기를 철회했습니다."
   }
 }

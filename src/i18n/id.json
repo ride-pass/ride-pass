@@ -74,7 +74,9 @@
     "skip": "Lewati",
     "start": "Mulai",
     "comingSoon": "Segera hadir",
-    "demoOnly": "Layar ini untuk demo"
+    "demoOnly": "Layar ini untuk demo",
+    "close": "Tutup",
+    "loading": "Memuat"
   },
   "apply": {
     "demoLabel": "Contoh layar pengajuan mitra rental (demo)",
@@ -503,6 +505,7 @@
     "confirm": "Tarik izin data untuk {partner} sekarang? Setelah ditarik, data langsung tidak terlihat di sana.",
     "cancel": "Batal",
     "revoke": "Tarik",
-    "revokedNote": "Ditarik pada {date}. Tempat ini tidak bisa melihat data lagi."
+    "revokedNote": "Ditarik pada {date}. Tempat ini tidak bisa melihat data lagi.",
+    "revokedToast": "Izin data untuk {partner} sudah ditarik."
   }
 }

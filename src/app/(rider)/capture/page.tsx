@@ -36,6 +36,7 @@ import { Card } from "@/components/ui/Card";
 import { DemoNote } from "@/components/ui/DemoNote";
 import { IconTile } from "@/components/ui/IconTile";
 import { StepBar } from "@/components/ui/StepBar";
+import { ScreenSkeleton } from "@/components/ui/Skeleton";
 import type { RiderRecords } from "@/data/derive";
 import { getRiderRecords, retakeCapture } from "@/data/repository";
 import type { SettlementCapture } from "@/data/types";
@@ -75,7 +76,7 @@ export default function CapturePage() {
     load();
   }, [load]);
 
-  if (!records) return null;
+  if (!records) return <ScreenSkeleton />;
 
   // 가장 최근 정산일의 촬영 (두 앱을 쓰면 두 장)
   const lastDate = records.captures.reduce((d, c) => (c.periodDate > d ? c.periodDate : d), "");
