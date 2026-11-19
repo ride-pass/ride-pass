@@ -86,8 +86,8 @@ export default function ShareDonePage() {
       </main>
       <BottomBar>
         <ButtonLink href="/credit">{t("done.toCredit")}</ButtonLink>
-        <ButtonLink href="/partner/apply" variant="secondary">
-          {t("done.backToStart")}
+        <ButtonLink href="/home" variant="secondary">
+          {t("done.toHome")}
         </ButtonLink>
       </BottomBar>
     </div>

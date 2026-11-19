@@ -7,11 +7,11 @@ import { CircleCheck, CircleHelp, CircleX, FileText, Landmark, TriangleAlert, Up
 import { useEffect, useState } from "react";
 import { useDemo, useT } from "@/components/demo/DemoProvider";
 import { AppHeader } from "@/components/ui/AppHeader";
-import { BottomBar } from "@/components/ui/BottomBar";
 import { ButtonLink } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { TabBar } from "@/components/ui/TabBar";
 import { buildKurChecklist, kurSummary, type KurGroup, type KurItem, type KurStatus } from "@/data/kur";
-import { getRiderMetrics } from "@/data/repository";
+import { getRiderMetrics, getRiderRecords } from "@/data/repository";
 
 const STATUS: Record<KurStatus, { icon: LucideIcon; color: string }> = {
   met: { icon: CircleCheck, color: "text-lime-ink" },
@@ -28,9 +28,12 @@ export default function KurPage() {
   const t = useT();
   const { riderId, dataVersion } = useDemo();
   const [items, setItems] = useState<KurItem[] | null>(null);
+  const [hasSlikSample, setHasSlikSample] = useState(false);
 
   useEffect(() => {
     getRiderMetrics(riderId).then((m) => setItems(m ? buildKurChecklist(m) : []));
+    // 가상 SLIK 샘플이 있는 인물만 "올리러 가기"를 보여 준다 (없는 인물은 눌러도 올릴 게 없다)
+    getRiderRecords(riderId).then((r) => setHasSlikSample(Boolean(r?.slikReports.length)));
     // dataVersion: 조작판 초기화 뒤 다시 읽는다
   }, [riderId, dataVersion]);
 
@@ -40,8 +43,8 @@ export default function KurPage() {
 
   return (
     <div className="flex flex-1 flex-col">
-      <AppHeader title={t("kur.header")} />
-      <main className="flex flex-col gap-4 px-4 pt-2">
+      <AppHeader title={t("kur.header")} back="/home" />
+      <main className="flex flex-col gap-4 px-4 pt-2 pb-6">
         <Card tone="purple" className="flex flex-col gap-2">
           <p className="text-sm text-white/80">{t("kur.subtitle")}</p>
           <p className="text-2xl font-bold">{t("kur.summary", { met: summary.met, total: summary.total })}</p>
@@ -79,20 +82,17 @@ export default function KurPage() {
           </Card>
         ))}
 
+        {needsUpload && hasSlikSample ? (
+          <ButtonLink href="/capture" variant="secondary" icon={<Upload className="size-5" aria-hidden />}>
+            {t("kur.toUpload")}
+          </ButtonLink>
+        ) : null}
         <p className="flex gap-2 px-1 text-xs leading-relaxed text-muted">
           <CircleHelp className="size-4 shrink-0" aria-hidden />
           {t("kur.sourceNote")}
         </p>
       </main>
-      {needsUpload ? (
-        <BottomBar>
-          <ButtonLink href="/capture" variant="secondary" icon={<Upload className="size-5" aria-hidden />}>
-            {t("kur.toUpload")}
-          </ButtonLink>
-        </BottomBar>
-      ) : (
-        <div className="h-6" />
-      )}
+      <TabBar />
     </div>
   );
 }

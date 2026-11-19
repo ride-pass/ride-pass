@@ -9,9 +9,9 @@ import { useEffect, useState } from "react";
 import { useDemo, useT } from "@/components/demo/DemoProvider";
 import { AppHeader } from "@/components/ui/AppHeader";
 import { Badge } from "@/components/ui/Badge";
-import { BottomBar } from "@/components/ui/BottomBar";
 import { ButtonLink } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { TabBar } from "@/components/ui/TabBar";
 import { getRiderCreditView, type ReadinessFactor, type ReadinessMark, type RiderCreditView } from "@/credit/riderView";
 
 export default function CreditPage() {
@@ -26,8 +26,8 @@ export default function CreditPage() {
 
   return (
     <div className="flex flex-1 flex-col">
-      <AppHeader title={t("creditPage.header")} />
-      <main className="flex flex-col gap-4 px-4 pt-2">
+      <AppHeader title={t("creditPage.header")} back="/home" />
+      <main className="flex flex-col gap-4 px-4 pt-2 pb-6">
         {view?.status === "hold" ? <HoldView view={view} /> : null}
         {view?.status === "readiness" ? (
           <>
@@ -76,12 +76,13 @@ export default function CreditPage() {
             <Improvement action={view.improvement} />
           </>
         ) : null}
+        {view ? (
+          <ButtonLink href="/kur" variant="secondary">
+            {t("creditPage.toKur")}
+          </ButtonLink>
+        ) : null}
       </main>
-      <BottomBar>
-        <ButtonLink href="/kur" variant="secondary">
-          {t("creditPage.toKur")}
-        </ButtonLink>
-      </BottomBar>
+      <TabBar />
     </div>
   );
 }

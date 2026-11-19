@@ -91,7 +91,10 @@
     "docIncomeStatus": "Diperlukan",
     "incomeHint": "Dari aplikasi mana pun kamu bekerja, cukup foto layar setoran untuk membuat slip penghasilan dan langsung mengirimkannya.",
     "cta": "Kirim slip penghasilan lewat {app}",
-    "notice": "{app} adalah layanan terpisah dari mitra rental ini. Data hanya ditunjukkan ke tempat yang kamu pilih."
+    "notice": "{app} adalah layanan terpisah dari mitra rental ini. Data hanya ditunjukkan ke tempat yang kamu pilih.",
+    "docIncomeSubmitted": "Terkirim via {app}",
+    "reviewStatus": "Slip penghasilan sudah diterima. Status pemeriksaan: {status}",
+    "openHistory": "Lihat riwayat kirim di {app}"
   },
   "onboarding": {
     "slide1Chip": "Cukup foto layar setoran dari aplikasi mana pun",
@@ -245,7 +248,9 @@
     "guide3Title": "Layar yang diedit tidak bisa",
     "guide3Body": "Layar yang diedit atau milik orang lain akan diberi peringatan pemalsuan.",
     "next": "Buat slip penghasilan",
-    "demo": "Demo: adegan memotret layar setoran fiktif. Kamera sungguhan tidak dipakai."
+    "demo": "Demo: adegan memotret layar setoran fiktif. Kamera sungguhan tidak dipakai.",
+    "frontCam": "Kamera depan",
+    "backCam": "Kamera belakang"
   },
   "statement": {
     "header": "Slip Penghasilan",
@@ -302,8 +307,8 @@
     "until": "Berlaku sampai",
     "items": "Data yang dikirim",
     "decision": "Keputusan persetujuan ada di tangan penerima.",
-    "backToStart": "Kembali ke awal",
-    "toCredit": "Lihat status kreditku"
+    "toCredit": "Lihat status kreditku",
+    "toHome": "Ke beranda"
   },
   "demo": {
     "open": "Panel demo",
@@ -458,5 +463,46 @@
     },
     "sourceNote": "Syarat dirangkum dari informasi bank dan media tahun 2026. Bisa berbeda antarbank dan berubah sewaktu-waktu.",
     "toUpload": "Unggah laporan SLIK"
+  },
+  "tabs": {
+    "label": "Menu bawah",
+    "home": "Beranda",
+    "history": "Riwayat kirim",
+    "credit": "Kreditku",
+    "kur": "Persiapan KUR"
+  },
+  "home": {
+    "hello": "Halo, {name}",
+    "monthlyNet": "Penghasilan bersih 30 hari",
+    "depositMatched": "Cocok dengan mutasi",
+    "depositMismatch": "Selisih besar dengan mutasi",
+    "viewStatement": "Lihat slip penghasilan",
+    "servicesTitle": "Akses cepat",
+    "tiles": {
+      "capture": "Foto setoran",
+      "statement": "Slip penghasilan",
+      "share": "Kirim",
+      "history": "Riwayat kirim",
+      "credit": "Status kredit",
+      "kur": "Persiapan KUR"
+    }
+  },
+  "history": {
+    "header": "Riwayat kirim",
+    "body": "Lihat data apa yang ditunjukkan ke siapa dan sampai kapan, lalu tarik izin kapan saja.",
+    "empty": "Belum ada tempat yang diberi akses.",
+    "startShare": "Tunjukkan slip penghasilan",
+    "period": "{from} – {to}",
+    "state": {
+      "active": "Sedang dibagikan",
+      "revoked": "Ditarik",
+      "expired": "Berakhir"
+    },
+    "appStatus": "Status pengajuan:",
+    "revokeStart": "Tarik izin",
+    "confirm": "Tarik izin data untuk {partner} sekarang? Setelah ditarik, data langsung tidak terlihat di sana.",
+    "cancel": "Batal",
+    "revoke": "Tarik",
+    "revokedNote": "Ditarik pada {date}. Tempat ini tidak bisa melihat data lagi."
   }
 }
