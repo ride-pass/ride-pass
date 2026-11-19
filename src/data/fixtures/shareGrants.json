@@ -1,0 +1,58 @@
+[
+  {
+    "id": "sg-siti-rental-a",
+    "riderId": "r-siti",
+    "partnerId": "p-rental-a",
+    "items": [
+      "income",
+      "activity",
+      "rental_history"
+    ],
+    "grantedAt": "2026-11-15",
+    "expiresAt": "2026-12-15",
+    "revokedAt": null
+  },
+  {
+    "id": "sg-agus-rental-a",
+    "riderId": "r-agus",
+    "partnerId": "p-rental-a",
+    "items": [
+      "income",
+      "activity",
+      "rental_history",
+      "bank_account"
+    ],
+    "grantedAt": "2026-11-16",
+    "expiresAt": "2026-12-16",
+    "revokedAt": null
+  },
+  {
+    "id": "sg-dewi-rental-a",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "items": [
+      "income",
+      "activity",
+      "rental_history",
+      "bank_account",
+      "telecom_bills"
+    ],
+    "grantedAt": "2026-11-17",
+    "expiresAt": "2026-12-17",
+    "revokedAt": null
+  },
+  {
+    "id": "sg-rizky-rental-a",
+    "riderId": "r-rizky",
+    "partnerId": "p-rental-a",
+    "items": [
+      "income",
+      "activity",
+      "rental_history",
+      "bank_account"
+    ],
+    "grantedAt": "2026-11-18",
+    "expiresAt": "2026-12-18",
+    "revokedAt": null
+  }
+]

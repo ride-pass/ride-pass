@@ -1,0 +1,12 @@
+[
+  {
+    "id": "slik-budi-20261112",
+    "riderId": "r-budi",
+    "reportDate": "2026-11-12",
+    "uploadedAt": "2026-11-19",
+    "filePath": "/samples/ideb-budi.pdf",
+    "worstKolektibilitas": 1,
+    "activeFacilities": 1,
+    "parseConfidence": 0.99
+  }
+]
