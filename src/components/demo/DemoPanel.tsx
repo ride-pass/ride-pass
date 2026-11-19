@@ -75,7 +75,7 @@ export function DemoPanel() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="fixed right-4 bottom-28 z-50 flex items-center gap-1.5 rounded-full bg-brand-navy px-3 py-2 text-xs font-semibold text-white shadow-lg"
+        className="fixed right-4 bottom-28 z-50 flex items-center gap-1.5 print:hidden rounded-full bg-brand-navy px-3 py-2 text-xs font-semibold text-white shadow-lg"
       >
         <SlidersHorizontal className="size-4" aria-hidden />
         {t("demo.open")} · {demo.stage}
@@ -86,7 +86,7 @@ export function DemoPanel() {
   return (
     <aside
       aria-label={t("demo.title")}
-      className="fixed right-4 bottom-28 z-50 w-72 rounded-3xl bg-brand-navy p-4 text-sm text-white shadow-2xl"
+      className="fixed right-4 bottom-28 z-50 w-72 print:hidden rounded-3xl bg-brand-navy p-4 text-sm text-white shadow-2xl"
     >
       <div className="flex items-center justify-between">
         <p className="flex items-center gap-1.5 font-bold">

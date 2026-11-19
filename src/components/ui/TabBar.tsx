@@ -18,7 +18,7 @@ export function TabBar() {
   const t = useT();
   const pathname = usePathname();
   return (
-    <nav className="sticky bottom-0 z-20 mt-auto grid grid-cols-4 border-t border-line bg-surface/95 pb-2 backdrop-blur" aria-label={t("tabs.label")}>
+    <nav className="sticky bottom-0 z-20 mt-auto grid grid-cols-4 border-t border-line bg-surface pb-2" aria-label={t("tabs.label")}>
       {TABS.map(({ href, key, icon: Icon }) => {
         const active = pathname === href;
         return (

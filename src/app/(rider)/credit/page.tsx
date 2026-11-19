@@ -31,9 +31,23 @@ export default function CreditPage() {
         {view?.status === "hold" ? <HoldView view={view} /> : null}
         {view?.status === "readiness" ? (
           <>
-            <Card tone="purple" className="flex flex-col gap-2">
-              <p className="text-2xl font-bold">{t("credit.readiness.summary", { met: view.metCount })}</p>
-              <p className="text-xs leading-relaxed text-white/70">{t("creditPage.aNote")}</p>
+            {/* 숫자 점수 대신 충족한 요인 수. 칸 하나 = 요인 하나 (✓ 보라, △ 연보라, ✗ 회색) */}
+            <Card className="flex flex-col gap-3">
+              <p className="text-xs font-semibold text-brand-purple">{t("credit.readiness.title")}</p>
+              <p className="flex items-baseline gap-1.5 tabular-nums">
+                <span className="text-[44px] leading-none font-bold text-brand-purple">{view.metCount}</span>
+                <span className="text-xl font-bold text-muted">/ {view.totalCount}</span>
+              </p>
+              <p className="text-base font-semibold">{t("credit.readiness.summary", { met: view.metCount })}</p>
+              <span className="grid grid-cols-5 gap-1" aria-hidden>
+                {view.factors.map((f) => (
+                  <span
+                    key={f.id}
+                    className={`h-2 rounded-full ${f.mark === "met" ? "bg-brand-purple" : f.mark === "partial" ? "bg-lavender-strong" : "bg-line"}`}
+                  />
+                ))}
+              </span>
+              <p className="text-xs leading-relaxed text-muted">{t("creditPage.aNote")}</p>
             </Card>
             <FactorList factors={view.factors} />
             <Improvement action={view.improvement} />
