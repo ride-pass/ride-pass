@@ -306,3 +306,41 @@ export function deriveRiderActivity(
 
   return { daily, activeDays: daily.filter((d) => d.net > 0).length, months };
 }
+
+// ---- 렌털사 화면의 「정산 vs 입금」 대조 차트 ----
+
+export interface SettlementDepositBlock {
+  /** 정산 기간 (30일, 양 끝 포함). 입금은 이 기간을 DEPOSIT_LAG_DAYS만큼 민 기간에서 센다 */
+  start: IsoDate;
+  end: IsoDate;
+  settled: number;
+  deposited: number;
+}
+
+/**
+ * 30일 구간별 정산 순수입과 입금 합 (오래된 구간 → 최근 구간).
+ * depositMatch()와 같은 기준: 정산은 오늘을 빼고(입금이 아직 안 들어옴), 입금은 하루 민 기간.
+ * 그래서 마지막 구간의 입금 ÷ 정산(1로 자름)은 입금 일치율과 같다.
+ */
+export function deriveSettlementVsDeposits(
+  records: RiderRecords,
+  today: IsoDate = DEMO_TODAY,
+  months: number = MONTH_BAR_COUNT,
+): SettlementDepositBlock[] {
+  const captures = records.captures.filter((c) => c.periodDate <= today);
+  const deposits = records.deposits.filter((d) => d.date <= today);
+  const settleToday = addDays(today, -DEPOSIT_LAG_DAYS);
+  const blocks: SettlementDepositBlock[] = [];
+  for (let k = months - 1; k >= 0; k--) {
+    const block = monthBlock(settleToday, k);
+    if (block.end < records.rider.firstActiveDate) continue;
+    const depStart = addDays(block.start, DEPOSIT_LAG_DAYS);
+    const depEnd = addDays(block.end, DEPOSIT_LAG_DAYS);
+    blocks.push({
+      ...block,
+      settled: netInRange(captures, block),
+      deposited: sum(deposits.filter((d) => isWithin(d.date, depStart, depEnd)).map((d) => d.amount)),
+    });
+  }
+  return blocks;
+}

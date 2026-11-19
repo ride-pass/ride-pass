@@ -3,7 +3,7 @@
 
 import { describe, expect, it } from "vitest";
 import { DEMO_TODAY } from "@/config/demo";
-import { ACTIVITY_MAP_DAYS, MONTH_BAR_COUNT, deriveRiderActivity, deriveRiderMetrics } from "./derive";
+import { ACTIVITY_MAP_DAYS, MONTH_BAR_COUNT, deriveRiderActivity, deriveRiderMetrics, deriveSettlementVsDeposits } from "./derive";
 import { mockRepository } from "./mockRepository";
 
 const RIDERS = ["r-budi", "r-siti", "r-agus", "r-dewi", "r-rizky"];
@@ -40,5 +40,25 @@ describe("deriveRiderActivity", () => {
     const first = records.rider.firstActiveDate;
     expect(daily.filter((d) => d.beforeStart).every((d) => d.date < first && d.net === 0)).toBe(true);
     expect(daily.some((d) => d.beforeStart)).toBe(true);
+  });
+});
+
+describe("deriveSettlementVsDeposits", () => {
+  for (const id of RIDERS) {
+    it(`${id}: 마지막 구간의 입금 ÷ 정산 = 입금 일치율`, async () => {
+      const records = (await mockRepository.getRiderRecords(id))!;
+      const blocks = deriveSettlementVsDeposits(records, DEMO_TODAY);
+      const metrics = deriveRiderMetrics(records, DEMO_TODAY);
+      const last = blocks.at(-1)!;
+      expect(Math.min(1, last.deposited / last.settled)).toBeCloseTo(metrics.depositMatchRate!, 10);
+      expect(blocks.every((b) => b.end >= records.rider.firstActiveDate)).toBe(true);
+    });
+  }
+
+  it("Agus는 모든 구간에서 입금이 정산의 절반쯤이다 (불일치 재현, CLAUDE.md 4-6)", async () => {
+    const records = (await mockRepository.getRiderRecords("r-agus"))!;
+    for (const b of deriveSettlementVsDeposits(records, DEMO_TODAY)) {
+      if (b.settled > 0) expect(b.deposited / b.settled).toBeLessThan(0.6);
+    }
   });
 });
