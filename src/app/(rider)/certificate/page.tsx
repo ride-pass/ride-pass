@@ -3,6 +3,7 @@
 // 시연 5단계: 수입 명세서 (급여명세서 형식) (CLAUDE.md 3절).
 // 기간, 월 순수입, 총매출·수수료·순수입 내역, 활동일, 사용 앱 수, 입금 일치 여부, 렌털 납부 이력, 발급번호·QR.
 // 화면에서도 종이 서류처럼 보이게 한 장(sheet)으로 그리고, 「인쇄 · PDF로 저장」으로 그 한 장만 인쇄한다.
+// 머리·아래 버튼을 감싼 div는 contents라서 sticky가 그대로 화면에 붙는다 (인쇄 때만 숨김).
 // 서류 안에 "시연용 가상 자료" 표시를 반드시 남긴다. 인쇄본이 실제 증명서로 오해받지 않게 한다.
 // "급여명세서 발급"이라고 쓰지 않는다 (2-2): 고용 관계가 아니라 기사 본인 자료로 만든 수입 명세서다.
 
@@ -39,7 +40,7 @@ export default function IncomeStatementPage() {
 
   return (
     <div className="flex flex-1 flex-col">
-      <div className="print:hidden">
+      <div className="contents print:hidden">
         <AppHeader title={t("statement.header")} />
         <StepBar current={3} total={4} />
       </div>
@@ -133,7 +134,7 @@ export default function IncomeStatementPage() {
         </Button>
       </main>
 
-      <div className="print:hidden">
+      <div className="contents print:hidden">
         <BottomBar>
           <ButtonLink href="/share">{t("statement.next")}</ButtonLink>
           <DemoNote>{t("statement.demo")}</DemoNote>
