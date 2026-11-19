@@ -247,8 +247,61 @@
     "next": "Buat slip penghasilan",
     "demo": "Demo: adegan memotret layar setoran fiktif. Kamera sungguhan tidak dipakai."
   },
-  "placeholder": {
-    "statementTitle": "Slip penghasilan",
-    "statementBody": "Layar langkah 5 (slip penghasilan) dibuat di tahap berikutnya."
+  "statement": {
+    "header": "Slip Penghasilan",
+    "docType": "Slip penghasilan format slip gaji",
+    "period": "Periode {start} – {end}",
+    "issued": "Terbit",
+    "monthlyNet": "Penghasilan bersih 30 hari terakhir",
+    "avg3m": "Rata-rata 3 bulan terakhir {amount}",
+    "breakdownTitle": "Rincian setoran per aplikasi",
+    "colGross": "Kotor",
+    "colFee": "Komisi",
+    "daysTrips": "{days} hari · {trips} order",
+    "activeDays": "Hari aktif",
+    "activeDaysValue": "{n} dari 30 hari",
+    "platforms": "Aplikasi dipakai",
+    "platformsValue": "{n}",
+    "deposit": "Pencocokan mutasi",
+    "depositMatched": "Cocok dengan mutasi",
+    "depositMismatch": "Selisih besar dengan mutasi",
+    "rental": "Bayar sewa",
+    "rentalValue": "{onTime} dari {total} kali tepat waktu",
+    "rentalNone": "Belum ada",
+    "qrLabel": "QR nomor slip (demo)",
+    "issueNo": "Nomor slip",
+    "issuedAt": "Tanggal terbit",
+    "basis": "Slip ini dibuat dari layar setoran yang kamu foto sendiri dan mutasi rekening. Ini bukan bukti hubungan kerja. Diterbitkan oleh {app}",
+    "next": "Pilih tujuan pengiriman",
+    "demo": "Demo: QR hanya penanda nomor slip, bukan alamat pengecekan sungguhan.",
+    "totalNet": "Total bersih"
+  },
+  "share": {
+    "header": "Pilih tujuan",
+    "step": "Langkah 4 / 4 · Kirim",
+    "title": "Kirim slip penghasilan ke mana?",
+    "body": "Hanya ditunjukkan ke tempat yang kamu pilih. Keputusan persetujuan ada di tiap mitra.",
+    "applied": "Tempat pengajuan",
+    "consented": "Sudah disetujui · 30 hari",
+    "types": {
+      "ev_rental": "Sewa motor listrik",
+      "installment": "Cicilan motor",
+      "bank": "Bank",
+      "insurance": "Asuransi"
+    },
+    "extraConsent": "Saya setuju menunjukkan data yang sama kepada {names} selama 30 hari.",
+    "onlyPicked": "Tempat yang tidak dipilih tidak bisa melihat data.",
+    "submit": "Kirim ke {n} tempat"
+  },
+  "done": {
+    "title": "Slip penghasilan sudah dikirim",
+    "revocable": "Izin bisa ditarik kapan saja",
+    "to": "Penerima",
+    "shareId": "Nomor berbagi",
+    "sentAt": "Tanggal kirim",
+    "until": "Berlaku sampai",
+    "items": "Data yang dikirim",
+    "decision": "Keputusan persetujuan ada di tangan penerima.",
+    "backToStart": "Kembali ke awal"
   }
 }

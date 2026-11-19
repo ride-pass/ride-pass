@@ -140,7 +140,7 @@ export default function ConsentPage() {
           <p className="px-1 text-center text-sm text-muted">{t("consent.count", { n: items.length })}</p>
         </section>
 
-        <Card className="flex flex-col gap-3 bg-lavender">
+        <Card tone="lavender" className="flex flex-col gap-3">
           <p className="flex items-start gap-2 text-sm">
             <BadgeCheck className="mt-0.5 size-4 shrink-0 text-brand-purple" aria-hidden />
             {t("consent.promiseOnly")}
