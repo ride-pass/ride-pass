@@ -44,6 +44,24 @@ const eslintConfig = defineConfig([
       ],
     },
   },
+  {
+    // CLAUDE.md 4-1: 기준일은 DEMO_TODAY 하나로 고정한다. 현재 시각을 읽지 않는다.
+    files: ["src/**", "scripts/**"],
+    rules: {
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: "NewExpression[callee.name='Date'][arguments.length=0]",
+          message: "현재 시각 대신 src/config/demo.ts의 DEMO_TODAY를 쓴다 (CLAUDE.md 4-1).",
+        },
+        {
+          selector:
+            "CallExpression[callee.object.name='Date'][callee.property.name='now']",
+          message: "현재 시각 대신 src/config/demo.ts의 DEMO_TODAY를 쓴다 (CLAUDE.md 4-1).",
+        },
+      ],
+    },
+  },
   globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
 ]);
 
