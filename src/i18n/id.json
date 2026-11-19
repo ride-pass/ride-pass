@@ -344,10 +344,6 @@
     "goRetake": "Foto ulang sekarang",
     "toKur": "Cek syarat KUR"
   },
-  "placeholder": {
-    "kurTitle": "Daftar cek KUR",
-    "kurBody": "Langkah 8 (daftar cek KUR) dibuat setelah syarat resmi dipastikan."
-  },
   "warnings": {
     "amount_mismatch": "Setoran & mutasi tidak cocok",
     "duplicate_image": "Foto duplikat",
@@ -389,5 +385,78 @@
     "approve": "Setujui",
     "reject": "Tolak",
     "decisionNote": "Keputusan persetujuan ada di mitra rental."
+  },
+  "kur": {
+    "header": "Persiapan KUR",
+    "subtitle": "Cek syarat pengajuan Kredit Usaha Rakyat (KUR)",
+    "summary": "{met} dari {total} syarat yang dicek aplikasi terpenuhi",
+    "bankDecides": "Pengajuan dan persetujuan dilakukan oleh bank. Daftar ini hanya menunjukkan kesiapanmu.",
+    "status": {
+      "met": "Terpenuhi",
+      "partial": "Perlu dicek",
+      "unmet": "Belum",
+      "needs_upload": "Unggah dulu",
+      "check_with_bank": "Dicek bank",
+      "prepare": "Siapkan"
+    },
+    "groups": {
+      "auto": {
+        "title": "Syarat yang dicek dari data aplikasi",
+        "body": "Dicek dari layar setoran, mutasi rekening, dan laporan SLIK yang kamu unggah."
+      },
+      "bank": {
+        "title": "Syarat yang dicek bank",
+        "body": "Tidak bisa dinilai dari data aplikasi; bank memeriksanya saat pengajuan."
+      },
+      "document": {
+        "title": "Dokumen yang perlu disiapkan",
+        "body": "Tidak dicek aplikasi. Siapkan sebelum mengajukan."
+      }
+    },
+    "items": {
+      "activeMonths": {
+        "title": "Usaha berjalan minimal 6 bulan",
+        "met": "Sudah aktif {months} bulan berturut-turut.",
+        "unmet": "Baru {months} bulan. Cek lagi setelah {min} bulan."
+      },
+      "incomeProof": {
+        "title": "Bukti penghasilan",
+        "met": "Slip penghasilan sudah ada.",
+        "unmet": "Unggah layar setoran untuk membuat slip penghasilan."
+      },
+      "slik": {
+        "title": "Riwayat SLIK baik",
+        "met": "Kolektibilitas {kol} (Lancar).",
+        "partial": "Kolektibilitas {kol}. Bank akan mengecek ulang.",
+        "unmet": "Kolektibilitas {kol}. Selesaikan tunggakan terlebih dahulu.",
+        "needs_upload": "Unggah laporan SLIK untuk dicek."
+      },
+      "noOtherLoan": {
+        "title": "Tidak punya KUR, pinjaman ultra mikro, atau pinjol lain",
+        "body": "Kredit konsumtif seperti cicilan bisa dikecualikan. Bank mengeceknya lewat SLIK."
+      },
+      "bpjs": {
+        "title": "Peserta BPJS Ketenagakerjaan",
+        "body": "Mungkin diwajibkan. Tanyakan ke bank."
+      },
+      "ektp": {
+        "title": "e-KTP",
+        "body": "KTP sendiri (dan pasangan jika sudah menikah)"
+      },
+      "kk": {
+        "title": "Kartu Keluarga (KK)",
+        "body": "Kartu Keluarga"
+      },
+      "nib": {
+        "title": "NIB atau Surat Keterangan Usaha (SKU)",
+        "body": "NIB dari OSS atau SKU dari kantor kelurahan/desa."
+      },
+      "npwp": {
+        "title": "NPWP",
+        "body": "Mungkin diperlukan tergantung jumlah pinjaman. Tanyakan ke bank."
+      }
+    },
+    "sourceNote": "Syarat dirangkum dari informasi bank dan media tahun 2026. Bisa berbeda antarbank dan berubah sewaktu-waktu.",
+    "toUpload": "Unggah laporan SLIK"
   }
 }
