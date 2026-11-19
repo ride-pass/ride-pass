@@ -1,0 +1,18 @@
+[
+  {
+    "id": "c-rizky-20261119-b",
+    "riderId": "r-rizky",
+    "platform": "delivery_app_b",
+    "imagePath": "/samples/delivery_app_b.png",
+    "periodDate": "2026-11-19",
+    "ocr": {
+      "grossAmount": 121400,
+      "platformFee": 9700,
+      "netAmount": 111700,
+      "tripCount": 9,
+      "rating": 5
+    },
+    "ocrConfidence": 0.96,
+    "editFlags": []
+  }
+]

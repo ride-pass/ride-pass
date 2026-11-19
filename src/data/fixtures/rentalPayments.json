@@ -1,0 +1,1442 @@
+[
+  {
+    "id": "rp-budi-20260822",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-08-22",
+    "paidDate": "2026-08-22",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260823",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-08-23",
+    "paidDate": "2026-08-23",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260824",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-08-24",
+    "paidDate": "2026-08-24",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260825",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-08-25",
+    "paidDate": "2026-08-25",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260826",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-08-26",
+    "paidDate": "2026-08-26",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260827",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-08-27",
+    "paidDate": "2026-08-27",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260828",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-08-28",
+    "paidDate": "2026-08-28",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260829",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-08-29",
+    "paidDate": "2026-08-29",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260830",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-08-30",
+    "paidDate": "2026-08-30",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260831",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-08-31",
+    "paidDate": "2026-08-31",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260901",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-01",
+    "paidDate": "2026-09-01",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260902",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-02",
+    "paidDate": "2026-09-02",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260903",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-03",
+    "paidDate": "2026-09-03",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260904",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-04",
+    "paidDate": "2026-09-04",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260905",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-05",
+    "paidDate": "2026-09-05",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260906",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-06",
+    "paidDate": "2026-09-06",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260907",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-07",
+    "paidDate": "2026-09-07",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260908",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-08",
+    "paidDate": "2026-09-08",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260909",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-09",
+    "paidDate": "2026-09-09",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260910",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-10",
+    "paidDate": "2026-09-10",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260911",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-11",
+    "paidDate": "2026-09-11",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260912",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-12",
+    "paidDate": "2026-09-12",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260913",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-13",
+    "paidDate": "2026-09-13",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260914",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-14",
+    "paidDate": "2026-09-14",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260915",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-15",
+    "paidDate": "2026-09-16",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260916",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-16",
+    "paidDate": "2026-09-16",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260917",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-17",
+    "paidDate": "2026-09-17",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260918",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-18",
+    "paidDate": "2026-09-18",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260919",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-19",
+    "paidDate": "2026-09-19",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260920",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-20",
+    "paidDate": "2026-09-20",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260921",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-21",
+    "paidDate": "2026-09-21",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260922",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-22",
+    "paidDate": "2026-09-22",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260923",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-23",
+    "paidDate": "2026-09-23",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260924",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-24",
+    "paidDate": "2026-09-24",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260925",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-25",
+    "paidDate": "2026-09-25",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260926",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-26",
+    "paidDate": "2026-09-26",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260927",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-27",
+    "paidDate": "2026-09-27",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260928",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-28",
+    "paidDate": "2026-09-28",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260929",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-29",
+    "paidDate": "2026-09-29",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20260930",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-30",
+    "paidDate": "2026-09-30",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261001",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-01",
+    "paidDate": "2026-10-01",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261002",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-02",
+    "paidDate": "2026-10-02",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261003",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-03",
+    "paidDate": "2026-10-03",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261004",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-04",
+    "paidDate": "2026-10-04",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261005",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-05",
+    "paidDate": "2026-10-05",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261006",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-06",
+    "paidDate": "2026-10-06",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261007",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-07",
+    "paidDate": "2026-10-07",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261008",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-08",
+    "paidDate": "2026-10-08",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261009",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-09",
+    "paidDate": "2026-10-09",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261010",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-10",
+    "paidDate": "2026-10-10",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261011",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-11",
+    "paidDate": "2026-10-11",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261012",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-12",
+    "paidDate": "2026-10-12",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261013",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-13",
+    "paidDate": "2026-10-13",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261014",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-14",
+    "paidDate": "2026-10-15",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261015",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-15",
+    "paidDate": "2026-10-15",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261016",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-16",
+    "paidDate": "2026-10-16",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261017",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-17",
+    "paidDate": "2026-10-17",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261018",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-18",
+    "paidDate": "2026-10-18",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261019",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-19",
+    "paidDate": "2026-10-19",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261020",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-20",
+    "paidDate": "2026-10-20",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261021",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-21",
+    "paidDate": "2026-10-21",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261022",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-22",
+    "paidDate": "2026-10-22",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261023",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-23",
+    "paidDate": "2026-10-23",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261024",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-24",
+    "paidDate": "2026-10-24",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261025",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-25",
+    "paidDate": "2026-10-25",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261026",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-26",
+    "paidDate": "2026-10-26",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261027",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-27",
+    "paidDate": "2026-10-27",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261028",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-28",
+    "paidDate": "2026-10-28",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261029",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-29",
+    "paidDate": "2026-10-29",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261030",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-30",
+    "paidDate": "2026-10-30",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261031",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-31",
+    "paidDate": "2026-10-31",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261101",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-01",
+    "paidDate": "2026-11-01",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261102",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-02",
+    "paidDate": "2026-11-02",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261103",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-03",
+    "paidDate": "2026-11-03",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261104",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-04",
+    "paidDate": "2026-11-04",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261105",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-05",
+    "paidDate": "2026-11-05",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261106",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-06",
+    "paidDate": "2026-11-06",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261107",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-07",
+    "paidDate": "2026-11-07",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261108",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-08",
+    "paidDate": "2026-11-08",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261109",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-09",
+    "paidDate": "2026-11-09",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261110",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-10",
+    "paidDate": "2026-11-10",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261111",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-11",
+    "paidDate": "2026-11-11",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261112",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-12",
+    "paidDate": "2026-11-12",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261113",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-13",
+    "paidDate": "2026-11-13",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261114",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-14",
+    "paidDate": "2026-11-14",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261115",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-15",
+    "paidDate": "2026-11-15",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261116",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-16",
+    "paidDate": "2026-11-16",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261117",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-17",
+    "paidDate": "2026-11-17",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261118",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-18",
+    "paidDate": "2026-11-18",
+    "amount": 55000
+  },
+  {
+    "id": "rp-budi-20261119",
+    "riderId": "r-budi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-19",
+    "paidDate": "2026-11-19",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260822",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-08-22",
+    "paidDate": "2026-08-22",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260823",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-08-23",
+    "paidDate": "2026-08-23",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260824",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-08-24",
+    "paidDate": "2026-08-24",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260825",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-08-25",
+    "paidDate": "2026-08-25",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260826",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-08-26",
+    "paidDate": "2026-08-26",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260827",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-08-27",
+    "paidDate": "2026-08-27",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260828",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-08-28",
+    "paidDate": "2026-08-28",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260829",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-08-29",
+    "paidDate": "2026-08-29",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260830",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-08-30",
+    "paidDate": "2026-08-30",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260831",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-08-31",
+    "paidDate": "2026-08-31",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260901",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-01",
+    "paidDate": "2026-09-01",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260902",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-02",
+    "paidDate": "2026-09-02",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260903",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-03",
+    "paidDate": "2026-09-03",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260904",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-04",
+    "paidDate": "2026-09-04",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260905",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-05",
+    "paidDate": "2026-09-05",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260906",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-06",
+    "paidDate": "2026-09-06",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260907",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-07",
+    "paidDate": "2026-09-07",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260908",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-08",
+    "paidDate": "2026-09-08",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260909",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-09",
+    "paidDate": "2026-09-09",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260910",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-10",
+    "paidDate": "2026-09-10",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260911",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-11",
+    "paidDate": "2026-09-11",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260912",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-12",
+    "paidDate": "2026-09-12",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260913",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-13",
+    "paidDate": "2026-09-13",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260914",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-14",
+    "paidDate": "2026-09-14",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260915",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-15",
+    "paidDate": "2026-09-15",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260916",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-16",
+    "paidDate": "2026-09-16",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260917",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-17",
+    "paidDate": "2026-09-17",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260918",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-18",
+    "paidDate": "2026-09-18",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260919",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-19",
+    "paidDate": "2026-09-19",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260920",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-20",
+    "paidDate": "2026-09-20",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260921",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-21",
+    "paidDate": "2026-09-21",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260922",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-22",
+    "paidDate": "2026-09-22",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260923",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-23",
+    "paidDate": "2026-09-23",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260924",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-24",
+    "paidDate": "2026-09-24",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260925",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-25",
+    "paidDate": "2026-09-25",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260926",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-26",
+    "paidDate": "2026-09-26",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260927",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-27",
+    "paidDate": "2026-09-27",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260928",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-28",
+    "paidDate": "2026-09-28",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260929",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-29",
+    "paidDate": "2026-09-29",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20260930",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-09-30",
+    "paidDate": "2026-09-30",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261001",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-01",
+    "paidDate": "2026-10-01",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261002",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-02",
+    "paidDate": "2026-10-02",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261003",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-03",
+    "paidDate": "2026-10-03",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261004",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-04",
+    "paidDate": "2026-10-04",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261005",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-05",
+    "paidDate": "2026-10-05",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261006",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-06",
+    "paidDate": "2026-10-06",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261007",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-07",
+    "paidDate": "2026-10-07",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261008",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-08",
+    "paidDate": "2026-10-08",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261009",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-09",
+    "paidDate": "2026-10-09",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261010",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-10",
+    "paidDate": "2026-10-10",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261011",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-11",
+    "paidDate": "2026-10-11",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261012",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-12",
+    "paidDate": "2026-10-12",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261013",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-13",
+    "paidDate": "2026-10-13",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261014",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-14",
+    "paidDate": "2026-10-14",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261015",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-15",
+    "paidDate": "2026-10-15",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261016",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-16",
+    "paidDate": "2026-10-16",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261017",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-17",
+    "paidDate": "2026-10-17",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261018",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-18",
+    "paidDate": "2026-10-18",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261019",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-19",
+    "paidDate": "2026-10-19",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261020",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-20",
+    "paidDate": "2026-10-20",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261021",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-21",
+    "paidDate": "2026-10-21",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261022",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-22",
+    "paidDate": "2026-10-22",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261023",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-23",
+    "paidDate": "2026-10-23",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261024",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-24",
+    "paidDate": "2026-10-24",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261025",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-25",
+    "paidDate": "2026-10-25",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261026",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-26",
+    "paidDate": "2026-10-26",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261027",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-27",
+    "paidDate": "2026-10-27",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261028",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-28",
+    "paidDate": "2026-10-28",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261029",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-29",
+    "paidDate": "2026-10-29",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261030",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-30",
+    "paidDate": "2026-10-30",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261031",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-10-31",
+    "paidDate": "2026-10-31",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261101",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-01",
+    "paidDate": "2026-11-01",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261102",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-02",
+    "paidDate": "2026-11-02",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261103",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-03",
+    "paidDate": "2026-11-03",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261104",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-04",
+    "paidDate": "2026-11-04",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261105",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-05",
+    "paidDate": "2026-11-05",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261106",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-06",
+    "paidDate": "2026-11-06",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261107",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-07",
+    "paidDate": "2026-11-07",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261108",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-08",
+    "paidDate": "2026-11-08",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261109",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-09",
+    "paidDate": "2026-11-09",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261110",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-10",
+    "paidDate": "2026-11-10",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261111",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-11",
+    "paidDate": "2026-11-11",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261112",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-12",
+    "paidDate": "2026-11-12",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261113",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-13",
+    "paidDate": "2026-11-13",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261114",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-14",
+    "paidDate": "2026-11-14",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261115",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-15",
+    "paidDate": "2026-11-15",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261116",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-16",
+    "paidDate": "2026-11-16",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261117",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-17",
+    "paidDate": "2026-11-17",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261118",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-18",
+    "paidDate": "2026-11-18",
+    "amount": 55000
+  },
+  {
+    "id": "rp-dewi-20261119",
+    "riderId": "r-dewi",
+    "partnerId": "p-rental-a",
+    "dueDate": "2026-11-19",
+    "paidDate": "2026-11-19",
+    "amount": 55000
+  }
+]

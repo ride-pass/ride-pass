@@ -45,3 +45,8 @@ export function diffDays(from: IsoDate, to: IsoDate): number {
 export function isWithin(iso: IsoDate, start: IsoDate, end: IsoDate): boolean {
   return iso >= start && iso <= end;
 }
+
+/** 요일 번호. 0 = 일요일 … 6 = 토요일 */
+export function dayOfWeek(iso: IsoDate): number {
+  return new Date(toDayNumber(iso) * DAY_MS).getUTCDay();
+}

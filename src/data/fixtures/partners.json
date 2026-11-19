@@ -1,0 +1,26 @@
+[
+  {
+    "id": "p-rental-a",
+    "nameKo": "렌털사 A (전기 오토바이)",
+    "nameId": "Mitra Rental A",
+    "type": "ev_rental"
+  },
+  {
+    "id": "p-installment-b",
+    "nameKo": "할부사 B",
+    "nameId": "Mitra Cicilan B",
+    "type": "installment"
+  },
+  {
+    "id": "p-bank-c",
+    "nameKo": "은행 C",
+    "nameId": "Bank C",
+    "type": "bank"
+  },
+  {
+    "id": "p-insurance-d",
+    "nameKo": "보험사 D",
+    "nameId": "Asuransi D",
+    "type": "insurance"
+  }
+]

@@ -1,0 +1,64 @@
+[
+  {
+    "id": "r-budi",
+    "displayName": "Budi Santoso",
+    "phoneMasked": "+62 812-0000-0101",
+    "area": "Jakarta Selatan",
+    "avatarKey": "avatar-budi",
+    "platforms": [
+      "ride_app_a",
+      "delivery_app_b"
+    ],
+    "firstActiveDate": "2026-03-19",
+    "hasBankAccount": true
+  },
+  {
+    "id": "r-siti",
+    "displayName": "Siti Rahayu",
+    "phoneMasked": "+62 812-0000-0102",
+    "area": "Jakarta Timur",
+    "avatarKey": "avatar-siti",
+    "platforms": [
+      "delivery_app_b"
+    ],
+    "firstActiveDate": "2026-07-19",
+    "hasBankAccount": false
+  },
+  {
+    "id": "r-agus",
+    "displayName": "Agus Pratama",
+    "phoneMasked": "+62 812-0000-0103",
+    "area": "Depok",
+    "avatarKey": "avatar-agus",
+    "platforms": [
+      "ride_app_a"
+    ],
+    "firstActiveDate": "2026-04-19",
+    "hasBankAccount": true
+  },
+  {
+    "id": "r-dewi",
+    "displayName": "Dewi Lestari",
+    "phoneMasked": "+62 812-0000-0104",
+    "area": "Tangerang Selatan",
+    "avatarKey": "avatar-dewi",
+    "platforms": [
+      "ride_app_a",
+      "ride_app_c"
+    ],
+    "firstActiveDate": "2025-12-19",
+    "hasBankAccount": true
+  },
+  {
+    "id": "r-rizky",
+    "displayName": "Rizky Hidayat",
+    "phoneMasked": "+62 812-0000-0105",
+    "area": "Bekasi",
+    "avatarKey": "avatar-rizky",
+    "platforms": [
+      "delivery_app_b"
+    ],
+    "firstActiveDate": "2026-05-19",
+    "hasBankAccount": true
+  }
+]

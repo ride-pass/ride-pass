@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addDays, diffDays, isWithin } from "./date";
+import { addDays, dayOfWeek, diffDays, isWithin } from "./date";
 
 describe("date", () => {
   it("addDays: 달·해를 넘긴다", () => {
@@ -20,5 +20,10 @@ describe("date", () => {
     expect(isWithin("2026-10-21", "2026-10-21", "2026-11-19")).toBe(true);
     expect(isWithin("2026-11-19", "2026-10-21", "2026-11-19")).toBe(true);
     expect(isWithin("2026-10-20", "2026-10-21", "2026-11-19")).toBe(false);
+  });
+
+  it("dayOfWeek: 2026-11-19는 목요일", () => {
+    expect(dayOfWeek("2026-11-19")).toBe(4);
+    expect(dayOfWeek("2026-11-22")).toBe(0);
   });
 });
