@@ -32,7 +32,7 @@ export default function OnboardingPage() {
         </Link>
       </div>
 
-      <div className="mt-8 grid aspect-square place-items-center rounded-[40px] bg-gradient-to-br from-lavender to-surface text-brand-purple">
+      <div className="mt-8 grid aspect-square place-items-center rounded-[40px] bg-lavender text-brand-purple">
         <span className="relative grid size-44 place-items-center rounded-full bg-surface shadow-sm">
           {slide.art}
           <span className="absolute -top-1 -right-1 grid size-10 place-items-center rounded-full bg-brand-lime text-lime-ink">

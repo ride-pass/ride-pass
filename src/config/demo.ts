@@ -7,3 +7,6 @@ export const SEED = 20261119;
 
 // 노트북 시연용 휴대폰 틀의 상태 표시줄 시각 (PhoneFrame). 현재 시각을 쓰지 않는다.
 export const DEMO_CLOCK = "9:41";
+
+// 인증 화면의 가상 인증 문자에 보이는 번호 (아무 4자리나 통과하지만, 자동 입력 연출에 쓴다).
+export const DEMO_OTP = "4821";

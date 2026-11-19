@@ -116,3 +116,14 @@ body {
   @apply bg-zinc-200 text-brand-navy;
   word-break: keep-all;
 }
+
+/* 수입 명세서 인쇄·PDF 저장: 흰 종이에 서류 한 장 */
+@media print {
+  @page {
+    margin: 12mm;
+  }
+  body {
+    @apply bg-white;
+    print-color-adjust: exact;
+  }
+}

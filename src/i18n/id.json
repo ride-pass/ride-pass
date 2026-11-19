@@ -131,7 +131,15 @@
     "submit": "Verifikasi dan lanjut",
     "delete": "Hapus",
     "warning": "{app} tidak pernah meminta kode verifikasi lewat telepon. Jangan berikan kepada siapa pun.",
-    "demo": "Demo: 4 digit angka apa pun bisa masuk."
+    "demo": "Demo: 4 digit angka apa pun bisa masuk.",
+    "resendIn": "Kirim ulang kode ({time})",
+    "smsApp": "Pesan",
+    "smsNow": "Sekarang",
+    "smsBody": "[{app}] Kode verifikasi {code}. Jangan berikan ke siapa pun.",
+    "smsDemo": "SMS fiktif untuk demo. Tidak benar-benar dikirim.",
+    "smsFill": "Isi otomatis",
+    "smsArrived": "SMS verifikasi sudah masuk",
+    "checking": "Mengecek…"
   },
   "platforms": {
     "ride_app_a": "Aplikasi Ojek A",
@@ -290,7 +298,15 @@
     "basis": "Slip ini dibuat dari layar setoran yang kamu foto sendiri dan mutasi rekening. Ini bukan bukti hubungan kerja. Diterbitkan oleh {app}",
     "next": "Pilih tujuan pengiriman",
     "demo": "Demo: QR hanya penanda nomor slip, bukan alamat pengecekan sungguhan.",
-    "totalNet": "Total bersih"
+    "totalNet": "Total bersih",
+    "print": "Cetak · Simpan PDF",
+    "demoStamp": "Data fiktif untuk demo · bukan dokumen resmi",
+    "infoName": "Nama",
+    "infoArea": "Wilayah",
+    "infoApps": "Aplikasi",
+    "checksTitle": "Hasil pengecekan",
+    "avg3mLabel": "Rata-rata 3 bulan terakhir",
+    "colNet": "Bersih"
   },
   "share": {
     "header": "Pilih tujuan",

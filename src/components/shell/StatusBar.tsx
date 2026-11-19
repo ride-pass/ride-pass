@@ -6,7 +6,7 @@ import { DEMO_CLOCK } from "@/config/demo";
 
 export function StatusBar() {
   return (
-    <div aria-hidden className="hidden h-11 shrink-0 items-center justify-between px-8 text-sm font-semibold md:flex">
+    <div aria-hidden className="hidden h-11 shrink-0 items-center justify-between px-8 text-sm font-semibold md:flex print:hidden">
       <span className="tabular-nums">{DEMO_CLOCK}</span>
       <span className="flex items-center gap-1.5">
         <Signal className="size-4" />

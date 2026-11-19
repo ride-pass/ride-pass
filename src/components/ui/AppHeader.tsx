@@ -16,7 +16,7 @@ export function AppHeader({ title, back = true, right }: Props) {
   const router = useRouter();
   const t = useT();
   return (
-    <header className="sticky top-0 z-10 flex h-14 items-center gap-2 bg-canvas/95 px-4 backdrop-blur">
+    <header className="sticky top-0 z-10 flex h-14 items-center gap-2 bg-canvas px-4">
       {back ? (
         <button
           type="button"
