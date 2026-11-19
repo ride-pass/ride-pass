@@ -478,14 +478,34 @@
     "depositMatched": "입금 내역과 일치",
     "depositMismatch": "입금 내역과 차이 큼",
     "viewStatement": "수입 명세서 보기",
-    "servicesTitle": "바로 가기",
-    "tiles": {
-      "capture": "정산 화면 촬영",
-      "statement": "수입 명세서",
-      "share": "제출하기",
-      "history": "제출 이력",
-      "credit": "내 신용 상태",
-      "kur": "KUR 준비"
+    "trail": {
+      "title": "일한 흔적",
+      "summary": "최근 180일 중 {n}일 일했습니다",
+      "streak": "연속 {m}개월",
+      "aria": "최근 180일 활동 지도. {n}일 일했습니다.",
+      "dayDetail": "{date} · {net} · {trips}건",
+      "dayOff": "{date} · 쉰 날",
+      "dayBefore": "{date} · 활동 시작 전",
+      "less": "적게",
+      "more": "많이"
+    },
+    "months": {
+      "title": "30일 단위 순수입",
+      "avg": "최근 3개월 월평균 {amount}",
+      "aria": "{from}~{to}: {amount}",
+      "partialNote": "회색 막대는 활동을 시작하기 전 날이 섞인 기간입니다."
+    },
+    "next": {
+      "title": "다음 할 일"
+    },
+    "feed": {
+      "title": "최근 활동",
+      "viewAll": "전체 보기",
+      "capture": "{app} 정산 화면 올림",
+      "application": "{partner}에 신청",
+      "grant": "{partner}에 수입 명세서 보여 주기 시작",
+      "revoked": "{partner}에 보여 주기 철회",
+      "empty": "아직 활동이 없습니다."
     }
   },
   "history": {

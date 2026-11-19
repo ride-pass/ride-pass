@@ -25,3 +25,22 @@ export function formatDate(iso: IsoDate, lang: Lang): string {
   if (lang === "ko") return `${year}년 ${month}월 ${day}일`;
   return `${day} ${ID_MONTHS[month - 1]} ${year}`;
 }
+
+/** 달 이름만. ko: "11월", id: "Nov" (활동 지도의 달 표시) */
+export function formatMonth(iso: IsoDate, lang: Lang): string {
+  const { month } = parseIsoDate(iso);
+  return lang === "ko" ? `${month}월` : ID_MONTHS[month - 1];
+}
+
+/** 연도 없는 짧은 날짜. ko: "11.19", id: "19/11" (월별 막대 아래 표시) */
+export function formatShortDate(iso: IsoDate, lang: Lang): string {
+  const { month, day } = parseIsoDate(iso);
+  return lang === "ko" ? `${month}.${day}` : `${day}/${month}`;
+}
+
+/** 막대 위 짧은 금액. ko: 5503000 → "550만", id: 5503000 → "5,5 jt" (juta = 백만) */
+export function formatRupiahCompact(amount: number, lang: Lang): string {
+  if (!Number.isFinite(amount)) throw new Error(`금액이 숫자가 아님: ${amount}`);
+  if (lang === "ko") return `${String(Math.round(amount / 10_000)).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}만`;
+  return `${(Math.round(amount / 100_000) / 10).toFixed(1).replace(".", ",")} jt`;
+}
