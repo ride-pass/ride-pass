@@ -127,8 +127,127 @@
     "warning": "{app}는 어떤 경우에도 전화로 인증번호를 묻지 않습니다. 다른 사람에게 알려 주지 마세요.",
     "demo": "시연용: 아무 숫자 4자리나 통과합니다."
   },
+  "platforms": {
+    "ride_app_a": "호출 앱 A",
+    "delivery_app_b": "배달 앱 B",
+    "ride_app_c": "호출 앱 C"
+  },
+  "kolektibilitas": {
+    "1": "정상",
+    "2": "1~90일 연체",
+    "3": "91~120일 연체",
+    "4": "121~180일 연체",
+    "5": "180일 초과 연체"
+  },
+  "consent": {
+    "header": "자료 보여 주기 동의",
+    "step": "1단계 / 4단계 · 동의",
+    "title": "무엇을, 누구에게, 며칠 동안",
+    "body": "보여 줄 항목은 기사님이 직접 고릅니다. 이번 신청에 필요한 항목만 켜 두세요.",
+    "toWhom": "보여 줄 곳",
+    "purposeLabel": "쓰는 곳",
+    "purpose": "이번 렌털 신청 확인에만",
+    "periodLabel": "기간",
+    "period": "{days}일 ({until}까지, 지나면 자동 종료)",
+    "itemsTitle": "보여 줄 항목",
+    "required": "필수",
+    "notAvailable": "이 시연 인물은 해당 자료가 없습니다",
+    "count": "{n}개 항목을 보여 줍니다",
+    "items": {
+      "income": {
+        "title": "수입 명세서",
+        "body": "최근 30일 순수입과 앱별 정산 내역, 입금 일치 여부"
+      },
+      "activity": {
+        "title": "활동 기록",
+        "body": "활동일, 사용 앱 수, 연속 활동 개월"
+      },
+      "rental_history": {
+        "title": "렌털 납부 기록",
+        "body": "렌털 일할 납부를 제때 했는지"
+      },
+      "bank_account": {
+        "title": "입금 계좌 확인",
+        "body": "정산이 들어온 계좌가 본인 것인지 (계좌번호는 가립니다)"
+      },
+      "slik_report": {
+        "title": "SLIK 확인서",
+        "body": "올린 확인서의 콜렉터빌리티와 남은 대출·할부 건수"
+      },
+      "telecom_bills": {
+        "title": "통신요금 납부 기록",
+        "body": "최근 6개월 통신요금을 제때 냈는지"
+      }
+    },
+    "promiseOnly": "내가 고른 곳에만 보여 줍니다. 다른 곳에는 보이지 않습니다.",
+    "promiseRevoke": "앱에서 언제든 철회할 수 있습니다. 철회하면 그때부터 보이지 않습니다.",
+    "declineOk": "거절해도 렌털 신청은 그대로 진행됩니다.",
+    "confirm": "위 항목을 {partner}에 보여 주는 데 동의합니다.",
+    "agree": "동의하고 계속하기",
+    "decline": "동의하지 않음",
+    "declinedTitle": "동의하지 않으셨습니다",
+    "declinedBody": "렌털 신청은 그대로 진행됩니다. 수입 증빙은 렌털사에 직접 내실 수 있습니다.",
+    "backToApply": "렌털 신청 화면으로",
+    "reconsider": "다시 보기"
+  },
+  "samples": {
+    "fakeLabel": "가상 예시 (시연용)",
+    "settlementOf": "오늘 정산",
+    "gross": "총매출",
+    "fee": "수수료",
+    "trips": "완료 건수",
+    "tripsValue": "{n}건",
+    "rating": "평점",
+    "idebTitle": "SLIK 확인서 (iDeb)",
+    "idebName": "이름",
+    "idebDate": "발급일",
+    "idebFacilities": "남은 대출·할부",
+    "idebWorst": "최악 콜렉터빌리티",
+    "telecomTitle": "{provider} 요금 납부 내역",
+    "unpaid": "미납"
+  },
+  "capture": {
+    "header": "수입 증빙 촬영",
+    "inAppOnlyTitle": "앱 안에서 직접 찍습니다",
+    "inAppOnlyBody": "갤러리에서 고른 사진은 받지 않습니다.",
+    "noCapture": "찍을 정산 화면이 없습니다",
+    "reading": "AI가 읽는 중…",
+    "frameHint": "하루 정산 요약 화면을 프레임 안에 맞춰 주세요",
+    "grid": "격자",
+    "flip": "카메라 전환",
+    "shoot": "촬영",
+    "blurryTitle": "흐려서 읽을 수 없습니다",
+    "blurryBody": "빛 반사나 흔들림이 있습니다. 밝은 곳에서 다시 찍어 주세요.",
+    "retake": "다시 찍기",
+    "resultTitle": "AI 인식 결과",
+    "resultBadge": "읽기 완료",
+    "netLabel": "인식된 순수입",
+    "dateLabel": "정산 날짜",
+    "tripsLabel": "완료 건수",
+    "matchNote": "입금 내역과 대조합니다. 금액이 다르면 렌털사 화면에 표시됩니다.",
+    "optionalTitle": "선택 자료 (올리면 상환 이력에 반영됩니다)",
+    "optional": "선택",
+    "slikTitle": "SLIK 확인서 (PDF) 올리기",
+    "slikBody": "OJK에서 받은 내 확인서를 올리면 함께 반영됩니다",
+    "slikResult": "콜렉터빌리티 {kol} ({label}) · 남은 대출·할부 {n}건",
+    "telecomTitle": "통신요금 납부 내역 올리기",
+    "telecomBody": "후불 요금제 납부 기록을 올리면 상환 이력이 생깁니다",
+    "telecomResult": "최근 {n}개월 중 {onTime}개월 제때 납부",
+    "noSample": "이 시연 인물은 가상 샘플이 없습니다",
+    "pickSample": "가상 샘플 고르기",
+    "readingDoc": "읽는 중…",
+    "guideTitle": "정확하게 찍는 법",
+    "guide1Title": "밝은 곳에서",
+    "guide1Body": "헬멧 그늘이나 햇빛 반사로 숫자가 흐려지지 않게 해 주세요.",
+    "guide2Title": "화면 전체가 나오게",
+    "guide2Body": "날짜, 앱 이름, 정산 금액이 잘리지 않아야 합니다.",
+    "guide3Title": "고친 화면은 안 됩니다",
+    "guide3Body": "수정한 화면이나 다른 사람 화면은 위변조 경고가 붙습니다.",
+    "next": "수입 명세서 만들기",
+    "demo": "시연용: 가상 정산 화면을 찍는 연출입니다. 실제 카메라는 쓰지 않습니다."
+  },
   "placeholder": {
-    "consentTitle": "동의",
-    "consentBody": "3단계(동의) 화면은 다음 작업에서 만듭니다."
+    "statementTitle": "수입 명세서",
+    "statementBody": "5단계(수입 명세서) 화면은 다음 작업에서 만듭니다."
   }
 }

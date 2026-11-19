@@ -128,8 +128,127 @@
     "warning": "{app} tidak pernah meminta kode verifikasi lewat telepon. Jangan berikan kepada siapa pun.",
     "demo": "Demo: 4 digit angka apa pun bisa masuk."
   },
+  "platforms": {
+    "ride_app_a": "Aplikasi Ojek A",
+    "delivery_app_b": "Aplikasi Antar B",
+    "ride_app_c": "Aplikasi Ojek C"
+  },
+  "kolektibilitas": {
+    "1": "Lancar",
+    "2": "Dalam Perhatian Khusus",
+    "3": "Kurang Lancar",
+    "4": "Diragukan",
+    "5": "Macet"
+  },
+  "consent": {
+    "header": "Persetujuan berbagi data",
+    "step": "Langkah 1 / 4 · Persetujuan",
+    "title": "Apa, untuk siapa, berapa lama",
+    "body": "Kamu sendiri yang memilih data yang ditunjukkan. Aktifkan hanya yang diperlukan untuk pengajuan ini.",
+    "toWhom": "Ditunjukkan kepada",
+    "purposeLabel": "Untuk",
+    "purpose": "Pemeriksaan pengajuan sewa ini saja",
+    "periodLabel": "Masa berlaku",
+    "period": "{days} hari (sampai {until}, berakhir otomatis)",
+    "itemsTitle": "Data yang ditunjukkan",
+    "required": "Wajib",
+    "notAvailable": "Tokoh demo ini tidak punya data ini",
+    "count": "{n} data akan ditunjukkan",
+    "items": {
+      "income": {
+        "title": "Slip penghasilan",
+        "body": "Penghasilan bersih 30 hari terakhir, rincian per aplikasi, kecocokan dengan mutasi"
+      },
+      "activity": {
+        "title": "Riwayat aktivitas",
+        "body": "Hari aktif, jumlah aplikasi, bulan aktif berturut-turut"
+      },
+      "rental_history": {
+        "title": "Riwayat bayar sewa",
+        "body": "Apakah sewa harian dibayar tepat waktu"
+      },
+      "bank_account": {
+        "title": "Konfirmasi rekening",
+        "body": "Apakah setoran masuk ke rekening milik sendiri (nomor rekening disamarkan)"
+      },
+      "slik_report": {
+        "title": "Laporan SLIK",
+        "body": "Kolektibilitas dan jumlah pinjaman/cicilan aktif dari laporan yang diunggah"
+      },
+      "telecom_bills": {
+        "title": "Riwayat bayar tagihan pulsa",
+        "body": "Apakah tagihan 6 bulan terakhir dibayar tepat waktu"
+      }
+    },
+    "promiseOnly": "Hanya ditunjukkan ke tempat yang kamu pilih. Tidak terlihat oleh pihak lain.",
+    "promiseRevoke": "Izin bisa ditarik kapan saja di aplikasi. Setelah ditarik, data tidak terlihat lagi.",
+    "declineOk": "Jika menolak, pengajuan sewa tetap berjalan.",
+    "confirm": "Saya setuju menunjukkan data di atas kepada {partner}.",
+    "agree": "Setuju dan lanjut",
+    "decline": "Tidak setuju",
+    "declinedTitle": "Kamu tidak memberi persetujuan",
+    "declinedBody": "Pengajuan sewa tetap berjalan. Bukti penghasilan bisa kamu serahkan langsung ke mitra rental.",
+    "backToApply": "Kembali ke pengajuan sewa",
+    "reconsider": "Lihat lagi"
+  },
+  "samples": {
+    "fakeLabel": "Contoh fiktif (demo)",
+    "settlementOf": "Setoran hari ini",
+    "gross": "Pendapatan kotor",
+    "fee": "Komisi",
+    "trips": "Order selesai",
+    "tripsValue": "{n} order",
+    "rating": "Rating",
+    "idebTitle": "Laporan SLIK (iDeb)",
+    "idebName": "Nama",
+    "idebDate": "Tanggal terbit",
+    "idebFacilities": "Pinjaman/cicilan aktif",
+    "idebWorst": "Kolektibilitas terburuk",
+    "telecomTitle": "Riwayat bayar {provider}",
+    "unpaid": "Belum dibayar"
+  },
+  "capture": {
+    "header": "Foto bukti penghasilan",
+    "inAppOnlyTitle": "Difoto langsung di aplikasi",
+    "inAppOnlyBody": "Foto dari galeri tidak diterima.",
+    "noCapture": "Tidak ada layar setoran untuk difoto",
+    "reading": "AI sedang membaca…",
+    "frameHint": "Posisikan ringkasan setoran harian di dalam bingkai",
+    "grid": "Kisi",
+    "flip": "Ganti kamera",
+    "shoot": "Foto",
+    "blurryTitle": "Foto buram, tidak terbaca",
+    "blurryBody": "Ada pantulan cahaya atau goyangan. Foto ulang di tempat yang terang.",
+    "retake": "Foto ulang",
+    "resultTitle": "Hasil baca AI",
+    "resultBadge": "Selesai dibaca",
+    "netLabel": "Penghasilan bersih terbaca",
+    "dateLabel": "Tanggal setoran",
+    "tripsLabel": "Order selesai",
+    "matchNote": "Dicocokkan dengan mutasi rekening. Jika berbeda, akan terlihat di layar mitra rental.",
+    "optionalTitle": "Dokumen tambahan (masuk ke riwayat pembayaran)",
+    "optional": "Opsional",
+    "slikTitle": "Unggah laporan SLIK (PDF)",
+    "slikBody": "Unggah laporan milikmu dari OJK agar ikut dihitung",
+    "slikResult": "Kolektibilitas {kol} ({label}) · {n} pinjaman/cicilan aktif",
+    "telecomTitle": "Unggah riwayat bayar pulsa",
+    "telecomBody": "Riwayat bayar pascabayar membangun riwayat pembayaran",
+    "telecomResult": "{onTime} dari {n} bulan terakhir dibayar tepat waktu",
+    "noSample": "Tokoh demo ini tidak punya contoh",
+    "pickSample": "Pilih contoh fiktif",
+    "readingDoc": "Sedang membaca…",
+    "guideTitle": "Cara memotret dengan benar",
+    "guide1Title": "Di tempat terang",
+    "guide1Body": "Jangan sampai angka buram karena bayangan helm atau pantulan matahari.",
+    "guide2Title": "Seluruh layar terlihat",
+    "guide2Body": "Tanggal, nama aplikasi, dan jumlah setoran tidak boleh terpotong.",
+    "guide3Title": "Layar yang diedit tidak bisa",
+    "guide3Body": "Layar yang diedit atau milik orang lain akan diberi peringatan pemalsuan.",
+    "next": "Buat slip penghasilan",
+    "demo": "Demo: adegan memotret layar setoran fiktif. Kamera sungguhan tidak dipakai."
+  },
   "placeholder": {
-    "consentTitle": "Persetujuan",
-    "consentBody": "Layar langkah 3 (persetujuan) dibuat di tahap berikutnya."
+    "statementTitle": "Slip penghasilan",
+    "statementBody": "Layar langkah 5 (slip penghasilan) dibuat di tahap berikutnya."
   }
 }
