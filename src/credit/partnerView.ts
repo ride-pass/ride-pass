@@ -6,8 +6,8 @@
 
 import { DEMO_TODAY } from "@/config/demo";
 import { LICENSE_STAGE, type LicenseStage } from "@/config/licenseStage";
-import type { RiderMetrics } from "@/data/derive";
-import { getRider, getRiderMetrics, listApplications, listShareGrants } from "@/data/repository";
+import { deriveSettlementVsDeposits, type RiderMetrics, type SettlementDepositBlock } from "@/data/derive";
+import { getRider, getRiderMetrics, getRiderRecords, listApplications, listShareGrants } from "@/data/repository";
 import type { Application, Rider, ShareGrant } from "@/data/types";
 import { isWithin } from "@/lib/date";
 import { evaluateCredit, type Grade, type HoldCode, type Reason } from "./engine";
@@ -21,6 +21,8 @@ export interface FactReport {
     avgMonthlyNet3m: number;
     depositMatchRate: number | null;
     depositMatched: boolean;
+    /** 30일 구간별 정산 vs 입금 (대조 차트). 오래된 구간 → 최근 구간 */
+    vsDeposits: SettlementDepositBlock[];
   } | null;
   activity: {
     activeDays30: number;
@@ -69,7 +71,7 @@ export function activeGrant(
   );
 }
 
-export function factReport(m: RiderMetrics, items: ShareItem[]): FactReport {
+export function factReport(m: RiderMetrics, items: ShareItem[], vsDeposits: SettlementDepositBlock[] = []): FactReport {
   const has = (item: ShareItem) => items.includes(item);
   const optional = <T>(item: ShareItem, present: boolean, value: () => T): T | null | "none" =>
     !has(item) ? null : present ? value() : "none";
@@ -81,6 +83,7 @@ export function factReport(m: RiderMetrics, items: ShareItem[]): FactReport {
           avgMonthlyNet3m: m.avgMonthlyNet3m,
           depositMatchRate: m.depositMatchRate,
           depositMatched: m.depositMatchRate !== null && m.depositMatchRate >= MATCHED_THRESHOLD,
+          vsDeposits,
         }
       : null,
     activity: has("activity")
@@ -112,12 +115,13 @@ export async function getApplicantReport(
   riderId: string,
   stage: LicenseStage = LICENSE_STAGE,
 ): Promise<ApplicantReport | null> {
-  const [rider, metrics, grants] = await Promise.all([
+  const [rider, metrics, grants, records] = await Promise.all([
     getRider(riderId),
     getRiderMetrics(riderId),
     listShareGrants(riderId),
+    getRiderRecords(riderId),
   ]);
-  if (!rider || !metrics) return null;
+  if (!rider || !metrics || !records) return null;
   const grant = activeGrant(grants, partnerId);
   if (!grant) return { status: "no_consent", riderId };
 
@@ -136,7 +140,7 @@ export async function getApplicantReport(
       grantedAt: grant.grantedAt,
       expiresAt: grant.expiresAt,
     },
-    facts: factReport(metrics, grant.items),
+    facts: factReport(metrics, grant.items, deriveSettlementVsDeposits(records, DEMO_TODAY)),
   };
 
   if (stage === "C") {

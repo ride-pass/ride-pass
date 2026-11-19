@@ -363,7 +363,6 @@
   "applicants": {
     "demoLabel": "Contoh layar staf mitra rental (demo)",
     "title": "Cek pemohon",
-    "summary": "{n} pengajuan · {w} peringatan",
     "stageA": "Tahap A: hanya laporan fakta yang diserahkan pengemudi. Skor dan peringkat tidak diberikan.",
     "stageC": "Tahap C (setelah izin PKA): laporan fakta ditambah skor kredit, peringkat, dan alasan.",
     "submitted": "Diajukan {date}",
@@ -397,7 +396,40 @@
     "reject": "Tolak",
     "decisionNote": "Keputusan persetujuan ada di mitra rental.",
     "approvedToast": "Pengajuan {name} disetujui. Notifikasi dikirim ke aplikasi pengemudi.",
-    "rejectedToast": "Pengajuan {name} ditolak. Notifikasi dikirim ke aplikasi pengemudi."
+    "rejectedToast": "Pengajuan {name} ditolak. Notifikasi dikirim ke aplikasi pengemudi.",
+    "summaryPending": "{n} pengajuan · {p} menunggu · {w} peringatan",
+    "findingWarn": "Perlu dicek: {names}",
+    "filterLabel": "Saring pengaju",
+    "filters": {
+      "all": "Semua",
+      "pending": "Menunggu",
+      "warning": "Ada peringatan",
+      "decided": "Selesai"
+    },
+    "empty": "Tidak ada pengaju yang cocok.",
+    "cols": {
+      "applicant": "Pengaju",
+      "submitted": "Tanggal ajuan",
+      "activeDays": "Hari aktif",
+      "activeDaysValue": "{n} dari 30 hari",
+      "warnings": "Peringatan",
+      "status": "Status"
+    },
+    "navLabel": "Menu mitra",
+    "nav": {
+      "applicants": "Cek pengaju",
+      "pendingCount": "{n} menunggu",
+      "contracts": "Kontrak & pembayaran",
+      "settings": "Pengaturan"
+    },
+    "chart": {
+      "title": "Setoran vs mutasi (per 30 hari)",
+      "settled": "Layar setoran",
+      "deposited": "Mutasi masuk",
+      "aria": "{from}–{to}: setoran {settled}, mutasi {deposited}",
+      "matched": "Mutasi 30 hari terakhir cocok dengan setoran (kecocokan {rate}).",
+      "mismatch": "Mutasi 30 hari terakhir {diff} lebih kecil dari setoran (kecocokan {rate}). Penghasilan perlu dicek lagi."
+    }
   },
   "kur": {
     "header": "Persiapan KUR",
