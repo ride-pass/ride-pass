@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { APP_NAME } from "@/config/brand";
+import { APP_ICON_PATH, APP_NAME } from "@/config/brand";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: APP_NAME,
+  icons: { icon: APP_ICON_PATH, apple: APP_ICON_PATH },
 };
 
 export const viewport: Viewport = {
