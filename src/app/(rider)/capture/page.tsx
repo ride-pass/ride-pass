@@ -67,6 +67,8 @@ export default function CapturePage() {
   const [phases, setPhases] = useState<Record<string, Phase>>({});
   const [slik, setSlik] = useState<DocPhase>("idle");
   const [telecom, setTelecom] = useState<DocPhase>("idle");
+  const [grid, setGrid] = useState(false);
+  const [front, setFront] = useState(false);
 
   const load = useCallback(() => getRiderRecords(riderId).then(setRecords), [riderId]);
   useEffect(() => {
@@ -136,6 +138,16 @@ export default function CapturePage() {
           <span className="absolute top-3 right-3 size-6 rounded-tr-xl border-t-4 border-r-4 border-brand-lime" />
           <span className="absolute bottom-3 left-3 size-6 rounded-bl-xl border-b-4 border-l-4 border-brand-lime" />
           <span className="absolute right-3 bottom-3 size-6 rounded-br-xl border-r-4 border-b-4 border-brand-lime" />
+          <span className="absolute top-4 right-10 z-10 rounded-full bg-black/40 px-2 py-0.5 text-[10px] text-white">
+            {front ? t("capture.frontCam") : t("capture.backCam")}
+          </span>
+          {grid ? (
+            <div className="pointer-events-none absolute inset-6 z-10 grid grid-cols-3 grid-rows-3" aria-hidden>
+              {Array.from({ length: 9 }, (_, i) => (
+                <span key={i} className="border border-white/30" />
+              ))}
+            </div>
+          ) : null}
           {capture ? (
             <FakeSettlementScreen capture={capture} blurred={capture.ocrConfidence < MIN_CONFIDENCE} />
           ) : (
@@ -153,10 +165,15 @@ export default function CapturePage() {
         </div>
 
         <div className="flex items-center justify-around">
-          <span className="flex flex-col items-center gap-1 text-xs text-muted">
+          <button
+            type="button"
+            aria-pressed={grid}
+            onClick={() => setGrid((g) => !g)}
+            className={`flex flex-col items-center gap-1 rounded-xl px-3 py-1 text-xs ${grid ? "text-brand-purple" : "text-muted"}`}
+          >
             <Grid3x3 className="size-5" aria-hidden />
             {t("capture.grid")}
-          </span>
+          </button>
           <button
             type="button"
             onClick={shoot}
@@ -166,10 +183,14 @@ export default function CapturePage() {
           >
             {phase === "reading" ? <Loader2 className="size-8 animate-spin" aria-hidden /> : <Camera className="size-8" aria-hidden />}
           </button>
-          <span className="flex flex-col items-center gap-1 text-xs text-muted">
+          <button
+            type="button"
+            onClick={() => setFront((f) => !f)}
+            className="flex flex-col items-center gap-1 rounded-xl px-3 py-1 text-xs text-muted"
+          >
             <RefreshCw className="size-5" aria-hidden />
             {t("capture.flip")}
-          </span>
+          </button>
         </div>
 
         {phase === "blurry" && capture ? (

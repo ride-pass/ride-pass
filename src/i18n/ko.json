@@ -90,7 +90,10 @@
     "docIncomeStatus": "필요",
     "incomeHint": "어느 앱에서 일하든, 정산 화면만 찍으면 수입 명세서를 만들어 바로 제출할 수 있습니다.",
     "cta": "{app}로 수입 명세서 제출하기",
-    "notice": "{app}는 이 렌털사와 별개 서비스입니다. 기사님이 고른 곳에만 보여 줍니다."
+    "notice": "{app}는 이 렌털사와 별개 서비스입니다. 기사님이 고른 곳에만 보여 줍니다.",
+    "docIncomeSubmitted": "{app}로 제출 완료",
+    "reviewStatus": "수입 명세서를 받았습니다. 렌털사 심사 상태: {status}",
+    "openHistory": "{app}에서 제출 이력 보기"
   },
   "onboarding": {
     "slide1Chip": "어느 앱이든 정산 화면을 찍으면 됩니다",
@@ -244,7 +247,9 @@
     "guide3Title": "고친 화면은 안 됩니다",
     "guide3Body": "수정한 화면이나 다른 사람 화면은 위변조 경고가 붙습니다.",
     "next": "수입 명세서 만들기",
-    "demo": "시연용: 가상 정산 화면을 찍는 연출입니다. 실제 카메라는 쓰지 않습니다."
+    "demo": "시연용: 가상 정산 화면을 찍는 연출입니다. 실제 카메라는 쓰지 않습니다.",
+    "frontCam": "전면 카메라",
+    "backCam": "후면 카메라"
   },
   "statement": {
     "header": "수입 명세서",
@@ -301,8 +306,8 @@
     "until": "볼 수 있는 기간",
     "items": "보낸 항목",
     "decision": "승인 여부는 받는 곳이 직접 정합니다.",
-    "backToStart": "처음 화면으로",
-    "toCredit": "내 신용 상태 보기"
+    "toCredit": "내 신용 상태 보기",
+    "toHome": "홈으로"
   },
   "demo": {
     "open": "시연 조작판",
@@ -457,5 +462,46 @@
     },
     "sourceNote": "조건은 2026년 은행·언론 안내를 기준으로 정리했습니다. 은행마다, 시기마다 다를 수 있습니다.",
     "toUpload": "SLIK 확인서 올리러 가기"
+  },
+  "tabs": {
+    "label": "하단 메뉴",
+    "home": "홈",
+    "history": "제출 이력",
+    "credit": "내 신용",
+    "kur": "KUR 준비"
+  },
+  "home": {
+    "hello": "안녕하세요, {name} 님",
+    "monthlyNet": "최근 30일 순수입",
+    "depositMatched": "입금 내역과 일치",
+    "depositMismatch": "입금 내역과 차이 큼",
+    "viewStatement": "수입 명세서 보기",
+    "servicesTitle": "바로 가기",
+    "tiles": {
+      "capture": "정산 화면 촬영",
+      "statement": "수입 명세서",
+      "share": "제출하기",
+      "history": "제출 이력",
+      "credit": "내 신용 상태",
+      "kur": "KUR 준비"
+    }
+  },
+  "history": {
+    "header": "제출 이력",
+    "body": "어디에 무엇을 언제까지 보여 줬는지 확인하고, 언제든 철회할 수 있습니다.",
+    "empty": "아직 보여 준 곳이 없습니다.",
+    "startShare": "수입 명세서 보여 주기",
+    "period": "{from} ~ {to}",
+    "state": {
+      "active": "보여 주는 중",
+      "revoked": "철회함",
+      "expired": "기간 끝남"
+    },
+    "appStatus": "신청 처리 상태:",
+    "revokeStart": "보여 주기 철회",
+    "confirm": "{partner}에 보여 주던 자료를 지금 철회할까요? 철회하면 그곳에서 바로 볼 수 없습니다.",
+    "cancel": "취소",
+    "revoke": "철회하기",
+    "revokedNote": "{date}에 철회했습니다. 이제 이곳은 자료를 볼 수 없습니다."
   }
 }

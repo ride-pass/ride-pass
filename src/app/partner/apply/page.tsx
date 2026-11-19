@@ -11,17 +11,28 @@ import { Badge } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { DemoNote } from "@/components/ui/DemoNote";
 import { APP_NAME } from "@/config/brand";
-import { getPartner } from "@/data/repository";
-import type { Partner } from "@/data/types";
+import { getPartner, listApplications, listShareGrants } from "@/data/repository";
+import type { Application, Partner } from "@/data/types";
 
 export default function PartnerApplyPage() {
   const t = useT();
-  const { lang, setPartnerId } = useDemo();
+  const { lang, setPartnerId, riderId, dataVersion } = useDemo();
   const [partner, setPartner] = useState<Partner | null>(null);
+  const [application, setApplication] = useState<Application | null>(null);
+  const [shared, setShared] = useState(false);
 
   useEffect(() => {
     getPartner(ENTRY_PARTNER_ID).then(setPartner);
   }, []);
+
+  // 기사가 이미 수입 명세서를 냈으면 신청서에 "제출 완료"와 렌털사 처리 상태를 보여 준다 (1단계 ↔ 7단계 연결)
+  useEffect(() => {
+    listApplications(ENTRY_PARTNER_ID).then((apps) => setApplication(apps.find((a) => a.riderId === riderId) ?? null));
+    listShareGrants(riderId).then((gs) =>
+      setShared(gs.some((g) => g.partnerId === ENTRY_PARTNER_ID && g.revokedAt === null)),
+    );
+  }, [riderId, dataVersion]);
+  const submitted = Boolean(application && shared);
 
   const partnerName = partner ? (lang === "ko" ? partner.nameKo : partner.nameId) : "";
 
@@ -68,18 +79,30 @@ export default function PartnerApplyPage() {
             <li className="flex items-center gap-3">
               <FileText className="size-5 text-brand-purple" aria-hidden />
               <span className="flex-1 text-sm font-semibold text-zinc-900">{t("apply.docIncome")}</span>
-              <Badge tone="danger">{t("apply.docIncomeStatus")}</Badge>
+              {submitted ? (
+                <Badge tone="lime">{t("apply.docIncomeSubmitted", { app: APP_NAME })}</Badge>
+              ) : (
+                <Badge tone="danger">{t("apply.docIncomeStatus")}</Badge>
+              )}
             </li>
           </ul>
           <p className="mt-4 rounded-xl bg-zinc-50 p-3 text-sm leading-relaxed text-zinc-600">
-            {t("apply.incomeHint")}
+            {submitted && application
+              ? t("apply.reviewStatus", { status: t(`applicants.status.${application.status}`) })
+              : t("apply.incomeHint")}
           </p>
         </section>
 
         <div className="mt-auto flex flex-col gap-3">
-          <ButtonLink href="/onboarding" onClick={() => setPartnerId(ENTRY_PARTNER_ID)}>
-            {t("apply.cta", { app: APP_NAME })}
-          </ButtonLink>
+          {submitted ? (
+            <ButtonLink href="/history" variant="secondary">
+              {t("apply.openHistory", { app: APP_NAME })}
+            </ButtonLink>
+          ) : (
+            <ButtonLink href="/onboarding" onClick={() => setPartnerId(ENTRY_PARTNER_ID)}>
+              {t("apply.cta", { app: APP_NAME })}
+            </ButtonLink>
+          )}
           <p className="flex items-start gap-1.5 text-xs leading-relaxed text-zinc-500">
             <ShieldCheck className="mt-0.5 size-3.5 shrink-0" aria-hidden />
             {t("apply.notice", { app: APP_NAME })}

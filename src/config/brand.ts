@@ -11,13 +11,15 @@ export const SLOGAN = {
   id: "Setiap jejak kerjamu jadi bukti.",
 } as const;
 
-// 로고 파일 (public/brand/). 화면은 이 경로만 쓴다.
-// 가로형 로고: 심볼 + "Trailcred" + 영어 태그라인. 흰 바탕용, 투명 배경
-export const LOGO_PATH = "/brand/Trailcred_logo.webp";
-export const LOGO_WIDTH = 1024;
-export const LOGO_HEIGHT = 265;
+// 로고 파일 (public/brand/). 화면은 이 경로만 쓴다. 팀 드라이브의 SVG를 쓴다 (CLAUDE.md 6절).
+// 가로형 로고: 심볼 + "Trailcred" + 영어 태그라인. 흰 바탕용, 글자는 패스로 변환됨 (viewBox 385×100)
+export const LOGO_PATH = "/brand/Trailcred_logo.svg";
+export const LOGO_WIDTH = 1155;
+export const LOGO_HEIGHT = 300;
 
-// 앱 아이콘: 보라 바탕 심볼, 1024×1024. 브라우저 탭·홈 화면 아이콘에 쓴다
-export const APP_ICON_PATH = "/brand/Trailcred_app_icon_1024.png";
+// 앱 아이콘: 보라 바탕 심볼. 브라우저 탭 아이콘은 SVG
+export const APP_ICON_PATH = "/brand/Trailcred_app_icon.svg";
+// 휴대폰 홈 화면 아이콘(apple-touch-icon)은 SVG를 받지 않아 같은 그림의 PNG를 쓴다
+export const APPLE_ICON_PATH = "/brand/Trailcred_app_icon_1024.png";
 
 // TODO: 보라 바탕용 로고("Trail" 흰색 + "cred" 라임)를 받으면 경로 추가
