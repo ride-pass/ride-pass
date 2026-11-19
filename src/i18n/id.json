@@ -479,14 +479,34 @@
     "depositMatched": "Cocok dengan mutasi",
     "depositMismatch": "Selisih besar dengan mutasi",
     "viewStatement": "Lihat slip penghasilan",
-    "servicesTitle": "Akses cepat",
-    "tiles": {
-      "capture": "Foto setoran",
-      "statement": "Slip penghasilan",
-      "share": "Kirim",
-      "history": "Riwayat kirim",
-      "credit": "Status kredit",
-      "kur": "Persiapan KUR"
+    "trail": {
+      "title": "Jejak kerja",
+      "summary": "{n} hari kerja dalam 180 hari terakhir",
+      "streak": "{m} bulan berturut-turut",
+      "aria": "Peta aktivitas 180 hari terakhir. {n} hari kerja.",
+      "dayDetail": "{date} · {net} · {trips} order",
+      "dayOff": "{date} · Libur",
+      "dayBefore": "{date} · Belum mulai",
+      "less": "Sedikit",
+      "more": "Banyak"
+    },
+    "months": {
+      "title": "Penghasilan bersih per 30 hari",
+      "avg": "Rata-rata 3 bulan terakhir {amount}",
+      "aria": "{from}–{to}: {amount}",
+      "partialNote": "Batang abu-abu: periode yang masih mencakup hari sebelum kamu mulai bekerja."
+    },
+    "next": {
+      "title": "Langkah berikutnya"
+    },
+    "feed": {
+      "title": "Aktivitas terbaru",
+      "viewAll": "Lihat semua",
+      "capture": "Layar setoran {app} diunggah",
+      "application": "Pengajuan ke {partner}",
+      "grant": "Mulai berbagi slip penghasilan ke {partner}",
+      "revoked": "Izin untuk {partner} ditarik",
+      "empty": "Belum ada aktivitas."
     }
   },
   "history": {

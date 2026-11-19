@@ -1,55 +1,87 @@
 "use client";
 
-// 기사 앱 홈 (Figma "RidePass 홈", CLAUDE.md 6절 표대로 바꿈).
+// 기사 앱 홈 (Figma "RidePass 홈", CLAUDE.md 6절 표대로 바꿈). 기사가 매일 열어 보는 화면이다.
+// 위에서부터: 수입 명세서 카드 → (평가 보류 / C단계 이유) → 다음 할 일 → 「일한 흔적」 활동 지도 → 30일 단위 순수입 → 최근 활동.
 // 원형 게이지 자리는 getRiderCreditView()가 정한다. A: 신용 준비도 5개 중 ○개, C: 신용도 + 「PKA 인가 후 제공 기능」 배지.
 // "안전 운행 점수", 「맞춤 제휴 혜택」 상품 카드, "소액 대출"·"보험 할인"·"오토바이 할부" 타일은 넣지 않는다.
+// 바로 가기 타일은 하단 탭·각 카드의 링크와 겹쳐서 뺐다.
 
-import { Camera, ClipboardList, FileText, Gauge, ListChecks, Send, TriangleAlert, type LucideIcon } from "lucide-react";
+import { ChevronRight, Lightbulb, TriangleAlert } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDemo, useT } from "@/components/demo/DemoProvider";
 import { LangToggle } from "@/components/demo/LangToggle";
+import { ActivityMap } from "@/components/home/ActivityMap";
+import { MonthBars } from "@/components/home/MonthBars";
 import { Badge } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { TabBar } from "@/components/ui/TabBar";
 import { ScreenSkeleton } from "@/components/ui/Skeleton";
+import { TabBar } from "@/components/ui/TabBar";
 import { APP_NAME, LOGO_HEIGHT, LOGO_PATH, LOGO_WIDTH } from "@/config/brand";
-import { getRiderCreditView, type RiderCreditView } from "@/credit/riderView";
-import type { RiderMetrics } from "@/data/derive";
-import { getIncomeStatement, getRider, getRiderMetrics } from "@/data/repository";
+import { getRiderCreditView, type RiderCreditHold, type RiderCreditView } from "@/credit/riderView";
+import type { RiderActivity, RiderMetrics } from "@/data/derive";
+import {
+  getIncomeStatement,
+  getRider,
+  getRiderActivity,
+  getRiderMetrics,
+  getRiderRecords,
+  listApplications,
+  listPartners,
+  listShareGrants,
+} from "@/data/repository";
 import type { IncomeStatement } from "@/data/statement";
-import type { Rider } from "@/data/types";
-import { formatRupiah } from "@/lib/format";
+import type { Application, Partner, Rider, SettlementCapture, ShareGrant } from "@/data/types";
+import { formatDate, formatRupiah } from "@/lib/format";
 
-const TILES: { href: string; key: string; icon: LucideIcon }[] = [
-  { href: "/capture", key: "capture", icon: Camera },
-  { href: "/certificate", key: "statement", icon: FileText },
-  { href: "/share", key: "share", icon: Send },
-  { href: "/history", key: "history", icon: ClipboardList },
-  { href: "/credit", key: "credit", icon: Gauge },
-  { href: "/kur", key: "kur", icon: ListChecks },
-];
+type ActionCode = RiderCreditHold["actions"][number];
+
+/** 개선 방법마다 기사가 바로 할 수 있는 화면. 없으면 문구만 보여 준다 */
+const ACTION_HREF: Partial<Record<ActionCode, string>> = {
+  RETAKE_CLEAR_PHOTO: "/capture",
+  ADD_REPAYMENT_RECORDS: "/capture",
+  ADD_ALL_APP_SETTLEMENTS: "/capture",
+  KEEP_UPLOADING: "/capture",
+};
+
+const FEED_LIMIT = 4;
+
+interface Feed {
+  captures: SettlementCapture[];
+  applications: Application[];
+  grants: ShareGrant[];
+  partners: Partner[];
+}
 
 export default function HomePage() {
   const t = useT();
   const { riderId, stage, dataVersion } = useDemo();
   const [rider, setRider] = useState<Rider | null>(null);
   const [metrics, setMetrics] = useState<RiderMetrics | null>(null);
+  const [activity, setActivity] = useState<RiderActivity | null>(null);
   const [statement, setStatement] = useState<IncomeStatement | null>(null);
   const [credit, setCredit] = useState<RiderCreditView | null>(null);
+  const [feed, setFeed] = useState<Feed | null>(null);
 
   useEffect(() => {
     getRider(riderId).then(setRider);
     getRiderMetrics(riderId).then(setMetrics);
+    getRiderActivity(riderId).then(setActivity);
     getIncomeStatement(riderId).then(setStatement);
     getRiderCreditView(riderId, stage).then(setCredit);
-    // dataVersion: 조작판 초기화·재촬영 뒤 다시 읽는다
+    (async () => {
+      const [records, partners, grants] = await Promise.all([getRiderRecords(riderId), listPartners(), listShareGrants(riderId)]);
+      const apps = (await Promise.all(partners.map((p) => listApplications(p.id)))).flat().filter((a) => a.riderId === riderId);
+      setFeed({ captures: records?.captures ?? [], applications: apps, grants, partners });
+    })();
+    // dataVersion: 조작판 초기화·재촬영·신청 상태 변경 뒤 다시 읽는다
   }, [riderId, stage, dataVersion]);
 
-  if (!rider || !metrics || !statement || !credit) return <ScreenSkeleton />;
+  if (!rider || !metrics || !activity || !statement || !credit || !feed) return <ScreenSkeleton />;
   const matched = metrics.depositMatchRate !== null && metrics.depositMatchRate >= 0.85;
+  const nextAction: ActionCode | null = credit.status === "hold" ? null : credit.improvement;
 
   return (
     <div className="flex flex-1 flex-col">
@@ -70,26 +102,34 @@ export default function HomePage() {
           </div>
         </div>
 
-        <Card tone="purple" className="flex flex-col gap-4">
-          <div className="flex items-center gap-4">
-            <CreditBadge view={credit} />
-            <div className="min-w-0 flex-1">
+        <Card tone="purple" className="flex flex-col gap-5">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
               <p className="text-xs text-white/70">{t("home.monthlyNet")}</p>
-              <p className="text-2xl font-bold">{formatRupiah(metrics.monthlyNet)}</p>
+              <p className="mt-1 text-[26px] leading-tight font-bold whitespace-nowrap tabular-nums">{formatRupiah(metrics.monthlyNet)}</p>
               <p className={`mt-1 flex items-center gap-1 text-xs ${matched ? "text-brand-lime" : "text-white"}`}>
                 {matched ? null : <TriangleAlert className="size-3.5" aria-hidden />}
                 {matched ? t("home.depositMatched") : t("home.depositMismatch")}
               </p>
             </div>
+            <CreditBadge view={credit} />
           </div>
           {/* 인니어처럼 버튼 글자가 길면 발급번호 아래로 내려간다 (발급번호는 자르지 않는다) */}
           <div className="flex flex-wrap items-center justify-between gap-2">
             <span className="rounded-full bg-white/10 px-3 py-1 font-mono text-[11px] whitespace-nowrap">{statement.issueNo}</span>
-            <Link href="/certificate" className="shrink-0 rounded-2xl bg-brand-lime px-4 py-2.5 text-center text-sm font-bold text-lime-ink">
+            <Link href="/certificate" className="shrink-0 rounded-2xl bg-brand-lime px-4 py-2.5 text-center text-sm font-bold text-lime-ink transition active:scale-[0.98]">
               {t("home.viewStatement")}
             </Link>
           </div>
         </Card>
+
+        {credit.status === "hold" ? (
+          <Card className="flex flex-col gap-2 ring-2 ring-danger">
+            <p className="font-semibold">{t("credit.holds.title")}</p>
+            <p className="text-sm text-muted">{credit.holds.map((h) => t(`credit.holds.${h}`)).join(" · ")}</p>
+            <ButtonLink href="/capture">{t("creditPage.goRetake")}</ButtonLink>
+          </Card>
+        ) : null}
 
         {credit.status === "scored" ? (
           <Card className="flex flex-col gap-2">
@@ -103,30 +143,122 @@ export default function HomePage() {
           </Card>
         ) : null}
 
-        <section>
-          <h2 className="mb-2 px-1 font-bold">{t("home.servicesTitle")}</h2>
-          <div className="grid grid-cols-3 gap-2">
-            {TILES.map(({ href, key, icon: Icon }) => (
-              <Link key={key} href={href} className="flex flex-col items-center gap-2 rounded-2xl bg-lavender px-2 py-4 text-center text-xs font-semibold text-brand-navy active:bg-lavender-strong">
-                <span className="grid size-10 place-items-center rounded-xl bg-surface text-brand-purple">
-                  <Icon className="size-5" aria-hidden />
-                </span>
-                {t(`home.tiles.${key}`)}
-              </Link>
-            ))}
-          </div>
-        </section>
+        {nextAction ? <NextAction code={nextAction} /> : null}
 
-        {credit.status === "hold" ? (
-          <Card className="flex flex-col gap-2 ring-2 ring-danger">
-            <p className="font-semibold">{t("credit.holds.title")}</p>
-            <p className="text-sm text-muted">{credit.holds.map((h) => t(`credit.holds.${h}`)).join(" · ")}</p>
-            <ButtonLink href="/capture">{t("creditPage.goRetake")}</ButtonLink>
-          </Card>
-        ) : null}
+        <Card className="flex flex-col gap-3">
+          <div className="flex items-baseline justify-between gap-2">
+            <h2 className="font-bold">{t("home.trail.title")}</h2>
+            {metrics.consecutiveActiveMonths > 0 ? (
+              <span className="text-xs font-semibold text-brand-purple">{t("home.trail.streak", { m: metrics.consecutiveActiveMonths })}</span>
+            ) : null}
+          </div>
+          <p className="-mt-2 text-sm text-muted">{t("home.trail.summary", { n: activity.activeDays })}</p>
+          <ActivityMap daily={activity.daily} />
+        </Card>
+
+        <Card className="flex flex-col gap-3">
+          <div className="flex flex-col">
+            <h2 className="font-bold">{t("home.months.title")}</h2>
+            <p className="text-sm text-muted tabular-nums">{t("home.months.avg", { amount: formatRupiah(metrics.avgMonthlyNet3m) })}</p>
+          </div>
+          <MonthBars months={activity.months} />
+        </Card>
+
+        <FeedCard feed={feed} />
       </main>
       <TabBar />
     </div>
+  );
+}
+
+function NextAction({ code }: { code: ActionCode }) {
+  const t = useT();
+  const href = ACTION_HREF[code];
+  const body = (
+    <>
+      <Lightbulb className="mt-0.5 size-5 shrink-0 text-brand-purple" aria-hidden />
+      <span className="min-w-0 flex-1">
+        <span className="block text-xs font-semibold text-brand-purple">{t("home.next.title")}</span>
+        <span className="block text-sm">{t(`credit.actions.${code}`)}</span>
+      </span>
+      {href ? <ChevronRight className="mt-2 size-5 shrink-0 text-muted" aria-hidden /> : null}
+    </>
+  );
+  const cls = "flex items-start gap-3 rounded-3xl bg-lavender p-4";
+  return href ? (
+    <Link href={href} className={`${cls} transition active:scale-[0.99] active:bg-lavender-strong`}>
+      {body}
+    </Link>
+  ) : (
+    <section className={cls}>{body}</section>
+  );
+}
+
+interface FeedItem {
+  key: string;
+  date: string;
+  /** 같은 날이면 신청 → 공유 → 정산 순 */
+  rank: number;
+  title: string;
+  right?: React.ReactNode;
+}
+
+function FeedCard({ feed }: { feed: Feed }) {
+  const t = useT();
+  const { lang } = useDemo();
+  const name = (id: string) => {
+    const p = feed.partners.find((x) => x.id === id);
+    return p ? (lang === "ko" ? p.nameKo : p.nameId) : id;
+  };
+
+  const items: FeedItem[] = [
+    ...feed.applications.map((a) => ({
+      key: a.id,
+      date: a.submittedAt,
+      rank: 0,
+      title: t("home.feed.application", { partner: name(a.partnerId) }),
+      right: <Badge tone={a.status === "approved" ? "lime" : a.status === "rejected" ? "danger" : "neutral"}>{t(`applicants.status.${a.status}`)}</Badge>,
+    })),
+    ...feed.grants.flatMap((g) => [
+      { key: g.id, date: g.grantedAt, rank: 1, title: t("home.feed.grant", { partner: name(g.partnerId) }) },
+      ...(g.revokedAt ? [{ key: `${g.id}-revoked`, date: g.revokedAt, rank: 1, title: t("home.feed.revoked", { partner: name(g.partnerId) }) }] : []),
+    ]),
+    // 정산은 날짜별로 묶어 최근 이틀만 넣는다 (매일 기록이 있어 신청·공유 소식이 밀려나지 않게)
+    ...[...new Set(feed.captures.map((c) => c.periodDate))].sort().slice(-2).map((date) => {
+      const day = feed.captures.filter((c) => c.periodDate === date);
+      return {
+        key: `capture-${date}`,
+        date,
+        rank: 2,
+        title: t("home.feed.capture", { app: [...new Set(day.map((c) => t(`platforms.${c.platform}`)))].join(" · ") }),
+        right: <span className="text-sm font-semibold tabular-nums">{formatRupiah(day.reduce((a, c) => a + c.ocr.netAmount, 0))}</span>,
+      };
+    }),
+  ]
+    .sort((a, b) => b.date.localeCompare(a.date) || a.rank - b.rank || a.key.localeCompare(b.key))
+    .slice(0, FEED_LIMIT);
+
+  return (
+    <Card className="flex flex-col gap-1">
+      <div className="flex items-baseline justify-between">
+        <h2 className="font-bold">{t("home.feed.title")}</h2>
+        <Link href="/history" className="text-xs font-semibold text-brand-purple">
+          {t("home.feed.viewAll")}
+        </Link>
+      </div>
+      {items.length === 0 ? <p className="py-2 text-sm text-muted">{t("home.feed.empty")}</p> : null}
+      <ul className="flex flex-col divide-y divide-line">
+        {items.map((item) => (
+          <li key={item.key} className="flex items-center justify-between gap-3 py-3">
+            <span className="min-w-0">
+              <span className="line-clamp-2 block text-sm font-medium">{item.title}</span>
+              <span className="block text-xs text-muted">{formatDate(item.date, lang)}</span>
+            </span>
+            <span className="shrink-0 whitespace-nowrap">{item.right}</span>
+          </li>
+        ))}
+      </ul>
+    </Card>
   );
 }
 
@@ -138,7 +270,7 @@ function CreditBadge({ view }: { view: RiderCreditView }) {
   const ratio =
     view.status === "readiness" ? view.metCount / view.totalCount : view.status === "scored" ? (view.score - 400) / 500 : 0;
   return (
-    <Link href="/credit" className="flex shrink-0 flex-col items-center gap-1" aria-label={t("tabs.credit")}>
+    <Link href="/credit" className="flex w-24 shrink-0 flex-col items-center gap-1 text-center" aria-label={t("tabs.credit")}>
       <span className="relative size-20">
         <svg viewBox="0 0 72 72" className="size-full -rotate-90" aria-hidden>
           <circle cx="36" cy="36" r={r} fill="none" strokeWidth="7" className="stroke-white/20" />
@@ -159,7 +291,12 @@ function CreditBadge({ view }: { view: RiderCreditView }) {
       <span className="text-[11px] text-white/80">
         {view.status === "readiness" ? t("credit.readiness.title") : view.status === "scored" ? `${view.grade} · ${t(`credit.grades.${view.grade}`)}` : ""}
       </span>
-      {view.status === "scored" ? <Badge tone="lime">{t("credit.badge.pka_licensed_feature")}</Badge> : null}
+      {/* 신용도 옆 「PKA 인가 후 제공 기능」 배지 (CLAUDE.md 2-4). 게이지 칸 폭 안에서 두 줄로 접힌다 */}
+      {view.status === "scored" ? (
+        <span className="rounded-lg bg-brand-lime px-2 py-0.5 text-[11px] leading-tight font-semibold text-lime-ink">
+          {t("credit.badge.pka_licensed_feature")}
+        </span>
+      ) : null}
     </Link>
   );
 }

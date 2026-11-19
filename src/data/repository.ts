@@ -2,7 +2,7 @@
 // 지금은 fixture를 읽는 mockRepository를 쓴다. 실제 API로 바꿀 때는 이 파일의 구현 연결만 바꾼다 (4-10).
 // 모든 함수는 비동기다. 나중에 네트워크 호출로 바뀌어도 화면 코드는 그대로다.
 
-import type { RiderMetrics, RiderRecords } from "./derive";
+import type { RiderActivity, RiderMetrics, RiderRecords } from "./derive";
 import { mockRepository } from "./mockRepository";
 import type { IncomeStatement } from "./statement";
 import type {
@@ -26,6 +26,8 @@ export interface Repository {
   getRiderRecords(riderId: string): Promise<RiderRecords | null>;
   /** 4-4 계산값. 기준일은 DEMO_TODAY */
   getRiderMetrics(riderId: string): Promise<RiderMetrics | null>;
+  /** 홈 화면의 활동 지도(최근 180일)와 30일 단위 월별 순수입 6개. 기준일은 DEMO_TODAY */
+  getRiderActivity(riderId: string): Promise<RiderActivity | null>;
   /** 수입 명세서 (최근 30일, 급여명세서 형식) */
   getIncomeStatement(riderId: string): Promise<IncomeStatement | null>;
 
@@ -58,6 +60,7 @@ export const {
   getRider,
   getRiderRecords,
   getRiderMetrics,
+  getRiderActivity,
   getIncomeStatement,
   listPartners,
   getPartner,

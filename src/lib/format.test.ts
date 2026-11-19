@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatDate, formatRupiah } from "./format";
+import { formatDate, formatMonth, formatRupiah, formatRupiahCompact, formatShortDate } from "./format";
 
 describe("formatRupiah", () => {
   it.each([
@@ -45,5 +45,28 @@ describe("formatDate", () => {
     expect(() => formatDate("2026-13-01", "ko")).toThrow();
     expect(() => formatDate("2026-02-30", "ko")).toThrow();
     expect(() => formatDate("19/11/2026", "ko")).toThrow();
+  });
+});
+
+describe("formatMonth · formatShortDate", () => {
+  it("한국어", () => {
+    expect(formatMonth("2026-11-19", "ko")).toBe("11월");
+    expect(formatShortDate("2026-11-19", "ko")).toBe("11.19");
+    expect(formatShortDate("2026-06-03", "ko")).toBe("6.3");
+  });
+  it("인니어", () => {
+    expect(formatMonth("2026-08-01", "id")).toBe("Agu");
+    expect(formatShortDate("2026-11-19", "id")).toBe("19/11");
+  });
+});
+
+describe("formatRupiahCompact", () => {
+  it("한국어는 만 단위", () => {
+    expect(formatRupiahCompact(5_503_000, "ko")).toBe("550만");
+    expect(formatRupiahCompact(12_345_000, "ko")).toBe("1,235만");
+  });
+  it("인니어는 juta(백만) 단위, 소수점은 쉼표", () => {
+    expect(formatRupiahCompact(5_503_000, "id")).toBe("5,5 jt");
+    expect(formatRupiahCompact(2_800_000, "id")).toBe("2,8 jt");
   });
 });

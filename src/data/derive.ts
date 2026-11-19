@@ -237,3 +237,72 @@ export function deriveRiderMetrics(
     telecomBillCount: telecom.length,
   };
 }
+
+// ---- 홈 화면의 「일한 흔적」 활동 지도와 월별 순수입 막대 ----
+
+/** 활동 지도에 그리는 기간: 기준일까지 180일 */
+export const ACTIVITY_MAP_DAYS = 180;
+/** 월별 순수입 막대 개수 (30일 단위) */
+export const MONTH_BAR_COUNT = 6;
+
+export interface DailyActivity {
+  date: IsoDate;
+  /** 그날 정산 순수입 합 (Rp). 기록이 없으면 0 */
+  net: number;
+  /** 그날 완료 건수 합 */
+  trips: number;
+  /** 첫 활동일 이전이면 true (활동 지도에서 "아직 시작 전"으로 그린다) */
+  beforeStart: boolean;
+}
+
+export interface MonthBlockNet {
+  /** 30일 구간의 첫날과 마지막 날 (양 끝 포함) */
+  start: IsoDate;
+  end: IsoDate;
+  net: number;
+  /** 첫 활동일 이전이 섞인 구간. 평균·안정성 계산에서 빠지는 달이다 (fullMonthSeries와 같은 기준) */
+  partial: boolean;
+}
+
+export interface RiderActivity {
+  /** 오래된 날 → 기준일, ACTIVITY_MAP_DAYS개 */
+  daily: DailyActivity[];
+  /** 정산 기록이 있는 날 수 (daily 기간 안) */
+  activeDays: number;
+  /** 오래된 구간 → 최근 구간, MONTH_BAR_COUNT개. 마지막 구간의 net은 monthlyNet과 같다 */
+  months: MonthBlockNet[];
+}
+
+export function deriveRiderActivity(
+  records: RiderRecords,
+  today: IsoDate = DEMO_TODAY,
+): RiderActivity {
+  const captures = records.captures.filter((c) => c.periodDate <= today);
+  const byDate = new Map<IsoDate, { net: number; trips: number }>();
+  for (const c of captures) {
+    const day = byDate.get(c.periodDate) ?? { net: 0, trips: 0 };
+    day.net += c.ocr.netAmount;
+    day.trips += c.ocr.tripCount;
+    byDate.set(c.periodDate, day);
+  }
+
+  const daily: DailyActivity[] = [];
+  for (let i = ACTIVITY_MAP_DAYS - 1; i >= 0; i--) {
+    const date = addDays(today, -i);
+    const day = byDate.get(date);
+    daily.push({
+      date,
+      net: day?.net ?? 0,
+      trips: day?.trips ?? 0,
+      beforeStart: date < records.rider.firstActiveDate,
+    });
+  }
+
+  const months: MonthBlockNet[] = [];
+  for (let k = MONTH_BAR_COUNT - 1; k >= 0; k--) {
+    const block = monthBlock(today, k);
+    months.push({ ...block, net: netInRange(captures, block), partial: block.start < records.rider.firstActiveDate });
+  }
+
+  return { daily, activeDays: daily.filter((d) => d.net > 0).length, months };
+}
