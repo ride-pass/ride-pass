@@ -252,7 +252,16 @@
     "next": "Buat slip penghasilan",
     "demo": "Demo: adegan memotret layar setoran fiktif. Kamera sungguhan tidak dipakai.",
     "frontCam": "Kamera depan",
-    "backCam": "Kamera belakang"
+    "backCam": "Kamera belakang",
+    "searching": "Mencari layar setoran…",
+    "locked": "Layar setoran ditemukan",
+    "steps": {
+      "date": "Mencari tanggal…",
+      "net": "Membaca jumlah…",
+      "trips": "Mengecek jumlah order…"
+    },
+    "confidence": "Keyakinan baca {n}%",
+    "confidenceLow": "Keyakinan baca {n}% · di bawah batas {min}%"
   },
   "statement": {
     "header": "Slip Penghasilan",
