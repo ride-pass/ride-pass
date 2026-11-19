@@ -4,7 +4,7 @@
 
 import { DEMO_TODAY } from "@/config/demo";
 import { deriveRiderMetrics, DEPOSIT_MISMATCH_THRESHOLD, MONTH_DAYS } from "@/data/derive";
-import type { FixtureSet } from "@/data/fixtureSet";
+import { riderRecordsFrom, type FixtureSet } from "@/data/fixtureSet";
 import { addDays, isWithin, type IsoDate } from "@/lib/date";
 
 const TOLERANCE = 0.1;
@@ -21,14 +21,18 @@ interface Expectation {
   rentalOnTimeRate: number | null;
   /** 최신 촬영 OCR 신뢰도가 재촬영 기준(0.7) 미만이어야 하는가 */
   blurredLatest: boolean;
+  /** SLIK 콜렉터빌리티. null = 확인서 없음 */
+  slikKolektibilitas: 1 | 2 | 3 | 4 | 5 | null;
+  /** 통신요금 정시 납부율과 건수. null = 기록 없음 */
+  telecom: { onTimeRate: number; count: number } | null;
 }
 
 export const EXPECTATIONS: Record<string, Expectation> = {
-  "r-budi": { monthlyNet: 5_200_000, activeMonths: 8, depositMismatch: false, rentalOnTimeRate: 88 / 90, blurredLatest: false },
-  "r-siti": { monthlyNet: 3_400_000, activeMonths: 4, depositMismatch: false, rentalOnTimeRate: null, blurredLatest: false },
-  "r-agus": { monthlyNet: 6_800_000, monthlyDeposit: 3_100_000, activeMonths: 7, depositMismatch: true, rentalOnTimeRate: null, blurredLatest: false },
-  "r-dewi": { monthlyNet: 4_600_000, activeMonths: 11, depositMismatch: false, rentalOnTimeRate: 1, blurredLatest: false },
-  "r-rizky": { monthlyNet: 2_800_000, activeMonths: 6, depositMismatch: false, rentalOnTimeRate: null, blurredLatest: true },
+  "r-budi": { monthlyNet: 5_200_000, activeMonths: 8, depositMismatch: false, rentalOnTimeRate: 88 / 90, blurredLatest: false, slikKolektibilitas: 1, telecom: null },
+  "r-siti": { monthlyNet: 3_400_000, activeMonths: 4, depositMismatch: false, rentalOnTimeRate: null, blurredLatest: false, slikKolektibilitas: null, telecom: null },
+  "r-agus": { monthlyNet: 6_800_000, monthlyDeposit: 3_100_000, activeMonths: 7, depositMismatch: true, rentalOnTimeRate: null, blurredLatest: false, slikKolektibilitas: null, telecom: null },
+  "r-dewi": { monthlyNet: 4_600_000, activeMonths: 11, depositMismatch: false, rentalOnTimeRate: 1, blurredLatest: false, slikKolektibilitas: null, telecom: { onTimeRate: 1, count: 6 } },
+  "r-rizky": { monthlyNet: 2_800_000, activeMonths: 6, depositMismatch: false, rentalOnTimeRate: null, blurredLatest: true, slikKolektibilitas: null, telecom: null },
 };
 
 const within = (actual: number, target: number) =>
@@ -60,12 +64,7 @@ export function checkFixtures(fx: FixtureSet, today: IsoDate = DEMO_TODAY): stri
   for (const rider of fx.riders) {
     const exp = EXPECTATIONS[rider.id];
     if (!exp) continue;
-    const records = {
-      rider,
-      captures: fx.captures.filter((c) => c.riderId === rider.id),
-      deposits: fx.deposits.filter((d) => d.riderId === rider.id),
-      rentalPayments: fx.rentalPayments.filter((p) => p.riderId === rider.id),
-    };
+    const records = riderRecordsFrom(fx, rider);
     const m = deriveRiderMetrics(records, today);
     const tag = `${rider.id}:`;
 
@@ -100,6 +99,14 @@ export function checkFixtures(fx: FixtureSet, today: IsoDate = DEMO_TODAY): stri
     const blurred = m.latestOcrConfidence !== null && m.latestOcrConfidence < 0.7;
     if (blurred !== exp.blurredLatest) {
       problems.push(`${tag} 최신 촬영 OCR 신뢰도 ${m.latestOcrConfidence}`);
+    }
+    if (m.slikKolektibilitas !== exp.slikKolektibilitas) {
+      problems.push(`${tag} SLIK 콜렉터빌리티 ${m.slikKolektibilitas} ≠ ${exp.slikKolektibilitas}`);
+    }
+    if (exp.telecom === null) {
+      if (m.telecomOnTimeRate !== null) problems.push(`${tag} 통신요금 기록이 없어야 한다`);
+    } else if (m.telecomOnTimeRate !== exp.telecom.onTimeRate || m.telecomBillCount !== exp.telecom.count) {
+      problems.push(`${tag} 통신요금 ${m.telecomBillCount}건 정시율 ${m.telecomOnTimeRate}`);
     }
     if (m.historyDays < 60) problems.push(`${tag} 기록이 ${m.historyDays}일로 60일 미만`);
     if (m.editFlags.length) problems.push(`${tag} 위변조 신호가 없어야 한다: ${m.editFlags.join(", ")}`);

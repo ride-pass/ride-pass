@@ -5,7 +5,7 @@
 import { DEMO_TODAY } from "@/config/demo";
 import { addDays } from "@/lib/date";
 import { deriveRiderMetrics, type RiderRecords } from "./derive";
-import type { FixtureSet } from "./fixtureSet";
+import { riderRecordsFrom, type FixtureSet } from "./fixtureSet";
 import type { Repository, ShareGrantInput } from "./repository";
 import type { Application, SettlementCapture, ShareGrant } from "./types";
 
@@ -17,6 +17,8 @@ import rentalPayments from "./fixtures/rentalPayments.json";
 import retakes from "./fixtures/retakes.json";
 import riders from "./fixtures/riders.json";
 import shareGrants from "./fixtures/shareGrants.json";
+import slikReports from "./fixtures/slikReports.json";
+import telecomBills from "./fixtures/telecomBills.json";
 
 // JSON import는 문자열 리터럴 타입이 넓어지므로 계약 타입으로 맞춘다.
 // 내용이 계약과 맞는지는 scripts/seed.test.ts가 확인한다.
@@ -26,6 +28,8 @@ const fixtures = {
   captures,
   deposits,
   rentalPayments,
+  slikReports,
+  telecomBills,
   applications,
   shareGrants,
   retakes,
@@ -68,12 +72,7 @@ function capturesOf(riderId: string): SettlementCapture[] {
 function recordsOf(riderId: string): RiderRecords | null {
   const rider = fixtures.riders.find((r) => r.id === riderId);
   if (!rider) return null;
-  return {
-    rider,
-    captures: capturesOf(riderId),
-    deposits: fixtures.deposits.filter((d) => d.riderId === riderId),
-    rentalPayments: fixtures.rentalPayments.filter((p) => p.riderId === riderId),
-  };
+  return { ...riderRecordsFrom(fixtures, rider), captures: capturesOf(riderId) };
 }
 
 export const mockRepository: Repository = {

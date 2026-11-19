@@ -12,8 +12,10 @@ import type {
   Rider,
   SettlementCapture,
   ShareGrant,
+  SlikReport,
+  TelecomBill,
 } from "@/data/types";
-import { addDays, dayOfWeek, type IsoDate } from "@/lib/date";
+import { addDays, dayOfWeek, parseIsoDate, type IsoDate } from "@/lib/date";
 import { createRandom, type Random } from "./random";
 
 /** 생성 기간: 기준일 포함 지난 180일 */
@@ -46,6 +48,11 @@ const PLATFORM_SHORT: Record<PlatformId, string> = {
 };
 
 export const RENTAL_PARTNER_ID = "p-rental-a";
+/** 통신요금: 가상 통신사, 월 납부액, 기간 (CLAUDE.md 4-6) */
+export const TELECOM_PROVIDER_LABEL = "통신사 E";
+export const TELECOM_MONTHLY_AMOUNT = 75_000;
+export const TELECOM_MONTHS = 6;
+const TELECOM_DUE_DAY = 15;
 
 export const PARTNERS: Partner[] = [
   { id: "p-rental-a", nameKo: "렌털사 A (전기 오토바이)", nameId: "Mitra Rental A", type: "ev_rental" },
@@ -70,6 +77,10 @@ export interface PersonaSpec {
   rental: "all_on_time" | "two_late" | null;
   /** 최신 촬영 1장을 흐리게 (OCR 신뢰도 0.55) */
   blurLatest: boolean;
+  /** SLIK 확인서 (r-budi만). 발급일은 기준일 며칠 전인지 */
+  slik: { worstKolektibilitas: SlikReport["worstKolektibilitas"]; activeFacilities: number; daysAgo: number } | null;
+  /** 통신요금 최근 6개월 전부 정시 (r-dewi만) */
+  telecomOnTime: boolean;
   /** 처음부터 렌털사 A에 들어 있는 신청의 제출일. null이면 시연 중 기사가 직접 제출한다 */
   applicationDate: IsoDate | null;
 }
@@ -93,6 +104,8 @@ export const PERSONAS: PersonaSpec[] = [
     depositSource: "bank_c",
     rental: "two_late",
     blurLatest: false,
+    slik: { worstKolektibilitas: 1, activeFacilities: 1, daysAgo: 7 },
+    telecomOnTime: false,
     applicationDate: null,
   },
   {
@@ -113,6 +126,8 @@ export const PERSONAS: PersonaSpec[] = [
     depositSource: "wallet_x",
     rental: null,
     blurLatest: false,
+    slik: null,
+    telecomOnTime: false,
     applicationDate: "2026-11-15",
   },
   {
@@ -133,6 +148,8 @@ export const PERSONAS: PersonaSpec[] = [
     depositSource: "bank_c",
     rental: null,
     blurLatest: false,
+    slik: null,
+    telecomOnTime: false,
     applicationDate: "2026-11-16",
   },
   {
@@ -153,6 +170,8 @@ export const PERSONAS: PersonaSpec[] = [
     depositSource: "bank_c",
     rental: "all_on_time",
     blurLatest: false,
+    slik: null,
+    telecomOnTime: true,
     applicationDate: "2026-11-17",
   },
   {
@@ -173,6 +192,8 @@ export const PERSONAS: PersonaSpec[] = [
     depositSource: "bank_c",
     rental: null,
     blurLatest: true,
+    slik: null,
+    telecomOnTime: false,
     applicationDate: "2026-11-18",
   },
 ];
@@ -264,6 +285,46 @@ function generateRentalPayments(p: PersonaSpec, rng: Random, today: IsoDate): Re
   }));
 }
 
+function generateSlikReports(p: PersonaSpec, rng: Random, today: IsoDate): SlikReport[] {
+  if (!p.slik) return [];
+  const reportDate = addDays(today, -p.slik.daysAgo);
+  return [
+    {
+      id: `slik-${shortId(p.rider.id)}-${compact(reportDate)}`,
+      riderId: p.rider.id,
+      reportDate,
+      uploadedAt: today,
+      filePath: `/samples/ideb-${shortId(p.rider.id)}.pdf`,
+      worstKolektibilitas: p.slik.worstKolektibilitas,
+      activeFacilities: p.slik.activeFacilities,
+      parseConfidence: round2(rng.range(0.92, 0.99)),
+    },
+  ];
+}
+
+function generateTelecomBills(p: PersonaSpec, rng: Random, today: IsoDate): TelecomBill[] {
+  if (!p.telecomOnTime) return [];
+  const { year, month } = parseIsoDate(today);
+  const out: TelecomBill[] = [];
+  // 이번 달 납기가 기준일 이후면 지난달까지 센다
+  const latestOffset = TELECOM_DUE_DAY <= parseIsoDate(today).day ? 0 : 1;
+  for (let i = TELECOM_MONTHS - 1 + latestOffset; i >= latestOffset; i--) {
+    const m0 = year * 12 + (month - 1) - i;
+    const ym = `${Math.floor(m0 / 12)}-${String((m0 % 12) + 1).padStart(2, "0")}`;
+    const dueDate = `${ym}-${String(TELECOM_DUE_DAY).padStart(2, "0")}`;
+    out.push({
+      id: `tb-${shortId(p.rider.id)}-${ym}`,
+      riderId: p.rider.id,
+      providerLabel: TELECOM_PROVIDER_LABEL,
+      month: ym,
+      dueDate,
+      paidDate: addDays(dueDate, -rng.int(0, 3)), // 납기일이나 그 며칠 전에 낸다
+      amount: TELECOM_MONTHLY_AMOUNT,
+    });
+  }
+  return out;
+}
+
 export function generateFixtures(today: IsoDate = DEMO_TODAY): FixtureSet {
   const fx: FixtureSet = {
     riders: [],
@@ -271,6 +332,8 @@ export function generateFixtures(today: IsoDate = DEMO_TODAY): FixtureSet {
     captures: [],
     deposits: [],
     rentalPayments: [],
+    slikReports: [],
+    telecomBills: [],
     applications: [],
     shareGrants: [],
     retakes: [],
@@ -291,6 +354,8 @@ export function generateFixtures(today: IsoDate = DEMO_TODAY): FixtureSet {
     fx.captures.push(...captures);
     fx.deposits.push(...generateDeposits(p, captures, rng, today));
     fx.rentalPayments.push(...generateRentalPayments(p, rng, today));
+    fx.slikReports.push(...generateSlikReports(p, rng, today));
+    fx.telecomBills.push(...generateTelecomBills(p, rng, today));
 
     if (p.applicationDate) {
       const application: Application = {
@@ -304,9 +369,14 @@ export function generateFixtures(today: IsoDate = DEMO_TODAY): FixtureSet {
         id: `sg-${shortId(p.rider.id)}-rental-a`,
         riderId: p.rider.id,
         partnerId: RENTAL_PARTNER_ID,
-        items: p.rider.hasBankAccount
-          ? ["income", "activity", "rental_history", "bank_account"]
-          : ["income", "activity", "rental_history"],
+        items: [
+          "income",
+          "activity",
+          "rental_history",
+          ...(p.rider.hasBankAccount ? (["bank_account"] as const) : []),
+          ...(p.slik ? (["slik_report"] as const) : []),
+          ...(p.telecomOnTime ? (["telecom_bills"] as const) : []),
+        ],
         grantedAt: p.applicationDate,
         expiresAt: addDays(p.applicationDate, 30),
         revokedAt: null,

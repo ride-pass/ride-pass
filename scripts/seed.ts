@@ -5,7 +5,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { DEMO_TODAY } from "@/config/demo";
 import { deriveRiderMetrics } from "@/data/derive";
-import { FIXTURE_FILES } from "@/data/fixtureSet";
+import { FIXTURE_FILES, riderRecordsFrom } from "@/data/fixtureSet";
 import { formatRupiah } from "@/lib/format";
 import { generateFixtures } from "./generate";
 import { checkFixtures } from "./seedChecks";
@@ -32,12 +32,7 @@ function main() {
 
   console.log(`기준일 ${DEMO_TODAY} · 검증 통과`);
   for (const rider of fx.riders) {
-    const m = deriveRiderMetrics({
-      rider,
-      captures: fx.captures.filter((c) => c.riderId === rider.id),
-      deposits: fx.deposits.filter((d) => d.riderId === rider.id),
-      rentalPayments: fx.rentalPayments.filter((p) => p.riderId === rider.id),
-    });
+    const m = deriveRiderMetrics(riderRecordsFrom(fx, rider));
     const rate = m.depositMatchRate === null ? "-" : m.depositMatchRate.toFixed(2);
     console.log(
       `  ${rider.id.padEnd(8)} 월 순수입 ${formatRupiah(m.monthlyNet).padStart(13)}` +

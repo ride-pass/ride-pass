@@ -34,7 +34,8 @@
       "income",
       "activity",
       "rental_history",
-      "bank_account"
+      "bank_account",
+      "telecom_bills"
     ],
     "grantedAt": "2026-11-17",
     "expiresAt": "2026-12-17",

@@ -21,6 +21,13 @@ describe("mockRepository 읽기", () => {
     expect(records?.rentalPayments).toHaveLength(90);
   });
 
+  it("SLIK 확인서는 Budi만, 통신요금은 Dewi만", async () => {
+    expect((await repo.getRiderMetrics("r-budi"))?.slikKolektibilitas).toBe(1);
+    expect((await repo.getRiderMetrics("r-dewi"))?.telecomOnTimeRate).toBe(1);
+    expect((await repo.getRiderRecords("r-dewi"))?.telecomBills).toHaveLength(6);
+    expect((await repo.getRiderMetrics("r-siti"))?.slikKolektibilitas).toBeNull();
+  });
+
   it("계산값은 derive에서 온다", async () => {
     const m = await repo.getRiderMetrics("r-agus");
     expect(m?.warnings).toContain("amount_mismatch");
