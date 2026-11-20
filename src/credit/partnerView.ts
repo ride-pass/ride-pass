@@ -2,6 +2,8 @@
 // A단계: 사실 리포트와 경고만. 점수·등급은 결과에 아예 넣지 않는다.
 // C단계: 사실 리포트 + 신용도·등급·이유 3개 + 「PKA 인가 후 제공 기능」 배지.
 // 기사가 이 기관에 동의한 항목만 보여 준다 ("내가 고른 곳에만 보여 줍니다").
+// 신용도도 동의한 항목만으로 계산한다. 공유하지 않은 상환 자료는 "자료 없음"으로 지우고,
+// 수입 명세서나 활동 기록을 공유하지 않았으면 점수를 내지 않고 보류한다.
 // 기사 화면 코드는 이 파일을 import하지 않는다 (eslint로 막음).
 
 import { DEMO_TODAY } from "@/config/demo";
@@ -10,9 +12,15 @@ import { deriveSettlementVsDeposits, type RiderMetrics, type SettlementDepositBl
 import { getRider, getRiderMetrics, getRiderRecords, listApplications, listShareGrants } from "@/data/repository";
 import type { Application, Rider, ShareGrant } from "@/data/types";
 import { isWithin } from "@/lib/date";
-import { evaluateCredit, type Grade, type HoldCode, type Reason } from "./engine";
+import { evaluateCredit, repaymentSources, type Grade, type HoldCode, type Reason, type ReasonCode } from "./engine";
 
 type ShareItem = ShareGrant["items"][number];
+
+/** 렌털사 화면에만 있는 보류: 점수를 내는 데 꼭 필요한 항목을 기사가 공유하지 않았다 */
+export type PartnerHoldCode = HoldCode | "NOT_SHARED_INCOME" | "NOT_SHARED_ACTIVITY";
+
+/** 렌털사 화면에만 있는 이유: 상환 자료는 있지만 이 기관에 공유하지 않아 중립으로 반영했다 */
+export type PartnerReason = Omit<Reason, "code"> & { code: ReasonCode | "REPAY_NOT_SHARED" };
 
 /** 기사가 이 항목을 공유하지 않았으면 null */
 export interface FactReport {
@@ -37,8 +45,8 @@ export interface FactReport {
 }
 
 export type PartnerCredit =
-  | { status: "scored"; score: number; grade: Grade; reasons: Reason[]; badge: "pka_licensed_feature" }
-  | { status: "hold"; holds: HoldCode[] };
+  | { status: "scored"; score: number; grade: Grade; reasons: PartnerReason[]; badge: "pka_licensed_feature" }
+  | { status: "hold"; holds: PartnerHoldCode[] };
 
 export type ApplicantReport =
   | { status: "no_consent"; riderId: string }
@@ -109,6 +117,45 @@ export function factReport(m: RiderMetrics, items: ShareItem[], vsDeposits: Sett
   };
 }
 
+/** 공유하지 않은 상환 자료(렌털 납부·SLIK 확인서·통신요금)를 "자료 없음"으로 지운 복사본 */
+export function sharedMetrics(m: RiderMetrics, items: ShareItem[]): RiderMetrics {
+  const out = { ...m };
+  if (!items.includes("rental_history")) {
+    out.rentalOnTimeRate = null;
+    out.rentalPaymentCount = 0;
+  }
+  if (!items.includes("slik_report")) {
+    out.slikKolektibilitas = null;
+    out.slikActiveFacilities = null;
+    out.slikParseConfidence = null;
+  }
+  if (!items.includes("telecom_bills")) {
+    out.telecomOnTimeRate = null;
+    out.telecomBillCount = 0;
+  }
+  return out;
+}
+
+/** 동의한 항목만으로 계산한 렌털사용 신용도 */
+export function partnerCredit(m: RiderMetrics, items: ShareItem[]): PartnerCredit {
+  const shareHolds: PartnerHoldCode[] = [];
+  if (!items.includes("income")) shareHolds.push("NOT_SHARED_INCOME");
+  if (!items.includes("activity")) shareHolds.push("NOT_SHARED_ACTIVITY");
+
+  const shared = sharedMetrics(m, items);
+  const credit = evaluateCredit(shared);
+  if (shareHolds.length || credit.status === "hold") {
+    return { status: "hold", holds: [...shareHolds, ...(credit.status === "hold" ? credit.holds : [])] };
+  }
+
+  // 상환 자료가 있는데 공유하지 않아 중립이 됐으면 "이력 없음"이 아니라 "공유된 이력 없음"으로 쓴다
+  const hiddenRepayment = repaymentSources(shared).length === 0 && repaymentSources(m).length > 0;
+  const reasons: PartnerReason[] = credit.reasons.map((r) =>
+    hiddenRepayment && r.code === "REPAY_NO_HISTORY" ? { ...r, code: "REPAY_NOT_SHARED" } : r,
+  );
+  return { status: "scored", score: credit.score, grade: credit.grade, reasons, badge: "pka_licensed_feature" };
+}
+
 /** 신청자 한 명의 리포트. 이 기관에 유효한 동의가 없으면 no_consent */
 export async function getApplicantReport(
   partnerId: string,
@@ -143,19 +190,7 @@ export async function getApplicantReport(
     facts: factReport(metrics, grant.items, deriveSettlementVsDeposits(records, DEMO_TODAY)),
   };
 
-  if (stage === "C") {
-    const credit = evaluateCredit(metrics);
-    report.credit =
-      credit.status === "hold"
-        ? { status: "hold", holds: credit.holds }
-        : {
-            status: "scored",
-            score: credit.score,
-            grade: credit.grade,
-            reasons: credit.reasons,
-            badge: "pka_licensed_feature",
-          };
-  }
+  if (stage === "C") report.credit = partnerCredit(metrics, grant.items);
   return report;
 }
 

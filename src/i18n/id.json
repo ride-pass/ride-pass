@@ -31,6 +31,7 @@
       "REPAY_ON_TIME": "Pembayaran selalu tepat waktu",
       "REPAY_LATE": "Ada pembayaran yang terlambat atau terlewat",
       "REPAY_NO_HISTORY": "Belum ada riwayat pembayaran, dihitung netral",
+      "REPAY_NOT_SHARED": "Riwayat pembayaran tidak dibagikan, dihitung netral",
       "INCOME_STABLE": "Penghasilan stabil setiap bulan",
       "INCOME_VOLATILE": "Penghasilan berubah-ubah setiap bulan",
       "DEPOSIT_MATCHED": "Jumlah setoran cocok dengan mutasi rekening",
@@ -60,7 +61,9 @@
     "holds": {
       "title": "Penilaian Ditunda",
       "NEED_RETAKE": "Foto terakhir buram dan tidak terbaca",
-      "NEED_MORE_HISTORY": "Riwayat kurang dari 60 hari"
+      "NEED_MORE_HISTORY": "Riwayat kurang dari 60 hari",
+      "NOT_SHARED_INCOME": "Pengemudi tidak membagikan slip penghasilan, skor kredit tidak bisa dihitung",
+      "NOT_SHARED_ACTIVITY": "Pengemudi tidak membagikan riwayat aktivitas, skor kredit tidak bisa dihitung"
     },
     "badge": {
       "pka_licensed_feature": "Fitur setelah izin PKA"
