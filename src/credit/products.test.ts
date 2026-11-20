@@ -17,7 +17,7 @@ describe("matchProducts (「추천」 화면, CLAUDE.md 2-1)", () => {
       const rates = (["A", "B", "C", "D"] as const).map((g) => p.exampleRateByGrade![g]).filter((r) => r !== undefined);
       expect(rates, p.id).toEqual([...rates].sort((a, b) => a - b));
     }
-    const rateOf = (grade: "A" | "D") => matchProducts(products, grade).available.find((o) => o.product.id === "prod-bank-f-micro")!.rate!;
+    const rateOf = (grade: "A" | "D") => matchProducts(products, grade).available.find((o) => o.product.id === "prod-bank-b-micro")!.rate!;
     expect(rateOf("D")).toBeGreaterThan(rateOf("A"));
   });
 
@@ -40,7 +40,7 @@ describe("matchProducts (「추천」 화면, CLAUDE.md 2-1)", () => {
     expect(top.map((o) => o.product.category).sort()).toEqual(["insurance", "rental"]);
     expect(top.every((o) => o.reason === "NO_GRADE_LIMIT" && o.rate === null)).toBe(true);
     expect(locked.map((l) => l.product.category)).not.toContain("rental");
-    expect(locked.find((l) => l.product.id === "prod-bank-c-working")?.minGrade).toBe("C");
+    expect(locked.find((l) => l.product.id === "prod-bank-a-working")?.minGrade).toBe("C");
   });
 
   it("한도·승인 가능성 같은 값은 만들지 않는다", () => {

@@ -61,7 +61,7 @@ function rental(dueDate: string, paidDate: string | null): RentalPayment {
   return {
     id: `p-${++seq}`,
     riderId: "r-test",
-    partnerId: "p-rental-a",
+    partnerId: "p-rental-d",
     dueDate,
     paidDate,
     amount: 55000,
@@ -110,7 +110,7 @@ function bill(dueDate: string, paidDate: string | null): TelecomBill {
   return {
     id: `t-${++seq}`,
     riderId: "r-test",
-    providerLabel: "통신사 E",
+    providerLabel: "통신사 F",
     month: dueDate.slice(0, 7),
     dueDate,
     paidDate,

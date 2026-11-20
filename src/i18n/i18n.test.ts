@@ -29,8 +29,8 @@ const REQUIRED = {
   "recommend.reasons": ["BEST_RATE_IN_CATEGORY", "GRADE_OK", "NO_GRADE_LIMIT"],
   "recommend.categories": ["loan", "installment", "rental", "insurance"],
   products: [
-    "prod-bank-c-working.name", "prod-bank-f-micro.name", "prod-installment-b-multi.name",
-    "prod-installment-b-moto.name", "prod-rental-a-ev.name", "prod-insurance-d-accident.name",
+    "prod-bank-a-working.name", "prod-bank-b-micro.name", "prod-installment-c-multi.name",
+    "prod-installment-c-moto.name", "prod-rental-d-ev.name", "prod-insurance-e-accident.name",
   ],
 };
 

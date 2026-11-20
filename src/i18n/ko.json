@@ -359,7 +359,8 @@
       "ev_rental": "렌털",
       "insurance": "보험"
     },
-    "mainGroup": "주요"
+    "mainGroup": "주요",
+    "pickFirst": "제출할 곳을 골라 주세요"
   },
   "done": {
     "title": "수입 명세서를 보냈습니다",
@@ -710,27 +711,27 @@
     "disclaimer": "모두 가상 상품이고 금리·요금은 예시입니다. 실제 금리와 승인 여부는 각 금융사가 정합니다. 이 앱은 대출을 직접 실행하지 않습니다."
   },
   "products": {
-    "prod-bank-c-working": {
+    "prod-bank-a-working": {
       "name": "기사 운영자금 대출",
       "desc": "연료·정비·장비처럼 일하는 데 드는 돈"
     },
-    "prod-bank-f-micro": {
+    "prod-bank-b-micro": {
       "name": "소액 대출",
       "desc": "급한 생활비를 짧게 빌리는 상품"
     },
-    "prod-installment-b-multi": {
+    "prod-installment-c-multi": {
       "name": "다목적 대출",
       "desc": "쓰는 곳에 제한이 없는 할부사 대출"
     },
-    "prod-installment-b-moto": {
+    "prod-installment-c-moto": {
       "name": "오토바이 할부",
       "desc": "새 오토바이를 나눠 내고 사기"
     },
-    "prod-rental-a-ev": {
+    "prod-rental-d-ev": {
       "name": "전기 오토바이 렌털",
       "desc": "하루 단위로 빌려 타기"
     },
-    "prod-insurance-d-accident": {
+    "prod-insurance-e-accident": {
       "name": "기사 상해보험",
       "desc": "일하다 다친 치료비 보장"
     }

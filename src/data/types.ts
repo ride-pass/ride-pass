@@ -53,9 +53,9 @@ export interface RentalPayment {
 }
 
 export interface Partner {
-  id: string;                 // "p-rental-a"
-  nameKo: string;             // "렌털사 A (전기 오토바이)"
-  nameId: string;             // "Mitra Rental A"
+  id: string;                 // "p-rental-d"
+  nameKo: string;             // "렌털사 D (전기 오토바이)"
+  nameId: string;             // "Mitra Rental D"
   type: PartnerType;
 }
 
@@ -75,7 +75,7 @@ export interface SlikReport {
 export interface TelecomBill {
   id: string;
   riderId: string;
-  providerLabel: string;      // "통신사 E" (가상)
+  providerLabel: string;      // "통신사 F" (가상)
   month: string;              // "2026-10"
   dueDate: string;
   paidDate: string | null;
@@ -108,7 +108,7 @@ export type ProductCategory = "loan" | "installment" | "rental" | "insurance";
 export type ProductGrade = "A" | "B" | "C" | "D" | "E";
 
 export interface Product {
-  id: string;                 // "prod-bank-c-working"
+  id: string;                 // "prod-bank-a-working"
   partnerId: string;
   category: ProductCategory;
   termMonths: [number, number] | null;  // 기간 (렌털·보험은 null)

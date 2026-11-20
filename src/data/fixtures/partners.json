@@ -1,32 +1,32 @@
 [
   {
-    "id": "p-rental-a",
-    "nameKo": "렌털사 A (전기 오토바이)",
-    "nameId": "Mitra Rental A",
-    "type": "ev_rental"
+    "id": "p-bank-a",
+    "nameKo": "은행 A",
+    "nameId": "Bank A",
+    "type": "bank"
   },
   {
-    "id": "p-installment-b",
-    "nameKo": "할부사 B",
-    "nameId": "Mitra Cicilan B",
+    "id": "p-bank-b",
+    "nameKo": "은행 B",
+    "nameId": "Bank B",
+    "type": "bank"
+  },
+  {
+    "id": "p-installment-c",
+    "nameKo": "할부사 C",
+    "nameId": "Mitra Cicilan C",
     "type": "installment"
   },
   {
-    "id": "p-bank-c",
-    "nameKo": "은행 C",
-    "nameId": "Bank C",
-    "type": "bank"
+    "id": "p-rental-d",
+    "nameKo": "렌털사 D (전기 오토바이)",
+    "nameId": "Mitra Rental D",
+    "type": "ev_rental"
   },
   {
-    "id": "p-bank-f",
-    "nameKo": "은행 F",
-    "nameId": "Bank F",
-    "type": "bank"
-  },
-  {
-    "id": "p-insurance-d",
-    "nameKo": "보험사 D",
-    "nameId": "Asuransi D",
+    "id": "p-insurance-e",
+    "nameKo": "보험사 E",
+    "nameId": "Asuransi E",
     "type": "insurance"
   }
 ]

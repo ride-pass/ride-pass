@@ -4,7 +4,7 @@ import { getRiderMetrics } from "@/data/repository";
 import { evaluateCredit } from "./engine";
 import { getApplicantReport, listApplicantReports, partnerCredit, sharedMetrics } from "./partnerView";
 
-const PARTNER = "p-rental-a";
+const PARTNER = "p-rental-d";
 
 beforeEach(async () => {
   await repo.resetDemoState();

@@ -2,28 +2,28 @@
   {
     "id": "app-siti-rental-a",
     "riderId": "r-siti",
-    "partnerId": "p-rental-a",
+    "partnerId": "p-rental-d",
     "submittedAt": "2026-11-15",
     "status": "pending"
   },
   {
     "id": "app-agus-rental-a",
     "riderId": "r-agus",
-    "partnerId": "p-rental-a",
+    "partnerId": "p-rental-d",
     "submittedAt": "2026-11-16",
     "status": "pending"
   },
   {
     "id": "app-dewi-rental-a",
     "riderId": "r-dewi",
-    "partnerId": "p-rental-a",
+    "partnerId": "p-rental-d",
     "submittedAt": "2026-11-17",
     "status": "pending"
   },
   {
     "id": "app-rizky-rental-a",
     "riderId": "r-rizky",
-    "partnerId": "p-rental-a",
+    "partnerId": "p-rental-d",
     "submittedAt": "2026-11-18",
     "status": "pending"
   }

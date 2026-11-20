@@ -1,6 +1,6 @@
 "use client";
 
-// 시연 1단계: 가상 렌털사 A의 신청 화면. 여기서 링크를 눌러 기사 앱으로 들어간다 (CLAUDE.md 3절).
+// 시연 1단계: 가상 렌털사 D의 신청 화면. 여기서 링크를 눌러 기사 앱으로 들어간다 (CLAUDE.md 3절).
 // 렌털사 화면이라 기사 앱과 다른 모양(흰 바탕·회색)으로 그린다.
 
 import { Bike, Check, FileText, IdCard, ShieldCheck } from "lucide-react";

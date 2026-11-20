@@ -83,7 +83,7 @@ describe("「평가 기준 보기」 데이터 (CLAUDE.md 4-5)", () => {
 });
 
 describe("getRiderSubmissionView: 「제출할 곳 고르기」에서 함께 가는 신용도", () => {
-  const PARTNER = "p-rental-a";
+  const PARTNER = "p-rental-d";
 
   it("A단계: 신용도를 보내지 않는다", async () => {
     const view = await getRiderSubmissionView("r-budi", ["income", "activity", "slik_report"], "A");
