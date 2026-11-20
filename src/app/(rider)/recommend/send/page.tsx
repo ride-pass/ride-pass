@@ -4,7 +4,7 @@
 // 상품 확인 → 함께 보내는 내용 → 동의 한 줄 → 「동의하고 보내기」 → 공유 완료(/share/done).
 // 무엇을(자료 목록)·누구에게(기관)·얼마 동안(30일)을 한 화면에 둔다 (CLAUDE.md 3절 3단계와 같은 원칙).
 // 보내는 자료: 렌털 신청 때 동의한 항목이 있으면 그대로, 없으면 동의 화면 기본값(올린 자료 전부).
-// 금리는 예시 금리만, 대출을 이 앱에서 실행하지 않는다 (2-1). 이미 보낸 곳이면 다시 보내지 않고 상태만 보여 준다.
+// 금리는 예시 금리만, 대출을 이 앱에서 실행하지 않는다 (2-1). 이미 보낸 곳이면 다시 보내지 않고 상태만 보여 준다(철회한 곳은 다시 보낼 수 있다).
 
 import { CircleCheck } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -74,8 +74,9 @@ export default function RecommendSendPage() {
       const [rider, grants, apps] = await Promise.all([getRider(riderId), listShareGrants(riderId), listApplications(partner.id)]);
       const entryGrant = grants.find((g) => g.partnerId === entryPartnerId && isActiveGrant(g));
       const items = defaultShareItems(rider, entryGrant);
-      const sent = apps.find((a) => a.riderId === riderId && a.status !== "rejected") ?? null;
       const hasGrant = grants.some((g) => g.partnerId === partner.id && isActiveGrant(g));
+      // 철회했으면(유효한 동의 없음) 신청 기록이 남아 있어도 다시 보낼 수 있다. 다시 보내면 새 동의를 만들고 대기 중 신청을 그대로 쓴다
+      const sent = hasGrant ? (apps.find((a) => a.riderId === riderId && a.status !== "rejected") ?? null) : null;
       setTarget({ product, offer, partner, items, sent, hasGrant });
       setSubmission(await getRiderSubmissionView(riderId, items, stage));
     })();
