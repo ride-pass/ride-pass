@@ -582,7 +582,7 @@
     "home": "Beranda",
     "history": "Riwayat kirim",
     "credit": "Kreditku",
-    "kur": "Persiapan KUR"
+    "my": "Profil"
   },
   "home": {
     "hello": "Halo, {name}",
@@ -606,9 +606,6 @@
       "avg": "Rata-rata 3 bulan terakhir {amount}",
       "aria": "{from}–{to}: {amount}",
       "partialNote": "Batang abu-abu: periode yang masih mencakup hari sebelum kamu mulai bekerja."
-    },
-    "next": {
-      "title": "Langkah berikutnya"
     },
     "feed": {
       "title": "Aktivitas terbaru",
@@ -655,5 +652,14 @@
     "amount_mismatch": "Mutasi selisih",
     "duplicate_image": "Foto ganda",
     "edited_image": "Ada suntingan"
+  },
+  "my": {
+    "title": "Profil Saya",
+    "docs": "Dokumen saya",
+    "statement": "Slip Penghasilan",
+    "upload": "Unggah dokumen",
+    "uploadBody": "Layar setoran · Laporan SLIK · Tagihan pulsa",
+    "settings": "Pengaturan",
+    "language": "Bahasa"
   }
 }

@@ -1,7 +1,7 @@
 "use client";
 
 // 시연 8단계: KUR(정부 소상공인 대출) 신청 조건 체크리스트 (CLAUDE.md 3절).
-// 충족 여부만 보여 준다. 금리·한도 숫자, 신청 버튼, 승인 여부는 보여 주지 않는다 (2-1). 신청과 승인은 은행이 한다.
+// 하단 탭 「마이」 안에서 들어온다. 충족 여부만 보여 준다. 금리·한도 숫자, 신청 버튼, 승인 여부는 보여 주지 않는다 (2-1). 신청과 승인은 은행이 한다.
 
 import { CircleCheck, CircleHelp, CircleX, FileText, Landmark, TriangleAlert, Upload, type LucideIcon } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -44,7 +44,7 @@ export default function KurPage() {
 
   return (
     <div className="flex flex-1 flex-col">
-      <AppHeader title={t("kur.header")} back="/home" />
+      <AppHeader title={t("kur.header")} back="/my" />
       <main className="flex flex-col gap-4 px-4 pt-2 pb-6">
         {/* 내 신용 상태와 같은 모양: 바탕 위 큰 숫자 + 조건 한 칸씩. 금리·한도 숫자는 넣지 않는다 (2-1) */}
         <Card className="flex flex-col gap-3">

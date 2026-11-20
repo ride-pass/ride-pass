@@ -581,7 +581,7 @@
     "home": "홈",
     "history": "제출 이력",
     "credit": "내 신용",
-    "kur": "KUR 준비"
+    "my": "마이"
   },
   "home": {
     "hello": "안녕하세요, {name} 님",
@@ -605,9 +605,6 @@
       "avg": "최근 3개월 월평균 {amount}",
       "aria": "{from}~{to}: {amount}",
       "partialNote": "회색 막대는 활동을 시작하기 전 날이 섞인 기간입니다."
-    },
-    "next": {
-      "title": "다음 할 일"
     },
     "feed": {
       "title": "최근 활동",
@@ -654,5 +651,14 @@
     "amount_mismatch": "정산·입금 불일치",
     "duplicate_image": "사진 중복",
     "edited_image": "수정 흔적"
+  },
+  "my": {
+    "title": "마이페이지",
+    "docs": "내 자료",
+    "statement": "수입 명세서",
+    "upload": "자료 올리기",
+    "uploadBody": "정산 화면 · SLIK 확인서 · 통신요금",
+    "settings": "설정",
+    "language": "언어"
   }
 }

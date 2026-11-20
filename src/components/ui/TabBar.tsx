@@ -1,17 +1,18 @@
 "use client";
 
 // 기사 앱 하단 탭 (Figma 하단 탭. 「혜택」은 「제출 이력」으로 바꿈, CLAUDE.md 6절).
+// KUR 체크리스트는 「마이」 안으로 옮겼다. /kur에 있을 때도 「마이」 탭이 켜진다.
 
-import { ClipboardList, Gauge, House, ListChecks, type LucideIcon } from "lucide-react";
+import { CircleUser, ClipboardList, Gauge, House, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useT } from "@/components/demo/DemoProvider";
 
-const TABS: { href: string; key: string; icon: LucideIcon }[] = [
+const TABS: { href: string; key: string; icon: LucideIcon; also?: string[] }[] = [
   { href: "/home", key: "home", icon: House },
   { href: "/history", key: "history", icon: ClipboardList },
   { href: "/credit", key: "credit", icon: Gauge },
-  { href: "/kur", key: "kur", icon: ListChecks },
+  { href: "/my", key: "my", icon: CircleUser, also: ["/kur"] },
 ];
 
 export function TabBar() {
@@ -19,8 +20,8 @@ export function TabBar() {
   const pathname = usePathname();
   return (
     <nav className="sticky bottom-0 z-20 mt-auto grid grid-cols-4 border-t border-line bg-surface pb-2" aria-label={t("tabs.label")}>
-      {TABS.map(({ href, key, icon: Icon }) => {
-        const active = pathname === href;
+      {TABS.map(({ href, key, icon: Icon, also }) => {
+        const active = pathname === href || Boolean(also?.includes(pathname));
         return (
           <Link
             key={href}
