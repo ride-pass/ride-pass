@@ -49,7 +49,7 @@
 
 | 시연 단계 | 주소 | 파일 | 비고 |
 |---|---|---|---|
-| 1 렌털사 신청 | `/partner/apply` | `src/app/partner/apply/page.tsx` | `/`로 들어오면 여기로 이동 |
+| 1 렌털사 신청 | `/partner/apply` | `src/app/partner/apply/page.tsx` | 조작판 「시연 단계로 바로 가기 1」로 연다 (`/`는 홈으로 이동) |
 | 2 로그인·인증 | `/onboarding` → `/login` → `/login/verify` | `src/app/(rider)/…` | 번호 끝 4자리로 인물 선택(4절), 인증 문자 「자동 입력」 |
 | 3 동의 | `/consent` (거절 시 `/consent/declined`) | | "거절해도 렌털 신청은 그대로" |
 | 4 촬영 | `/capture` | | Rizky는 흐림 → 다시 찍기 |
@@ -196,7 +196,7 @@ npm run lint && npm test && npm run build   # PR 전에 반드시
 ```
 
 - **PR:** 설명에 "2절 확인함". CI(lint·test·build)가 PR마다 자동으로 돈다. 팀원 1명 승인 후 합친다.
-- **충돌 피하기:** `ko.json`/`id.json`은 거의 모든 PR이 고친다. 같은 날 여러 명이 고치면 먼저 합친 사람 뒤에 `git pull` 후 다시 맞춘다. 렌털사 화면(`partner/applicants`)은 한 번에 한 사람만.
+- **충돌 피하기:** `ko.json`/`id.json`은 거의 모든 PR이 고친다. 같은 날 여러 명이 고치면 먼저 합친 사람 뒤에 `git pull` 후 다시 맞춘다.
 - **쌓인 PR:** 아래 PR을 합친 뒤 위 PR의 base를 `main`으로 바꾸고 나서 브랜치를 지운다. 먼저 지우면 위 PR이 닫힌다.
 - **Vercel 미리보기:** 팀원은 PR 미리보기를 못 연다. 열려면 계정 주인이 Settings → Deployment Protection에서 Vercel Authentication을 끄거나, 특정 주소만 예외로 넣거나, 배포별 Shareable Link를 보낸다(Hobby 플랜 가능, 비밀번호 보호는 불가).
 - **확인은 production 빌드로:** `npm run build && npx next start -p 3100`. 개발 서버를 오래 켜 두면 `/`가 404로 나올 때가 있다. 다시 켜면 된다.
