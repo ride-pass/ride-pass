@@ -10,7 +10,7 @@ describe("mockRepository 읽기", () => {
     expect((await repo.listRiders()).map((r) => r.id)).toEqual([
       "r-budi", "r-siti", "r-agus", "r-dewi", "r-rizky",
     ]);
-    expect(await repo.listPartners()).toHaveLength(4);
+    expect(await repo.listPartners()).toHaveLength(5);
     expect(await repo.getRider("r-nobody")).toBeNull();
     expect(await repo.getRiderMetrics("r-nobody")).toBeNull();
   });
