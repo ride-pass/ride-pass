@@ -26,7 +26,6 @@
   --font-sans: var(--font-pretendard), system-ui, sans-serif;
 
   --breakpoint-app: 390px; /* Figma 기준 화면 폭 */
-  --breakpoint-console: 56.25rem; /* 900px: 렌털사 화면이 카드 목록 → 표 + 상세 패널로 바뀌는 폭 (분할 보기 오른쪽 포함) */
 
   /* 움직임은 반응으로만 쓴다: 화면 전환, 바텀시트, 토스트. 쓰는 곳은 motion-safe:로 감싼다 */
   /* backwards: 끝나면 transform이 남지 않는다. 남으면 화면 안의 바텀시트(fixed)가 화면이 아니라 이 틀에 붙는다 */

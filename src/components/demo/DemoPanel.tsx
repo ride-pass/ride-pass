@@ -1,14 +1,15 @@
 "use client";
 
 // 시연 조작판 (CLAUDE.md 4-8). 주소 뒤에 ?demo=1을 붙이면 화면 구석에 열린다.
-// 페르소나 바꾸기, 처음 상태로, 시연 단계로 바로 가기. 허가 단계는 C(PKA 인가 후)로 고정이라 바꾸는 버튼이 없다 (2-4).
+// 페르소나 바꾸기, 처음 상태로, 시연 단계로 바로 가기, 보낸 곳 결과 보내기. 허가 단계는 C(PKA 인가 후)로 고정이라 바꾸는 버튼이 없다 (2-4).
+// 렌털사 직원 화면은 2026-11-20에 뺐다. 기관이 신청서를 열고 승인하는 장면은 「보낸 곳 결과 보내기」 버튼이 대신한다.
 
-import { ChevronDown, Columns2, RotateCcw, SlidersHorizontal, X } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { BadgeCheck, ChevronDown, RotateCcw, SlidersHorizontal, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { createShareGrant, listRiders, listShareGrants, submitApplication } from "@/data/repository";
+import { listApplications, listPartners, listRiders, recordApplicationView, setApplicationStatus } from "@/data/repository";
 import type { Rider } from "@/data/types";
-import { ENTRY_PARTNER_ID, useDemo, useT } from "./DemoProvider";
+import { useDemo, useT } from "./DemoProvider";
 
 export const DEMO_STEPS: { step: number; href: string }[] = [
   { step: 1, href: "/partner/apply" },
@@ -17,19 +18,14 @@ export const DEMO_STEPS: { step: number; href: string }[] = [
   { step: 4, href: "/capture" },
   { step: 5, href: "/certificate" },
   { step: 6, href: "/credit" },
-  { step: 7, href: "/partner/applicants" },
+  { step: 7, href: "/recommend" },
   { step: 8, href: "/kur" },
 ];
-
-/** 분할 보기 화면 주소. 왼쪽 기사 폰, 오른쪽 렌털사 화면 */
-export const SPLIT_PATH = "/demo/split";
 
 export function DemoPanel() {
   const t = useT();
   const router = useRouter();
-  const pathname = usePathname();
   const demo = useDemo();
-  const inSplit = pathname === SPLIT_PATH;
   const [open, setOpen] = useState(false);
   const [riders, setRiders] = useState<Rider[]>([]);
 
@@ -37,34 +33,30 @@ export function DemoPanel() {
     listRiders().then(setRiders);
   }, []);
 
-  /** 7단계로 바로 갈 때: 지금 기사가 렌털사 A에 아직 안 냈으면 공유·신청을 넣어 둔다 */
-  const ensureSubmitted = async () => {
-    const grants = await listShareGrants(demo.riderId);
-    const has = grants.some((g) => g.partnerId === ENTRY_PARTNER_ID && g.revokedAt === null);
-    if (!has) {
-      await createShareGrant({
-        riderId: demo.riderId,
-        partnerId: ENTRY_PARTNER_ID,
-        items: ["income", "activity", "rental_history", "slik_report", "telecom_bills"],
-      });
-    }
-    await submitApplication(demo.riderId, ENTRY_PARTNER_ID);
-    demo.bumpData();
-  };
-
-  // 분할 보기에서는 이 화면을 떠나지 않고 해당 쪽 iframe만 옮긴다 (7단계는 렌털사 쪽, 나머지는 기사 폰)
-  const go = async (step: number, href: string) => {
-    if (step === 7) await ensureSubmitted();
-    if (inSplit) demo.navigateFrame(step === 7 ? "partner" : "rider", href);
-    else router.push(href);
-  };
+  const go = (href: string) => router.push(href);
 
   const reset = async () => {
     await demo.reset();
-    if (inSplit) {
-      demo.navigateFrame("rider", "/partner/apply");
-      demo.navigateFrame("partner", "/partner/applicants");
-    } else router.push("/partner/apply");
+    router.push("/partner/apply");
+  };
+
+  /** 기관 쪽 연출: 지금 기사의 가장 최근 대기 중 신청을 기관이 열어 보고 승인한다. 기사 앱에 알림이 두 개 생긴다 */
+  const [approveNote, setApproveNote] = useState<"done" | "none" | null>(null);
+  const approveLatest = async () => {
+    const partners = await listPartners();
+    const apps = (await Promise.all(partners.map((p) => listApplications(p.id))))
+      .flat()
+      .filter((a) => a.riderId === demo.riderId && a.status === "pending")
+      .sort((a, b) => b.submittedAt.localeCompare(a.submittedAt));
+    const latest = apps[0];
+    if (!latest) {
+      setApproveNote("none");
+      return;
+    }
+    await recordApplicationView(latest.id);
+    await setApplicationStatus(latest.id, "approved");
+    demo.bumpData();
+    setApproveNote("done");
   };
 
   if (!open) {
@@ -117,7 +109,7 @@ export function DemoPanel() {
           <button
             key={step}
             type="button"
-            onClick={() => go(step, href)}
+            onClick={() => go(href)}
             title={t(`demo.steps.${step}`)}
             className="rounded-lg bg-white/10 py-1.5 text-xs font-semibold hover:bg-white/20"
           >
@@ -128,12 +120,13 @@ export function DemoPanel() {
 
       <button
         type="button"
-        onClick={() => router.push(inSplit ? "/home" : SPLIT_PATH)}
+        onClick={approveLatest}
         className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-xl bg-white/10 py-2 text-xs font-semibold hover:bg-white/20"
       >
-        <Columns2 className="size-3.5" aria-hidden />
-        {inSplit ? t("demo.splitExit") : t("demo.split")}
+        <BadgeCheck className="size-3.5" aria-hidden />
+        {t("demo.approve")}
       </button>
+      {approveNote ? <p className="mt-1 text-center text-[11px] text-white/70">{t(`demo.approveNote.${approveNote}`)}</p> : null}
 
       <button
         type="button"

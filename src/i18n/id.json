@@ -405,14 +405,15 @@
       "4": "Foto",
       "5": "Slip penghasilan",
       "6": "Status kredit",
-      "7": "Layar mitra rental",
+      "7": "Rekomendasi produk",
       "8": "Daftar cek KUR"
     },
     "reset": "Kembali ke awal",
-    "split": "Tampilan terbagi (HP + mitra)",
-    "splitExit": "Tutup tampilan terbagi",
-    "splitRider": "HP pengemudi",
-    "splitPartner": "Layar staf mitra"
+    "approve": "Kirim hasil dari mitra (disetujui)",
+    "approveNote": {
+      "done": "Pengajuan terbaru dibuka dan disetujui mitra. Cek notifikasi di aplikasi.",
+      "none": "Belum ada pengajuan yang menunggu. Kirim dulu."
+    }
   },
   "creditPage": {
     "header": "Status kreditku",

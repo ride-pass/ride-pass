@@ -2,7 +2,7 @@
 
 // 공유 완료 (Figma "4. 공유 완료"). 날짜는 기준일 기준, "OJK 규정 준수" 문구는 쓰지 않는다 (CLAUDE.md 6절).
 // 보낸 곳마다 "다음에 일어날 일" 3단계(보냄 → 기관 확인 → 결과 알림)를 보여 준다. 기관이 열람·승인·거절하면
-// (분할 보기의 렌털사 화면 등) dataVersion이 올라 바로 바뀐다. 승인 여부는 기관이 정하고 기사는 결과만 받는다 (1절).
+// (시연 조작판 「보낸 곳 결과 보내기」 등) dataVersion이 올라 바로 바뀐다. 승인 여부는 기관이 정하고 기사는 결과만 받는다 (1절).
 
 import { CheckCircle2, Circle, CircleCheck, CircleX, RotateCcw } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -37,7 +37,7 @@ export default function ShareDonePage() {
       setApps(all.flat().filter((a) => a.riderId === riderId));
       setNotices(ns);
     })();
-    // dataVersion: 기관이 열람·승인하면(분할 보기) 다시 읽는다
+    // dataVersion: 기관이 열람·승인하면(조작판) 다시 읽는다
   }, [riderId, dataVersion]);
 
   const sent = new Set(new URLSearchParams(typeof window === "undefined" ? "" : window.location.search).get("to")?.split(",") ?? []);

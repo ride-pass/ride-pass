@@ -1,4 +1,4 @@
-// 분할 보기 동기화: 한쪽 화면에서 바꾼 상태가 다른 쪽 메모리 저장소에도 똑같이 생기는지 (demoSync.ts).
+// 창 사이 동기화: 한쪽 화면에서 바꾼 상태가 다른 쪽 메모리 저장소에도 똑같이 생기는지 (demoSync.ts).
 
 import { describe, expect, it } from "vitest";
 import { withDemoSync, type SyncChannel, type SyncMessage } from "./demoSync";

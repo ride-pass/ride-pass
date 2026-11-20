@@ -79,12 +79,12 @@ export interface Repository {
   resetDemoState(): Promise<void>;
 }
 
-// 분할 보기(기사 폰 + 렌털사 화면)에서 두 화면의 메모리 상태를 맞춘다 (demoSync.ts). 실제 API로 바꾸면 빼도 된다.
+// 같은 브라우저의 여러 창에서 메모리 상태를 맞춘다 (demoSync.ts). 실제 API로 바꾸면 빼도 된다.
 const synced = withDemoSync(mockRepository, browserChannel());
 
 export const repository: Repository = synced.repository;
 
-/** 다른 화면(분할 보기의 반대쪽)이 상태를 바꿨을 때 부른다. DemoProvider가 듣고 화면을 다시 읽게 한다 */
+/** 다른 화면(다른 창)이 상태를 바꿨을 때 부른다. DemoProvider가 듣고 화면을 다시 읽게 한다 */
 export const onRemoteDataChange = synced.onRemoteChange;
 
 export const {
