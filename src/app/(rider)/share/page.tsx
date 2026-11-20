@@ -1,9 +1,9 @@
 "use client";
 
 // 시연 5단계 뒷부분: 제출할 곳을 기사가 고른다 (Figma "1. Pilih Mitra").
-// 신청한 렌털사 A는 3단계에서 동의를 받았다. 다른 곳을 고르면 같은 항목으로 동의를 한 번 더 확인한다.
+// 신청한 렌털사 D는 3단계에서 동의를 받았다. 다른 곳을 고르면 같은 항목으로 동의를 한 번 더 확인한다.
 // 승인율·심사 시간·OJK 문구는 쓰지 않는다 (CLAUDE.md 6절).
-// 기관은 종류별로 묶고 대출(은행)을 맨 위에 둔다 (2026-11-20 멘토링: 대출이 메인).
+// 기관은 종류별로 묶고 대출(은행)을 맨 위에 둔다 (2026-11-20 멘토링: 대출이 메인). 이름 알파벳도 위에서부터 A → E.
 
 import { Bike, Building2, CreditCard, Landmark, Shield, Check, type LucideIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -45,10 +45,10 @@ export default function SharePage() {
   const { riderId, partnerId, lang, stage } = useDemo();
   const [partners, setPartners] = useState<Partner[]>([]);
   const [grants, setGrants] = useState<ShareGrant[]>([]);
-  // 「추천」 화면에서 「이곳에 내 자료 보내기」로 오면 그 기관을 골라 둔다 (?partner=). 아니면 신청한 곳
+  // 처음에는 아무 곳도 고르지 않는다(신청한 곳에는 배지만). 「추천」 화면의 「이곳에 내 자료 보내기」로 오면 그 기관만 골라 둔다 (?partner=)
   const fromParam = useSyncExternalStore(subscribeNever, readPartnerParam, () => null);
   const [pickedState, setPicked] = useState<Set<string> | null>(null);
-  const picked = pickedState ?? new Set([fromParam ?? partnerId]);
+  const picked = pickedState ?? new Set(fromParam ? [fromParam] : []);
   const [confirmed, setConfirmed] = useState(false);
   const [busy, setBusy] = useState(false);
   const [submission, setSubmission] = useState<RiderSubmissionView | null>(null);
@@ -101,7 +101,7 @@ export default function SharePage() {
         <SendCard items={items} submission={submission} />
 
         {TYPE_ORDER.map((type) => {
-          const group = partners.filter((p) => p.type === type);
+          const group = partners.filter((p) => p.type === type).sort((a, b) => a.nameKo.localeCompare(b.nameKo));
           if (group.length === 0) return null;
           const main = type === "bank";
           return (
@@ -169,7 +169,7 @@ export default function SharePage() {
 
       <BottomBar>
         <Button disabled={!canSubmit} onClick={submit}>
-          {t("share.submit", { n: picked.size })}
+          {picked.size ? t("share.submit", { n: picked.size }) : t("share.pickFirst")}
         </Button>
       </BottomBar>
     </div>

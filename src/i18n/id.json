@@ -360,7 +360,8 @@
       "ev_rental": "Sewa",
       "insurance": "Asuransi"
     },
-    "mainGroup": "Utama"
+    "mainGroup": "Utama",
+    "pickFirst": "Pilih tujuan dulu"
   },
   "done": {
     "title": "Slip penghasilan sudah dikirim",
@@ -711,27 +712,27 @@
     "disclaimer": "Semua produk fiktif dan bunga/tarif hanya contoh. Bunga dan persetujuan sebenarnya ditentukan tiap lembaga keuangan. Aplikasi ini tidak menyalurkan pinjaman langsung."
   },
   "products": {
-    "prod-bank-c-working": {
+    "prod-bank-a-working": {
       "name": "Pinjaman Modal Kerja Pengemudi",
       "desc": "Untuk bensin, servis, dan perlengkapan kerja"
     },
-    "prod-bank-f-micro": {
+    "prod-bank-b-micro": {
       "name": "Pinjaman Mikro",
       "desc": "Pinjaman jangka pendek untuk kebutuhan mendesak"
     },
-    "prod-installment-b-multi": {
+    "prod-installment-c-multi": {
       "name": "Pembiayaan Multiguna",
       "desc": "Pembiayaan tanpa batasan tujuan"
     },
-    "prod-installment-b-moto": {
+    "prod-installment-c-moto": {
       "name": "Cicilan Motor",
       "desc": "Beli motor baru dengan dicicil"
     },
-    "prod-rental-a-ev": {
+    "prod-rental-d-ev": {
       "name": "Sewa Motor Listrik",
       "desc": "Sewa harian"
     },
-    "prod-insurance-d-accident": {
+    "prod-insurance-e-accident": {
       "name": "Asuransi Kecelakaan Pengemudi",
       "desc": "Biaya pengobatan cedera saat bekerja"
     }

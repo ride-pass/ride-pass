@@ -195,9 +195,9 @@ export interface RentalPayment {
 }
 
 export interface Partner {
-  id: string;                 // "p-rental-a"
-  nameKo: string;             // "렌털사 A (전기 오토바이)"
-  nameId: string;             // "Mitra Rental A"
+  id: string;                 // "p-rental-d"
+  nameKo: string;             // "렌털사 D (전기 오토바이)"
+  nameId: string;             // "Mitra Rental D"
   type: PartnerType;
 }
 
@@ -217,7 +217,7 @@ export interface SlikReport {
 export interface TelecomBill {
   id: string;
   riderId: string;
-  providerLabel: string;      // "통신사 E" (가상)
+  providerLabel: string;      // "통신사 F" (가상)
   month: string;              // "2026-10"
   dueDate: string;
   paidDate: string | null;
@@ -237,7 +237,7 @@ export interface ShareGrant {
 
 // 「추천」 화면의 가상 상품 (2026-11-20 추가, 2-1). 이름·설명은 i18n products.<id>
 export interface Product {
-  id: string;                 // "prod-bank-c-working"
+  id: string;                 // "prod-bank-a-working"
   partnerId: string;
   category: "loan" | "installment" | "rental" | "insurance";
   termMonths: [number, number] | null;
@@ -333,7 +333,7 @@ fixture에 저장하지 않고 항상 위 원본에서 계산한다.
 - 입금: 정산 순수입이 다음 날 같은 금액으로 들어온다. 예외는 `r-agus`뿐이다. 실제 입금을 정산의 약 45%로 만들어 불일치를 재현한다.
 - 렌털 납부: `r-dewi`, `r-budi`만 가진다. 하루 Rp 55.000, 최근 90일. `r-dewi`는 전부 정시, `r-budi`는 2회 하루 늦음.
 - SLIK 확인서: `r-budi`만 가진다. 콜렉터빌리티 1, 남은 할부 1건, 발급일 `DEMO_TODAY` 7일 전.
-- 통신요금: `r-dewi`만 가진다. 통신사 E, 월 Rp 75.000, 최근 6개월 전부 정시.
+- 통신요금: `r-dewi`만 가진다. 통신사 F, 월 Rp 75.000, 최근 6개월 전부 정시.
 - 위 두 자료를 넣어도 4-2의 예상 범위는 그대로다(`r-budi` 약 864, `r-dewi` 약 876). 바뀌면 seed 검증이 실패해야 한다.
 - OCR 신뢰도: 기본 0.92~0.99. `r-rizky`의 최신 촬영 1장만 0.55.
 - 생성 후 검증: `npm run seed`가 끝나면 (1) 4-4 계산값이 4-2 표의 월 순수입 목표값과 ±10% 안에 드는지, (2) 4-5 엔진이 낸 신용도가 4-2 표의 예상 범위와 등급에 드는지 스스로 확인하고, 하나라도 벗어나면 실패한다. 범위를 벗어나면 데이터를 고친다. 엔진 가중치를 데이터에 맞춰 고치지 않는다.
@@ -355,7 +355,7 @@ fixture에 저장하지 않고 항상 위 원본에서 계산한다.
 
 - **통화:** 인도네시아식 `Rp 1.250.000`(천 단위 마침표). `src/lib/format.ts`의 `formatRupiah()`로만 표시한다.
 - **날짜:** 한국어 화면은 `2026년 11월 19일`, 인니어 화면은 `19 Nov 2026`. `formatDate()`로만 표시한다.
-- **기관 이름:** `렌털사 A (전기 오토바이)`, `할부사 B`, `은행 C`, `보험사 D`, `통신사 E`, `은행 F`. 인니어는 `Mitra Rental A` 식.
+- **기관 이름:** `은행 A`, `은행 B`, `할부사 C`, `렌털사 D (전기 오토바이)`, `보험사 E`, 통신요금은 `통신사 F`. 알파벳은 「제출할 곳 고르기」에서 위에서부터 보이는 순서다(2026-11-20에 렌털사 A → D 등으로 바꿈). 인니어는 `Mitra Rental D` 식.
 - Figma 초안의 2021·2024·2025년 날짜와 실제 기관명은 쓰지 않는다.
 
 ### 4-10. 나중에 실제 데이터로 바꿀 때 (지금 하지 않는다)
@@ -431,7 +431,7 @@ scripts/seed.ts         # 더미 데이터 생성 + 검증
 | Figma 화면 | 구현 시 변경 |
 |---|---|
 | RidePass 홈 | 82점 원형 게이지 자리는 유지하되 내용은 `getRiderCreditView()`가 정한다. A단계: "신용 준비도 5개 중 4개 충족", C단계: 신용도 점수 + 「PKA 인가 후 제공 기능」 배지. "안전 운행 점수" 문구 삭제. 「맞춤 제휴 혜택」 상품 카드 삭제(상품은 하단 탭 「추천」에만, 2-1). "소액 대출" 타일 삭제 |
-| 1. Pilih Mitra (기관 선택) | 실제 기관명 → 가상 이름. "승인율 98%", "심사 약 5분", "OJK 정식 등록" 삭제. 기관은 종류별로 묶고 **대출(은행 C·은행 F)을 첫 번째로** 둔다(2026-11-20 멘토링: 대출이 메인). 시연 진입처 `렌털사 A`는 「신청한 곳」 배지로 표시 |
+| 1. Pilih Mitra (기관 선택) | 실제 기관명 → 가상 이름. "승인율 98%", "심사 약 5분", "OJK 정식 등록" 삭제. 기관은 종류별로 묶고 **대출(은행 A·은행 B)을 첫 번째로** 둔다(2026-11-20 멘토링: 대출이 메인). 시연 진입처 `렌털사 D`는 「신청한 곳」 배지로만 표시하고, 처음에는 아무 곳도 골라 두지 않는다 |
 | 2. Atur Izin (항목 선택) | 그대로 사용. "운행 데이터" 설명에서 "실시간 운행 노선" 삭제 |
 | 3. Persetujuan (동의) | 로고가 보이는 기사 사진 교체. "거절해도 불이익 없음" 문구 추가. ISO·OJK 문구 삭제 |
 | 4. 공유 완료 | 날짜를 기준일 기준으로. "OJK 규정 준수" 문구 삭제 |

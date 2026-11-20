@@ -1,7 +1,7 @@
 [
   {
-    "id": "prod-bank-c-working",
-    "partnerId": "p-bank-c",
+    "id": "prod-bank-a-working",
+    "partnerId": "p-bank-a",
     "category": "loan",
     "termMonths": [
       6,
@@ -15,8 +15,8 @@
     "examplePrice": null
   },
   {
-    "id": "prod-bank-f-micro",
-    "partnerId": "p-bank-f",
+    "id": "prod-bank-b-micro",
+    "partnerId": "p-bank-b",
     "category": "loan",
     "termMonths": [
       3,
@@ -31,8 +31,8 @@
     "examplePrice": null
   },
   {
-    "id": "prod-installment-b-multi",
-    "partnerId": "p-installment-b",
+    "id": "prod-installment-c-multi",
+    "partnerId": "p-installment-c",
     "category": "loan",
     "termMonths": [
       6,
@@ -47,8 +47,8 @@
     "examplePrice": null
   },
   {
-    "id": "prod-installment-b-moto",
-    "partnerId": "p-installment-b",
+    "id": "prod-installment-c-moto",
+    "partnerId": "p-installment-c",
     "category": "installment",
     "termMonths": [
       12,
@@ -63,8 +63,8 @@
     "examplePrice": null
   },
   {
-    "id": "prod-rental-a-ev",
-    "partnerId": "p-rental-a",
+    "id": "prod-rental-d-ev",
+    "partnerId": "p-rental-d",
     "category": "rental",
     "termMonths": null,
     "exampleRateByGrade": null,
@@ -74,8 +74,8 @@
     }
   },
   {
-    "id": "prod-insurance-d-accident",
-    "partnerId": "p-insurance-d",
+    "id": "prod-insurance-e-accident",
+    "partnerId": "p-insurance-e",
     "category": "insurance",
     "termMonths": null,
     "exampleRateByGrade": null,

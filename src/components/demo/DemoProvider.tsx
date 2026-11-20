@@ -13,7 +13,7 @@ import { translate, type TranslateVars } from "@/i18n/translate";
 import { DEFAULT_RIDER_ID } from "@/lib/demoLogin";
 import { DemoPanel } from "./DemoPanel";
 
-export const ENTRY_PARTNER_ID = "p-rental-a";
+export const ENTRY_PARTNER_ID = "p-rental-d";
 
 interface DemoState {
   riderId: string;

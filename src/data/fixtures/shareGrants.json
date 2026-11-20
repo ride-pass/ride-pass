@@ -2,7 +2,7 @@
   {
     "id": "sg-siti-rental-a",
     "riderId": "r-siti",
-    "partnerId": "p-rental-a",
+    "partnerId": "p-rental-d",
     "items": [
       "income",
       "activity",
@@ -15,7 +15,7 @@
   {
     "id": "sg-agus-rental-a",
     "riderId": "r-agus",
-    "partnerId": "p-rental-a",
+    "partnerId": "p-rental-d",
     "items": [
       "income",
       "activity",
@@ -29,7 +29,7 @@
   {
     "id": "sg-dewi-rental-a",
     "riderId": "r-dewi",
-    "partnerId": "p-rental-a",
+    "partnerId": "p-rental-d",
     "items": [
       "income",
       "activity",
@@ -44,7 +44,7 @@
   {
     "id": "sg-rizky-rental-a",
     "riderId": "r-rizky",
-    "partnerId": "p-rental-a",
+    "partnerId": "p-rental-d",
     "items": [
       "income",
       "activity",

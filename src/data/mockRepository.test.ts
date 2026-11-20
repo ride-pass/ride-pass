@@ -41,27 +41,27 @@ describe("mockRepository 읽기", () => {
 });
 
 describe("mockRepository 신청", () => {
-  it("처음에는 Budi를 뺀 4명이 렌털사 A에 대기 중", async () => {
-    const apps = await repo.listApplications("p-rental-a");
+  it("처음에는 Budi를 뺀 4명이 렌털사 D에 대기 중", async () => {
+    const apps = await repo.listApplications("p-rental-d");
     expect(apps.map((a) => a.riderId).sort()).toEqual(["r-agus", "r-dewi", "r-rizky", "r-siti"]);
     expect(apps.every((a) => a.status === "pending")).toBe(true);
   });
 
   it("Budi가 제출하면 맨 앞에 들어오고, 다시 제출해도 하나만 있다", async () => {
-    const first = await repo.submitApplication("r-budi", "p-rental-a");
-    const again = await repo.submitApplication("r-budi", "p-rental-a");
+    const first = await repo.submitApplication("r-budi", "p-rental-d");
+    const again = await repo.submitApplication("r-budi", "p-rental-d");
     expect(again.id).toBe(first.id);
-    const apps = await repo.listApplications("p-rental-a");
+    const apps = await repo.listApplications("p-rental-d");
     expect(apps[0].riderId).toBe("r-budi");
     expect(apps[0].submittedAt).toBe("2026-11-19");
     expect(apps).toHaveLength(5);
   });
 
   it("렌털사가 승인하고, 초기화하면 처음으로 돌아간다", async () => {
-    const app = await repo.submitApplication("r-budi", "p-rental-a");
+    const app = await repo.submitApplication("r-budi", "p-rental-d");
     expect((await repo.setApplicationStatus(app.id, "approved")).status).toBe("approved");
     await repo.resetDemoState();
-    expect(await repo.listApplications("p-rental-a")).toHaveLength(4);
+    expect(await repo.listApplications("p-rental-d")).toHaveLength(4);
   });
 });
 
@@ -69,7 +69,7 @@ describe("mockRepository 동의", () => {
   it("동의 기간은 오늘부터 30일, 철회하면 철회일이 남는다", async () => {
     const grant = await repo.createShareGrant({
       riderId: "r-budi",
-      partnerId: "p-rental-a",
+      partnerId: "p-rental-d",
       items: ["income", "activity"],
     });
     expect(grant.grantedAt).toBe("2026-11-19");

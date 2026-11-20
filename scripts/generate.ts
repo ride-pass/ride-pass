@@ -48,21 +48,21 @@ const PLATFORM_SHORT: Record<PlatformId, string> = {
   ride_app_c: "c",
 };
 
-export const RENTAL_PARTNER_ID = "p-rental-a";
+export const RENTAL_PARTNER_ID = "p-rental-d";
 /** 통신요금: 가상 통신사, 월 납부액, 기간 (CLAUDE.md 4-6) */
-export const TELECOM_PROVIDER_LABEL = "통신사 E";
+export const TELECOM_PROVIDER_LABEL = "통신사 F";
 export const TELECOM_MONTHLY_AMOUNT = 75_000;
 export const TELECOM_MONTHS = 6;
 const TELECOM_DUE_DAY = 15;
 
 export const PARTNERS: Partner[] = [
-  { id: "p-rental-a", nameKo: "렌털사 A (전기 오토바이)", nameId: "Mitra Rental A", type: "ev_rental" },
+  // 이름의 알파벳은 「제출할 곳 고르기」에서 위에서부터 보이는 순서다: 대출 → 할부 → 렌털 → 보험 (2026-11-20)
   // TODO: 원어민 검수 (nameId)
-  { id: "p-installment-b", nameKo: "할부사 B", nameId: "Mitra Cicilan B", type: "installment" },
-  { id: "p-bank-c", nameKo: "은행 C", nameId: "Bank C", type: "bank" },
-  // 대출을 주로 내는 곳이 둘은 있어야 제출 화면·추천 화면에서 대출이 앞에 선다 (2026-11-20)
-  { id: "p-bank-f", nameKo: "은행 F", nameId: "Bank F", type: "bank" },
-  { id: "p-insurance-d", nameKo: "보험사 D", nameId: "Asuransi D", type: "insurance" },
+  { id: "p-bank-a", nameKo: "은행 A", nameId: "Bank A", type: "bank" },
+  { id: "p-bank-b", nameKo: "은행 B", nameId: "Bank B", type: "bank" },
+  { id: "p-installment-c", nameKo: "할부사 C", nameId: "Mitra Cicilan C", type: "installment" },
+  { id: "p-rental-d", nameKo: "렌털사 D (전기 오토바이)", nameId: "Mitra Rental D", type: "ev_rental" },
+  { id: "p-insurance-e", nameKo: "보험사 E", nameId: "Asuransi E", type: "insurance" },
 ];
 
 /**
@@ -70,12 +70,12 @@ export const PARTNERS: Partner[] = [
  * 대출이 셋은 있어야 추천 3개가 대출로 채워진다. 등급이 낮을수록 예시 금리가 높고, 받는 등급이 줄어든다.
  */
 export const PRODUCTS: Product[] = [
-  { id: "prod-bank-c-working", partnerId: "p-bank-c", category: "loan", termMonths: [6, 24], exampleRateByGrade: { A: 14, B: 17, C: 21 }, examplePrice: null },
-  { id: "prod-bank-f-micro", partnerId: "p-bank-f", category: "loan", termMonths: [3, 12], exampleRateByGrade: { A: 16, B: 19, C: 23, D: 27 }, examplePrice: null },
-  { id: "prod-installment-b-multi", partnerId: "p-installment-b", category: "loan", termMonths: [6, 24], exampleRateByGrade: { A: 22, B: 25, C: 29, D: 34 }, examplePrice: null },
-  { id: "prod-installment-b-moto", partnerId: "p-installment-b", category: "installment", termMonths: [12, 36], exampleRateByGrade: { A: 18, B: 21, C: 25, D: 30 }, examplePrice: null },
-  { id: "prod-rental-a-ev", partnerId: "p-rental-a", category: "rental", termMonths: null, exampleRateByGrade: null, examplePrice: { amount: 55_000, per: "day" } },
-  { id: "prod-insurance-d-accident", partnerId: "p-insurance-d", category: "insurance", termMonths: null, exampleRateByGrade: null, examplePrice: { amount: 25_000, per: "month" } },
+  { id: "prod-bank-a-working", partnerId: "p-bank-a", category: "loan", termMonths: [6, 24], exampleRateByGrade: { A: 14, B: 17, C: 21 }, examplePrice: null },
+  { id: "prod-bank-b-micro", partnerId: "p-bank-b", category: "loan", termMonths: [3, 12], exampleRateByGrade: { A: 16, B: 19, C: 23, D: 27 }, examplePrice: null },
+  { id: "prod-installment-c-multi", partnerId: "p-installment-c", category: "loan", termMonths: [6, 24], exampleRateByGrade: { A: 22, B: 25, C: 29, D: 34 }, examplePrice: null },
+  { id: "prod-installment-c-moto", partnerId: "p-installment-c", category: "installment", termMonths: [12, 36], exampleRateByGrade: { A: 18, B: 21, C: 25, D: 30 }, examplePrice: null },
+  { id: "prod-rental-d-ev", partnerId: "p-rental-d", category: "rental", termMonths: null, exampleRateByGrade: null, examplePrice: { amount: 55_000, per: "day" } },
+  { id: "prod-insurance-e-accident", partnerId: "p-insurance-e", category: "insurance", termMonths: null, exampleRateByGrade: null, examplePrice: { amount: 25_000, per: "month" } },
 ];
 
 export interface PersonaSpec {
@@ -97,7 +97,7 @@ export interface PersonaSpec {
   slik: { worstKolektibilitas: SlikReport["worstKolektibilitas"]; activeFacilities: number; daysAgo: number } | null;
   /** 통신요금 최근 6개월 전부 정시 (r-dewi만) */
   telecomOnTime: boolean;
-  /** 처음부터 렌털사 A에 들어 있는 신청의 제출일. null이면 시연 중 기사가 직접 제출한다 */
+  /** 처음부터 렌털사 D에 들어 있는 신청의 제출일. null이면 시연 중 기사가 직접 제출한다 */
   applicationDate: IsoDate | null;
 }
 
