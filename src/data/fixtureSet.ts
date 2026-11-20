@@ -5,6 +5,7 @@ import type {
   Application,
   Deposit,
   Partner,
+  Product,
   RentalPayment,
   Rider,
   SettlementCapture,
@@ -16,6 +17,8 @@ import type {
 export interface FixtureSet {
   riders: Rider[];
   partners: Partner[];
+  /** 「추천」 화면의 가상 상품 */
+  products: Product[];
   captures: SettlementCapture[];
   deposits: Deposit[];
   rentalPayments: RentalPayment[];
@@ -30,6 +33,7 @@ export interface FixtureSet {
 export const FIXTURE_FILES = [
   "riders",
   "partners",
+  "products",
   "captures",
   "deposits",
   "rentalPayments",

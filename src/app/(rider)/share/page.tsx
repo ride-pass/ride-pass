@@ -7,7 +7,7 @@
 
 import { Bike, Building2, CreditCard, Landmark, Shield, Check, type LucideIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { useDemo, useT } from "@/components/demo/DemoProvider";
 import { CreditCriteria } from "@/components/credit/CreditCriteria";
 import { AppHeader } from "@/components/ui/AppHeader";
@@ -34,6 +34,9 @@ const TYPE_ICON: Record<PartnerType, LucideIcon> = {
 /** 묶음 순서: 대출이 먼저 */
 const TYPE_ORDER: PartnerType[] = ["bank", "installment", "ev_rental", "insurance"];
 
+const subscribeNever = () => () => {};
+const readPartnerParam = () => new URLSearchParams(window.location.search).get("partner");
+
 const active = (g: ShareGrant) => g.revokedAt === null && isWithin(DEMO_TODAY, g.grantedAt, g.expiresAt);
 
 export default function SharePage() {
@@ -42,7 +45,10 @@ export default function SharePage() {
   const { riderId, partnerId, lang, stage } = useDemo();
   const [partners, setPartners] = useState<Partner[]>([]);
   const [grants, setGrants] = useState<ShareGrant[]>([]);
-  const [picked, setPicked] = useState<Set<string>>(new Set([partnerId]));
+  // 「추천」 화면에서 「이곳에 내 자료 보내기」로 오면 그 기관을 골라 둔다 (?partner=). 아니면 신청한 곳
+  const fromParam = useSyncExternalStore(subscribeNever, readPartnerParam, () => null);
+  const [pickedState, setPicked] = useState<Set<string> | null>(null);
+  const picked = pickedState ?? new Set([fromParam ?? partnerId]);
   const [confirmed, setConfirmed] = useState(false);
   const [busy, setBusy] = useState(false);
   const [submission, setSubmission] = useState<RiderSubmissionView | null>(null);
@@ -66,7 +72,7 @@ export default function SharePage() {
 
   const toggle = (id: string) =>
     setPicked((s) => {
-      const next = new Set(s);
+      const next = new Set(s ?? picked);
       if (next.has(id)) next.delete(id);
       else next.add(id);
       return next;

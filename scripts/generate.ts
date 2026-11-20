@@ -7,6 +7,7 @@ import type {
   Application,
   Deposit,
   Partner,
+  Product,
   PlatformId,
   RentalPayment,
   Rider,
@@ -62,6 +63,19 @@ export const PARTNERS: Partner[] = [
   // 대출을 주로 내는 곳이 둘은 있어야 제출 화면·추천 화면에서 대출이 앞에 선다 (2026-11-20)
   { id: "p-bank-f", nameKo: "은행 F", nameId: "Bank F", type: "bank" },
   { id: "p-insurance-d", nameKo: "보험사 D", nameId: "Asuransi D", type: "insurance" },
+];
+
+/**
+ * 「추천」 화면의 가상 상품 (2026-11-20 멘토링 뒤 추가, CLAUDE.md 2-1). 금리·요금은 모두 예시다.
+ * 대출이 셋은 있어야 추천 3개가 대출로 채워진다. 등급이 낮을수록 예시 금리가 높고, 받는 등급이 줄어든다.
+ */
+export const PRODUCTS: Product[] = [
+  { id: "prod-bank-c-working", partnerId: "p-bank-c", category: "loan", termMonths: [6, 24], exampleRateByGrade: { A: 14, B: 17, C: 21 }, examplePrice: null },
+  { id: "prod-bank-f-micro", partnerId: "p-bank-f", category: "loan", termMonths: [3, 12], exampleRateByGrade: { A: 16, B: 19, C: 23, D: 27 }, examplePrice: null },
+  { id: "prod-installment-b-multi", partnerId: "p-installment-b", category: "loan", termMonths: [6, 24], exampleRateByGrade: { A: 22, B: 25, C: 29, D: 34 }, examplePrice: null },
+  { id: "prod-installment-b-moto", partnerId: "p-installment-b", category: "installment", termMonths: [12, 36], exampleRateByGrade: { A: 18, B: 21, C: 25, D: 30 }, examplePrice: null },
+  { id: "prod-rental-a-ev", partnerId: "p-rental-a", category: "rental", termMonths: null, exampleRateByGrade: null, examplePrice: { amount: 55_000, per: "day" } },
+  { id: "prod-insurance-d-accident", partnerId: "p-insurance-d", category: "insurance", termMonths: null, exampleRateByGrade: null, examplePrice: { amount: 25_000, per: "month" } },
 ];
 
 export interface PersonaSpec {
@@ -331,6 +345,7 @@ export function generateFixtures(today: IsoDate = DEMO_TODAY): FixtureSet {
   const fx: FixtureSet = {
     riders: [],
     partners: PARTNERS,
+    products: PRODUCTS,
     captures: [],
     deposits: [],
     rentalPayments: [],

@@ -588,6 +588,7 @@
     "home": "홈",
     "history": "제출 이력",
     "credit": "내 신용",
+    "recommend": "추천",
     "my": "마이"
   },
   "home": {
@@ -667,5 +668,70 @@
     "uploadBody": "정산 화면 · SLIK 확인서 · 통신요금",
     "settings": "설정",
     "language": "언어"
+  },
+  "recommend": {
+    "title": "추천 상품",
+    "badge": "중개 제휴 후 제공 기능",
+    "myCredit": "내 신용도 {score}점 · {grade} {gradeName}",
+    "summary": "내 등급으로 볼 수 있는 상품 {n}개",
+    "topTitle": "{name} 님께 추천하는 상품",
+    "topBody": "볼 수 있는 상품 중 대출을 먼저, 같은 종류에서는 예시 금리가 낮은 순으로 골랐습니다.",
+    "allTitle": "내 등급으로 볼 수 있는 상품",
+    "lockedTitle": "지금은 어려운 상품",
+    "lockedGrade": "{g}등급 이상부터",
+    "lockedHow": "이렇게 하면 신용도를 올릴 수 있어요",
+    "exampleRate": "예시 금리",
+    "rate": "연 {r}%",
+    "priceLabel": {
+      "day": "예시 요금",
+      "month": "예시 보험료"
+    },
+    "price": {
+      "day": "하루 {amount}",
+      "month": "월 {amount}"
+    },
+    "term": "{min}~{max}개월",
+    "send": "이곳에 내 자료 보내기",
+    "reasons": {
+      "BEST_RATE_IN_CATEGORY": "{g}등급에서 볼 수 있는 {category} 중 예시 금리가 가장 낮아요",
+      "GRADE_OK": "{g}등급으로 볼 수 있는 {category} 상품이에요",
+      "NO_GRADE_LIMIT": "신용 등급과 상관없이 이용할 수 있어요"
+    },
+    "categories": {
+      "loan": "대출",
+      "installment": "할부",
+      "rental": "렌털",
+      "insurance": "보험"
+    },
+    "empty": "이 종류에서 지금 볼 수 있는 상품이 없습니다.",
+    "hold": "평가가 끝나면 내 등급에 맞는 상품을 추천해 드립니다.",
+    "notAvailable": "PKA 인가 후 제공하는 화면입니다.",
+    "disclaimer": "모두 가상 상품이고 금리·요금은 예시입니다. 실제 금리와 승인 여부는 각 금융사가 정합니다. 이 앱은 대출을 직접 실행하지 않습니다."
+  },
+  "products": {
+    "prod-bank-c-working": {
+      "name": "기사 운영자금 대출",
+      "desc": "연료·정비·장비처럼 일하는 데 드는 돈"
+    },
+    "prod-bank-f-micro": {
+      "name": "소액 대출",
+      "desc": "급한 생활비를 짧게 빌리는 상품"
+    },
+    "prod-installment-b-multi": {
+      "name": "다목적 대출",
+      "desc": "쓰는 곳에 제한이 없는 할부사 대출"
+    },
+    "prod-installment-b-moto": {
+      "name": "오토바이 할부",
+      "desc": "새 오토바이를 나눠 내고 사기"
+    },
+    "prod-rental-a-ev": {
+      "name": "전기 오토바이 렌털",
+      "desc": "하루 단위로 빌려 타기"
+    },
+    "prod-insurance-d-accident": {
+      "name": "기사 상해보험",
+      "desc": "일하다 다친 치료비 보장"
+    }
   }
 }
