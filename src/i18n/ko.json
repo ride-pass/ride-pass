@@ -601,5 +601,10 @@
     "rejected": "{partner}에서 신청을 거절했습니다",
     "bellUnread": "알림 {n}개 안 읽음",
     "unread": "안 읽음"
+  },
+  "warningsShort": {
+    "amount_mismatch": "정산·입금 불일치",
+    "duplicate_image": "사진 중복",
+    "edited_image": "수정 흔적"
   }
 }

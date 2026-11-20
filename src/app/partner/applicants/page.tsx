@@ -15,7 +15,7 @@ import { useCallback, useEffect, useState } from "react";
 import { ENTRY_PARTNER_ID, useDemo, useT } from "@/components/demo/DemoProvider";
 import { LangToggle } from "@/components/demo/LangToggle";
 import { ApplicantDrawer } from "@/components/partner/ApplicantDrawer";
-import { CreditBlock, CreditChip, Facts, StatusBadge, pct } from "@/components/partner/ApplicantParts";
+import { CreditBlock, Facts, StatusBadge, pct } from "@/components/partner/ApplicantParts";
 import { Badge } from "@/components/ui/Badge";
 import { useToast } from "@/components/ui/Toast";
 import { listApplicantReports, type ApplicantRow } from "@/credit/partnerView";
@@ -244,11 +244,14 @@ function ApplicantTable({ rows, open, onOpen, riderName }: ListProps & { onOpen(
                 </td>
                 <td className="px-3 py-3">
                   {shared?.facts.warnings.length ? (
+                    // 표 칸은 좁아서 짧은 문구를 쓴다. 전체 문구는 상세 패널과 마우스를 올렸을 때 보인다
                     <span className="flex flex-wrap gap-1">
                       {shared.facts.warnings.map((w) => (
-                        <Badge key={w} tone="danger" icon={<CircleAlert className="size-3.5" aria-hidden />}>
-                          {t(`warnings.${w}`)}
-                        </Badge>
+                        <span key={w} title={t(`warnings.${w}`)} className="whitespace-nowrap">
+                          <Badge tone="danger" icon={<CircleAlert className="size-3.5" aria-hidden />}>
+                            {t(`warningsShort.${w}`)}
+                          </Badge>
+                        </span>
                       ))}
                     </span>
                   ) : (
@@ -307,7 +310,7 @@ function CardList({
                   </span>
                 ) : null}
               </span>
-              {shared?.credit ? <CreditChip credit={shared.credit} /> : null}
+              {/* 접힌 카드에는 신용도 숫자를 두지 않는다. 신용도는 펼쳤을 때 이유 3개·PKA 배지·가설 모델 표기와 함께만 보인다 (CLAUDE.md 2-4, 8절) */}
               <ChevronDown className={`size-5 shrink-0 text-zinc-400 transition ${expanded ? "rotate-180" : ""}`} aria-hidden />
             </button>
 

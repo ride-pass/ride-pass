@@ -602,5 +602,10 @@
     "rejected": "{partner} menolak pengajuanmu",
     "bellUnread": "{n} notifikasi belum dibaca",
     "unread": "Belum dibaca"
+  },
+  "warningsShort": {
+    "amount_mismatch": "Mutasi selisih",
+    "duplicate_image": "Foto ganda",
+    "edited_image": "Ada suntingan"
   }
 }
