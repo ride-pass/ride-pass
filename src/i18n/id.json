@@ -390,11 +390,6 @@
       "r-dewi": "Selalu tepat waktu",
       "r-rizky": "Foto ulang"
     },
-    "stage": "Tahap izin",
-    "stages": {
-      "A": "A · Sekarang (sebelum izin)",
-      "C": "C · Setelah izin PKA"
-    },
     "jump": "Langsung ke langkah demo",
     "steps": {
       "1": "Pengajuan mitra rental",
