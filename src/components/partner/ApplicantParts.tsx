@@ -1,6 +1,6 @@
 "use client";
 
-// 렌털사 확인 화면의 공통 조각: 신청 상태 배지, 신용도(C단계), 사실 리포트 표.
+// 렌털사 확인 화면의 공통 조각: 신청 상태 배지, 신용도 블록(C단계), 사실 리포트 표.
 // 휴대폰 목록과 데스크톱 업무 화면(표 + 상세 패널)이 같이 쓴다.
 // 신용도는 C단계에서만 오고, 옆에 「PKA 인가 후 제공 기능」 배지와 "시연용 가설 모델" 표기를 붙인다 (CLAUDE.md 2-4, 4-5).
 
@@ -20,17 +20,6 @@ export function StatusBadge({ status }: { status: Application["status"] }) {
     <Badge tone={tone} icon={status === "pending" ? <Clock className="size-3" aria-hidden /> : undefined}>
       {t(`applicants.status.${status}`)}
     </Badge>
-  );
-}
-
-export function CreditChip({ credit }: { credit: PartnerCredit }) {
-  const t = useT();
-  if (credit.status === "hold") return <Badge tone="neutral">{t("credit.holds.title")}</Badge>;
-  return (
-    <span className="flex flex-col items-end">
-      <span className="text-lg leading-none font-bold text-zinc-900">{credit.score}</span>
-      <span className="text-xs text-zinc-500">{credit.grade}</span>
-    </span>
   );
 }
 
