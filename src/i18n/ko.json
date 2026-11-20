@@ -624,6 +624,22 @@
       "grant": "{partner}에 수입 명세서 보여 주기 시작",
       "revoked": "{partner}에 보여 주기 철회",
       "empty": "아직 활동이 없습니다."
+    },
+    "rows": {
+      "title": "내 수입 한눈에",
+      "trail": {
+        "title": "근무 이력",
+        "sub": "최근 180일 중 {n}일 일함 · 연속 {m}개월"
+      },
+      "income": {
+        "title": "순수입"
+      },
+      "feed": {
+        "title": "최근 활동"
+      },
+      "reason": {
+        "title": "신용도 이유"
+      }
     }
   },
   "history": {

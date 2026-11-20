@@ -625,6 +625,22 @@
       "grant": "Mulai berbagi slip penghasilan ke {partner}",
       "revoked": "Izin untuk {partner} ditarik",
       "empty": "Belum ada aktivitas."
+    },
+    "rows": {
+      "title": "Ringkasan penghasilanku",
+      "trail": {
+        "title": "Riwayat kerja",
+        "sub": "Kerja {n} hari dari 180 hari terakhir · {m} bulan berturut-turut"
+      },
+      "income": {
+        "title": "Penghasilan bersih"
+      },
+      "feed": {
+        "title": "Aktivitas terbaru"
+      },
+      "reason": {
+        "title": "Alasan skor kredit"
+      }
     }
   },
   "history": {

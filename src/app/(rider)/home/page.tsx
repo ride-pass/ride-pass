@@ -1,16 +1,18 @@
 "use client";
 
 // 기사 앱 홈 (Figma "RidePass 홈", CLAUDE.md 6절 표대로 바꿈). 기사가 매일 열어 보는 화면이다.
-// 위에서부터: 수입 명세서 카드 → (평가 보류 / C단계 이유) → 「일한 흔적」 활동 지도 → 30일 단위 순수입 → 최근 활동.
+// 위에서부터: 수입 명세서 배너(원형 게이지) → (평가 보류) → 접고 펴는 목록 한 장.
+// 목록(팀원 스케치·2026-11-20): 근무 이력(활동 지도) · 순수입(30일 단위 막대) · 최근 활동 · 신용도 이유(「평가 기준 보기」 창).
+// 줄마다 요약 한 줄을 늘 보여 주고, 누르면 그 자리에서 펼친다. 한 번에 하나만 열린다.
 // 「다음 할 일」 카드는 2026-11-20 멘토링 뒤 뺐다. 개선 방법은 「내 신용」 화면에 있다.
 // 원형 게이지 자리는 getRiderCreditView()가 정한다. A: 신용 준비도 5개 중 ○개, C: 신용도 + 「PKA 인가 후 제공 기능」 배지.
 // "안전 운행 점수", 「맞춤 제휴 혜택」 상품 카드, "소액 대출"·"보험 할인"·"오토바이 할부" 타일은 넣지 않는다.
 // 바로 가기 타일은 하단 탭·각 카드의 링크와 겹쳐서 뺐다.
 
-import { Bell, TriangleAlert } from "lucide-react";
+import { Bell, CalendarDays, ChartColumn, ChevronRight, ClipboardCheck, History, TriangleAlert, type LucideIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useDemo, useT } from "@/components/demo/DemoProvider";
 import { LangToggle } from "@/components/demo/LangToggle";
 import { ActivityMap } from "@/components/home/ActivityMap";
@@ -21,7 +23,7 @@ import { Card } from "@/components/ui/Card";
 import { ScreenSkeleton } from "@/components/ui/Skeleton";
 import { TabBar } from "@/components/ui/TabBar";
 import { APP_NAME, LOGO_HEIGHT, LOGO_PATH, LOGO_WIDTH } from "@/config/brand";
-import { CreditCriteria } from "@/components/credit/CreditCriteria";
+import { CriteriaSheet } from "@/components/credit/CreditCriteria";
 import { getRiderCreditView, type RiderCreditView } from "@/credit/riderView";
 import type { RiderActivity, RiderMetrics } from "@/data/derive";
 import {
@@ -58,6 +60,9 @@ export default function HomePage() {
   const [credit, setCredit] = useState<RiderCreditView | null>(null);
   const [feed, setFeed] = useState<Feed | null>(null);
   const [unread, setUnread] = useState(0);
+  const [openRow, setOpenRow] = useState<RowId | null>(null);
+  const [criteriaOpen, setCriteriaOpen] = useState(false);
+  const toggleRow = (id: RowId) => setOpenRow((cur) => (cur === id ? null : id));
 
   useEffect(() => {
     getRider(riderId).then(setRider);
@@ -74,6 +79,7 @@ export default function HomePage() {
     // dataVersion: 조작판 초기화·재촬영·신청 상태 변경 뒤 다시 읽는다
   }, [riderId, stage, dataVersion]);
 
+  const feedItems = useFeedItems(feed);
   if (!rider || !metrics || !activity || !statement || !credit || !feed) return <ScreenSkeleton />;
   const matched = metrics.depositMatchRate !== null && metrics.depositMatchRate >= 0.85;
 
@@ -129,6 +135,7 @@ export default function HomePage() {
               {t("home.viewStatement")}
             </Link>
           </div>
+          {credit.status === "scored" ? <p className="-mt-2 text-[11px] leading-relaxed text-white/60">{t("credit.disclaimer")}</p> : null}
         </Card>
 
         {credit.status === "hold" ? (
@@ -139,34 +146,57 @@ export default function HomePage() {
           </Card>
         ) : null}
 
-        {credit.status === "scored" ? (
-          <Card className="flex flex-col gap-2">
-            {/* 이유 3개·평가 기준은 「평가 기준 보기」 창에서. 점수 옆에는 가장 큰 이유를 늘 둔다 (CLAUDE.md 8절) */}
-            <CreditCriteria reasons={credit.reasons} criteria={credit.criteria} grade={credit.grade} />
-            <p className="text-[11px] text-muted">{t("credit.disclaimer")}</p>
-          </Card>
-        ) : null}
-
-        <Card className="flex flex-col gap-3">
-          <div className="flex items-baseline justify-between gap-2">
-            <h2 className="font-bold">{t("home.trail.title")}</h2>
-            {metrics.consecutiveActiveMonths > 0 ? (
-              <span className="text-xs font-semibold text-brand-purple">{t("home.trail.streak", { m: metrics.consecutiveActiveMonths })}</span>
-            ) : null}
-          </div>
-          <p className="-mt-2 text-sm text-muted">{t("home.trail.summary", { n: activity.activeDays })}</p>
-          <ActivityMap daily={activity.daily} />
+        <Card className="flex flex-col px-2 py-2">
+          <h2 className="px-3 pt-2 pb-1 text-sm font-semibold text-muted">{t("home.rows.title")}</h2>
+          <ToggleRow
+            id="trail"
+            open={openRow === "trail"}
+            onToggle={toggleRow}
+            icon={CalendarDays}
+            title={t("home.rows.trail.title")}
+            sub={t("home.rows.trail.sub", { n: activity.activeDays, m: metrics.consecutiveActiveMonths })}
+          >
+            <ActivityMap daily={activity.daily} />
+          </ToggleRow>
+          <ToggleRow
+            id="income"
+            open={openRow === "income"}
+            onToggle={toggleRow}
+            icon={ChartColumn}
+            title={t("home.rows.income.title")}
+            sub={t("home.months.avg", { amount: formatRupiah(metrics.avgMonthlyNet3m) })}
+          >
+            <MonthBars months={activity.months} />
+          </ToggleRow>
+          <ToggleRow
+            id="feed"
+            open={openRow === "feed"}
+            onToggle={toggleRow}
+            icon={History}
+            title={t("home.rows.feed.title")}
+            sub={feedItems[0]?.title ?? t("home.feed.empty")}
+          >
+            <FeedList items={feedItems} />
+          </ToggleRow>
+          {/* 점수 옆 가장 큰 이유 한 줄은 늘 보이고, 누르면 「평가 기준 보기」 창이 열린다 (CLAUDE.md 8절) */}
+          {credit.status === "scored" ? (
+            <>
+              <RowButton
+                icon={ClipboardCheck}
+                title={t("home.rows.reason.title")}
+                sub={credit.reasons[0] ? t(`credit.reasons.${credit.reasons[0].code}`) : ""}
+                onClick={() => setCriteriaOpen(true)}
+              />
+              <CriteriaSheet
+                open={criteriaOpen}
+                onClose={() => setCriteriaOpen(false)}
+                reasons={credit.reasons}
+                criteria={credit.criteria}
+                grade={credit.grade}
+              />
+            </>
+          ) : null}
         </Card>
-
-        <Card className="flex flex-col gap-3">
-          <div className="flex flex-col">
-            <h2 className="font-bold">{t("home.months.title")}</h2>
-            <p className="text-sm text-muted tabular-nums">{t("home.months.avg", { amount: formatRupiah(metrics.avgMonthlyNet3m) })}</p>
-          </div>
-          <MonthBars months={activity.months} />
-        </Card>
-
-        <FeedCard feed={feed} />
       </main>
       <TabBar />
     </div>
@@ -182,15 +212,17 @@ interface FeedItem {
   right?: React.ReactNode;
 }
 
-function FeedCard({ feed }: { feed: Feed }) {
+/** 최근 활동 (최근 것부터 FEED_LIMIT개). 피드를 아직 못 읽었으면 빈 목록 */
+function useFeedItems(feed: Feed | null): FeedItem[] {
   const t = useT();
   const { lang } = useDemo();
+  if (!feed) return [];
   const name = (id: string) => {
     const p = feed.partners.find((x) => x.id === id);
     return p ? (lang === "ko" ? p.nameKo : p.nameId) : id;
   };
 
-  const items: FeedItem[] = [
+  return [
     ...feed.applications.map((a) => ({
       key: a.id,
       date: a.submittedAt,
@@ -216,15 +248,13 @@ function FeedCard({ feed }: { feed: Feed }) {
   ]
     .sort((a, b) => b.date.localeCompare(a.date) || a.rank - b.rank || a.key.localeCompare(b.key))
     .slice(0, FEED_LIMIT);
+}
 
+function FeedList({ items }: { items: FeedItem[] }) {
+  const t = useT();
+  const { lang } = useDemo();
   return (
-    <Card className="flex flex-col gap-1">
-      <div className="flex items-baseline justify-between">
-        <h2 className="font-bold">{t("home.feed.title")}</h2>
-        <Link href="/history" className="text-xs font-semibold text-brand-purple">
-          {t("home.feed.viewAll")}
-        </Link>
-      </div>
+    <div className="flex flex-col">
       {items.length === 0 ? <p className="py-2 text-sm text-muted">{t("home.feed.empty")}</p> : null}
       <ul className="flex flex-col divide-y divide-line">
         {items.map((item) => (
@@ -237,7 +267,81 @@ function FeedCard({ feed }: { feed: Feed }) {
           </li>
         ))}
       </ul>
-    </Card>
+      <Link href="/history" className="self-end pt-1 text-xs font-semibold text-brand-purple">
+        {t("home.feed.viewAll")}
+      </Link>
+    </div>
+  );
+}
+
+type RowId = "trail" | "income" | "feed";
+
+/** 목록 한 줄의 겉모양: 굵은 제목 + 요약 한 줄, 오른쪽 아이콘 + 화살표 (팀원 스케치·네이버 목록) */
+function RowFace({ icon: Icon, title, sub, chevron }: { icon: LucideIcon; title: string; sub: string; chevron: ReactNode }) {
+  return (
+    <>
+      <span className="min-w-0 flex-1">
+        <span className="block text-[17px] font-bold">{title}</span>
+        <span className="mt-0.5 block text-sm text-muted">{sub}</span>
+      </span>
+      <span className="grid size-11 shrink-0 place-items-center rounded-2xl bg-lavender text-brand-purple">
+        <Icon className="size-5" aria-hidden />
+      </span>
+      {chevron}
+    </>
+  );
+}
+
+/** 누르면 그 자리에서 펼쳐지는 줄 */
+function ToggleRow({
+  id,
+  open,
+  onToggle,
+  icon,
+  title,
+  sub,
+  children,
+}: {
+  id: RowId;
+  open: boolean;
+  onToggle: (id: RowId) => void;
+  icon: LucideIcon;
+  title: string;
+  sub: string;
+  children: ReactNode;
+}) {
+  const panelId = `home-row-${id}`;
+  return (
+    <div className={`rounded-2xl transition-colors ${open ? "bg-canvas" : ""}`}>
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-controls={panelId}
+        onClick={() => onToggle(id)}
+        className="flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left active:bg-canvas"
+      >
+        <RowFace
+          icon={icon}
+          title={title}
+          sub={sub}
+          chevron={<ChevronRight className={`size-5 shrink-0 text-muted transition-transform ${open ? "rotate-90" : ""}`} aria-hidden />}
+        />
+      </button>
+      {open ? (
+        <div id={panelId} className="px-3 pb-3">
+          {children}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+/** 펼치지 않고 창을 여는 줄 */
+function RowButton({ icon, title, sub, onClick }: { icon: LucideIcon; title: string; sub: string; onClick: () => void }) {
+  return (
+    <button type="button" onClick={onClick} className="flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left active:bg-canvas">
+      <RowFace icon={icon} title={title} sub={sub} chevron={<ChevronRight className="size-5 shrink-0 text-muted" aria-hidden />} />
+    </button>
   );
 }
 
