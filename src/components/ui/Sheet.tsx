@@ -22,7 +22,9 @@ export function Sheet({ open, onClose, title, children }: Props) {
 
   useEffect(() => {
     if (!open) return;
-    panel.current?.focus();
+    // preventScroll: 창은 아래에서 올라오는 중이라 포커스 순간엔 화면 밖에 있다. 그냥 focus()하면 브라우저가 창을 보이게 하려고
+    // 뒤 화면(휴대폰 틀 안쪽 스크롤)을 아래로 끌어내린다 (2026-11-20 홈 「신용도 이유」에서 발견)
+    panel.current?.focus({ preventScroll: true });
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
