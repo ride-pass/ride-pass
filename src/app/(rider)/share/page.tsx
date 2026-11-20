@@ -8,13 +8,17 @@ import { Bike, Building2, CreditCard, Landmark, Shield, Check, type LucideIcon }
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDemo, useT } from "@/components/demo/DemoProvider";
+import { CreditCriteria } from "@/components/credit/CreditCriteria";
 import { AppHeader } from "@/components/ui/AppHeader";
 import { Badge } from "@/components/ui/Badge";
 import { BottomBar } from "@/components/ui/BottomBar";
 import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
 import { IconTile } from "@/components/ui/IconTile";
 import { StepBar } from "@/components/ui/StepBar";
+import { APP_NAME } from "@/config/brand";
 import { DEMO_TODAY } from "@/config/demo";
+import { getRiderSubmissionView, type RiderSubmissionView } from "@/credit/riderView";
 import { createShareGrant, listPartners, listShareGrants, submitApplication } from "@/data/repository";
 import type { Partner, PartnerType, ShareGrant } from "@/data/types";
 import { isWithin } from "@/lib/date";
@@ -31,12 +35,13 @@ const active = (g: ShareGrant) => g.revokedAt === null && isWithin(DEMO_TODAY, g
 export default function SharePage() {
   const t = useT();
   const router = useRouter();
-  const { riderId, partnerId, lang } = useDemo();
+  const { riderId, partnerId, lang, stage } = useDemo();
   const [partners, setPartners] = useState<Partner[]>([]);
   const [grants, setGrants] = useState<ShareGrant[]>([]);
   const [picked, setPicked] = useState<Set<string>>(new Set([partnerId]));
   const [confirmed, setConfirmed] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [submission, setSubmission] = useState<RiderSubmissionView | null>(null);
 
   useEffect(() => {
     listPartners().then(setPartners);
@@ -45,6 +50,13 @@ export default function SharePage() {
 
   const grantFor = (id: string) => grants.find((g) => g.partnerId === id && active(g));
   const entryGrant = grantFor(partnerId);
+  // 고른 곳 모두에 신청한 곳과 같은 항목이 간다 (submit 참고)
+  const items: ShareGrant["items"] = entryGrant?.items ?? ["income"];
+  const itemsKey = items.join(",");
+
+  useEffect(() => {
+    getRiderSubmissionView(riderId, itemsKey.split(",") as ShareGrant["items"], stage).then(setSubmission);
+  }, [riderId, itemsKey, stage]);
   const needsConsent = [...picked].filter((id) => !grantFor(id));
   const canSubmit = picked.size > 0 && (needsConsent.length === 0 || confirmed) && !busy;
 
@@ -58,7 +70,6 @@ export default function SharePage() {
 
   const submit = async () => {
     setBusy(true);
-    const items = entryGrant?.items ?? ["income"];
     for (const id of picked) {
       if (!grantFor(id)) await createShareGrant({ riderId, partnerId: id, items });
       await submitApplication(riderId, id);
@@ -76,6 +87,8 @@ export default function SharePage() {
           <h2 className="mt-3 text-2xl font-bold">{t("share.title")}</h2>
           <p className="mt-2 text-[15px] leading-relaxed text-muted">{t("share.body")}</p>
         </div>
+
+        <SendCard items={items} submission={submission} />
 
         <ul className="flex flex-col gap-2">
           {partners.map((p) => {
@@ -137,5 +150,57 @@ export default function SharePage() {
         </Button>
       </BottomBar>
     </div>
+  );
+}
+
+/**
+ * 고른 곳에 함께 가는 내용. 자료 목록 + (C단계) 렌털사가 받는 것과 같은 신용도.
+ * A단계에는 신용도를 보내지 않으므로 점수를 보여 주지 않는다 (CLAUDE.md 2-4).
+ */
+function SendCard({ items, submission }: { items: ShareGrant["items"]; submission: RiderSubmissionView | null }) {
+  const t = useT();
+  const credit = submission?.stage === "C" ? submission.credit : null;
+  return (
+    <Card className="flex flex-col gap-3">
+      <div>
+        <p className="font-semibold">{t("share.send.title")}</p>
+        <p className="mt-0.5 text-xs text-muted">{t("share.send.itemsLabel")}</p>
+        <ul className="mt-2 flex flex-wrap gap-1.5">
+          {items.map((i) => (
+            <li key={i} className="rounded-full bg-canvas px-2.5 py-1 text-xs font-medium">
+              {t(`consent.items.${i}.title`)}
+            </li>
+          ))}
+        </ul>
+      </div>
+      {submission?.stage === "A" ? <p className="text-xs leading-relaxed text-muted">{t("share.send.aNote")}</p> : null}
+      {credit ? (
+        <div className="flex flex-col gap-2 border-t border-line pt-3">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <span className="text-sm font-semibold text-brand-purple">{t("share.send.creditTitle", { app: APP_NAME })}</span>
+            <Badge tone="lime">{t("credit.badge.pka_licensed_feature")}</Badge>
+          </div>
+          {credit.status === "scored" && submission?.stage === "C" && submission.criteria ? (
+            <>
+              <p className="text-2xl font-bold text-brand-navy tabular-nums">
+                {credit.score} <span className="text-base font-semibold">{credit.grade} · {t(`credit.grades.${credit.grade}`)}</span>
+              </p>
+              <p className="text-xs text-muted">{t("share.send.sameAsPartner")}</p>
+              <CreditCriteria reasons={credit.reasons} criteria={submission.criteria} grade={credit.grade} />
+            </>
+          ) : credit.status === "hold" ? (
+            <ul className="flex flex-col gap-1 text-sm">
+              <li className="font-semibold">{t("credit.holds.title")}</li>
+              {credit.holds.map((h) => (
+                <li key={h} className="text-muted">
+                  {h === "NOT_SHARED_INCOME" || h === "NOT_SHARED_ACTIVITY" ? t(`share.send.holds.${h}`) : t(`credit.holds.${h}`)}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          <p className="text-[11px] leading-relaxed text-muted">{t("credit.disclaimer")}</p>
+        </div>
+      ) : null}
+    </Card>
   );
 }

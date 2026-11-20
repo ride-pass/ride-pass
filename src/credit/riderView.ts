@@ -1,9 +1,14 @@
 // 기사 화면용 신용 정보 (CLAUDE.md 2-4, 4-5). 기사 화면은 이 파일의 getRiderCreditView()만 쓴다.
 // A단계: 신용 준비도(요인별 ✓/△/✗)와 개선 방법만. 숫자 점수·등급은 결과에 아예 넣지 않는다.
-// C단계: 신용도·등급·이유·개선 방법 + 「PKA 인가 후 제공 기능」 배지.
+// C단계: 신용도·등급·이유·개선 방법 + 「PKA 인가 후 제공 기능」 배지 + 「평가 기준 보기」에 쓰는 요인 6개.
+// getRiderSubmissionView(): 「제출할 곳 고르기」에서 기관에 함께 가는 신용도. 렌털사 화면과 같은 계산(sharedCredit)이다.
 
 import { LICENSE_STAGE, type LicenseStage } from "@/config/licenseStage";
 import { getRiderMetrics } from "@/data/repository";
+import { sharedCreditResult, type ShareItem, type SharedCredit, type SharedReason } from "./sharedCredit";
+
+/** 기사 화면은 sharedCredit.ts를 직접 import하지 않으므로 필요한 타입만 여기서 내보낸다 */
+export type { SharedCredit, SharedReason };
 import {
   evaluateCredit,
   type ActionCode,
@@ -57,16 +62,34 @@ export interface RiderCreditScore {
   reasons: Reason[];
   improvement: ActionCode;
   factors: ReadinessFactor[];
+  /** 「평가 기준 보기」에 보여 줄 요인 6개 */
+  criteria: CriteriaFactor[];
   /** 화면에 「PKA 인가 후 제공 기능」 배지와 "시연용 가설 모델" 표기를 붙인다 */
   badge: "pka_licensed_feature";
 }
 
 export type RiderCreditView = RiderCreditHold | RiderCreditReadiness | RiderCreditScore;
 
+/** 「평가 기준 보기」: 요인 6개와 반영 비율(합 100), 내 상태 */
+export interface CriteriaFactor {
+  id: FactorId;
+  weight: number;
+  mark: ReadinessMark;
+}
+
+/** 「제출할 곳 고르기」에서 함께 보내는 신용도. A단계에는 신용도가 없다 */
+export type RiderSubmissionView =
+  | { stage: "A" }
+  | { stage: "C"; credit: SharedCredit; criteria: CriteriaFactor[] | null };
+
 export function markOf(value: number): ReadinessMark {
   if (value >= 0.7) return "met";
   if (value >= 0.4) return "partial";
   return "unmet";
+}
+
+function criteriaOf(factors: FactorResult[]): CriteriaFactor[] {
+  return factors.map((f) => ({ id: f.id, weight: f.weight, mark: markOf(f.value) }));
 }
 
 function readiness(factors: FactorResult[]): ReadinessFactor[] {
@@ -108,6 +131,23 @@ export async function getRiderCreditView(
     reasons: credit.reasons,
     improvement: credit.improvement,
     factors,
+    criteria: criteriaOf(credit.factors),
     badge: "pka_licensed_feature",
   };
+}
+
+/**
+ * 「제출할 곳 고르기」: 고른 기관들에 함께 가는 신용도. 기사가 동의한 항목(items)만으로 계산한다.
+ * 렌털사 화면(partnerView)과 같은 함수로 계산하므로 두 화면의 점수는 항상 같다. 기사가 없으면 null
+ */
+export async function getRiderSubmissionView(
+  riderId: string,
+  items: ShareItem[],
+  stage: LicenseStage = LICENSE_STAGE,
+): Promise<RiderSubmissionView | null> {
+  const metrics = await getRiderMetrics(riderId);
+  if (!metrics) return null;
+  if (stage === "A") return { stage: "A" };
+  const { credit, factors } = sharedCreditResult(metrics, items);
+  return { stage: "C", credit, criteria: credit.status === "scored" ? criteriaOf(factors) : null };
 }

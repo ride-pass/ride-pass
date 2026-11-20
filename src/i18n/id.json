@@ -68,7 +68,23 @@
     "badge": {
       "pka_licensed_feature": "Fitur setelah izin PKA"
     },
-    "disclaimer": "Model hipotesis untuk demo · belum divalidasi dengan data pembayaran nyata · keputusan ada di tangan mitra"
+    "disclaimer": "Model hipotesis untuk demo · belum divalidasi dengan data pembayaran nyata · keputusan ada di tangan mitra",
+    "criteria": {
+      "open": "Lihat kriteria penilaian",
+      "title": "Kriteria penilaian",
+      "topReason": "Alasan utama",
+      "reasonsTitle": "Alasan skor ini",
+      "factorsTitle": "Apa yang dinilai dan bobotnya",
+      "factorsBody": "Enam faktor diubah ke nilai 0–1, dijumlahkan sesuai bobot, lalu diubah ke skala 400–900.",
+      "weight": "{w}%",
+      "rulesTitle": "Aturan yang diterapkan lebih dulu",
+      "rules": {
+        "cap": "Jika setoran dan mutasi rekening tidak cocok atau ada tanda suntingan, atau ada tunggakan di lembaga keuangan pada SLIK (kolektibilitas 3 ke atas), skor maksimal 549.",
+        "hold": "Jika riwayat kurang dari 60 hari atau foto terakhir buram, skor tidak dihitung dan penilaian ditunda."
+      },
+      "gradesTitle": "Peringkat",
+      "gradeRange": "{from}–{to}"
+    }
   },
   "common": {
     "back": "Kembali",
@@ -326,7 +342,18 @@
     },
     "extraConsent": "Saya setuju menunjukkan data yang sama kepada {names} selama 30 hari.",
     "onlyPicked": "Tempat yang tidak dipilih tidak bisa melihat data.",
-    "submit": "Kirim ke {n} tempat"
+    "submit": "Kirim ke {n} tempat",
+    "send": {
+      "title": "Yang ikut dikirim",
+      "itemsLabel": "Data yang dikirim (sesuai persetujuan)",
+      "aNote": "Skor kredit tidak dikirim. Hanya fakta yang dicek dari data yang kamu unggah.",
+      "creditTitle": "Skor kredit versi {app}",
+      "sameAsPartner": "Tempat yang kamu pilih melihat skor yang sama. Dihitung hanya dari data yang kamu setujui.",
+      "holds": {
+        "NOT_SHARED_INCOME": "Slip penghasilan tidak ikut dikirim, jadi skor kredit tidak bisa dihitung.",
+        "NOT_SHARED_ACTIVITY": "Riwayat aktivitas tidak ikut dikirim, jadi skor kredit tidak bisa dihitung."
+      }
+    }
   },
   "done": {
     "title": "Slip penghasilan sudah dikirim",
