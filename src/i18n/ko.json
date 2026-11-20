@@ -67,7 +67,23 @@
     "badge": {
       "pka_licensed_feature": "PKA 인가 후 제공 기능"
     },
-    "disclaimer": "시연용 가설 모델 · 실제 상환 데이터로 검증 전 · 승인 여부는 제휴사가 결정"
+    "disclaimer": "시연용 가설 모델 · 실제 상환 데이터로 검증 전 · 승인 여부는 제휴사가 결정",
+    "criteria": {
+      "open": "평가 기준 보기",
+      "title": "평가 기준",
+      "topReason": "가장 큰 이유",
+      "reasonsTitle": "이 점수가 나온 이유",
+      "factorsTitle": "무엇을 얼마나 반영하나",
+      "factorsBody": "요인 6개를 0~1로 바꾸고 반영 비율대로 더한 뒤 400~900점으로 바꿉니다.",
+      "weight": "{w}%",
+      "rulesTitle": "먼저 적용하는 규칙",
+      "rules": {
+        "cap": "정산과 입금이 맞지 않거나 수정 흔적이 있을 때, 또는 SLIK에 금융기관 연체 기록(콜렉터빌리티 3 이상)이 있을 때는 549점을 넘지 않습니다.",
+        "hold": "기록이 60일보다 짧거나 최근 촬영이 흐리면 점수를 내지 않고 평가를 보류합니다."
+      },
+      "gradesTitle": "등급",
+      "gradeRange": "{from}~{to}점"
+    }
   },
   "common": {
     "back": "뒤로",
@@ -325,7 +341,18 @@
     },
     "extraConsent": "{names}에도 같은 항목을 30일 동안 보여 주는 데 동의합니다.",
     "onlyPicked": "고르지 않은 곳에는 보이지 않습니다.",
-    "submit": "{n}곳에 제출하기"
+    "submit": "{n}곳에 제출하기",
+    "send": {
+      "title": "함께 보내는 내용",
+      "itemsLabel": "보내는 자료 (동의한 항목)",
+      "aNote": "신용도는 보내지 않습니다. 기사님이 올린 자료로 확인한 사실만 갑니다.",
+      "creditTitle": "{app} 기준 신용도",
+      "sameAsPartner": "고른 곳에는 이 점수가 그대로 보입니다. 동의한 항목만으로 계산했습니다.",
+      "holds": {
+        "NOT_SHARED_INCOME": "수입 명세서를 함께 보내지 않아 신용도를 낼 수 없습니다.",
+        "NOT_SHARED_ACTIVITY": "활동 기록을 함께 보내지 않아 신용도를 낼 수 없습니다."
+      }
+    }
   },
   "done": {
     "title": "수입 명세서를 보냈습니다",

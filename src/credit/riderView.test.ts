@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { mockRepository as repo } from "@/data/mockRepository";
-import { getRiderCreditView, markOf } from "./riderView";
+import { getApplicantReport } from "./partnerView";
+import { getRiderCreditView, getRiderSubmissionView, markOf } from "./riderView";
 
 beforeEach(async () => {
   await repo.resetDemoState();
@@ -61,5 +62,58 @@ describe("getRiderCreditView (CLAUDE.md 2-4)", () => {
 
   it("없는 기사는 null", async () => {
     expect(await getRiderCreditView("r-nobody")).toBeNull();
+  });
+});
+
+describe("「평가 기준 보기」 데이터 (CLAUDE.md 4-5)", () => {
+  it("C단계: 요인 6개와 반영 비율(합 100), 이유 3개", async () => {
+    const view = await getRiderCreditView("r-budi", "C");
+    if (view?.status !== "scored") throw new Error("점수가 있어야 한다");
+    expect(view.criteria.map((c) => c.id)).toEqual([
+      "repayment", "stability", "verifiedIncome", "incomeLevel", "continuity", "dataQuality",
+    ]);
+    expect(view.criteria.reduce((a, c) => a + c.weight, 0)).toBe(100);
+    expect(view.reasons).toHaveLength(3);
+  });
+
+  it("A단계 결과에는 평가 기준(반영 비율)도 넣지 않는다", async () => {
+    const view = await getRiderCreditView("r-budi", "A");
+    expect(view).not.toHaveProperty("criteria");
+  });
+});
+
+describe("getRiderSubmissionView: 「제출할 곳 고르기」에서 함께 가는 신용도", () => {
+  const PARTNER = "p-rental-a";
+
+  it("A단계: 신용도를 보내지 않는다", async () => {
+    const view = await getRiderSubmissionView("r-budi", ["income", "activity", "slik_report"], "A");
+    expect(view).toEqual({ stage: "A" }); // 숫자가 하나도 없다
+  });
+
+  it("C단계: 렌털사 화면이 받는 점수와 같다 (동의 항목별)", async () => {
+    const cases: Parameters<typeof repo.createShareGrant>[0]["items"][] = [
+      ["income", "activity", "rental_history", "slik_report", "telecom_bills"],
+      ["income", "activity"],
+      ["income", "slik_report"],
+    ];
+    for (const items of cases) {
+      await repo.resetDemoState();
+      await repo.createShareGrant({ riderId: "r-budi", partnerId: PARTNER, items });
+      const rider = await getRiderSubmissionView("r-budi", items, "C");
+      const partner = await getApplicantReport(PARTNER, "r-budi", "C");
+      if (rider?.stage !== "C" || partner?.status !== "shared") throw new Error("C단계 결과가 있어야 한다");
+      expect(rider.credit).toEqual(partner.credit);
+    }
+  });
+
+  it("C단계: 점수가 있으면 평가 기준 6개, 보류면 없음", async () => {
+    const scored = await getRiderSubmissionView("r-budi", ["income", "activity"], "C");
+    expect(scored?.stage === "C" && scored.criteria?.length).toBe(6);
+    const held = await getRiderSubmissionView("r-budi", ["income"], "C");
+    expect(held).toEqual({ stage: "C", credit: { status: "hold", holds: ["NOT_SHARED_ACTIVITY"] }, criteria: null });
+  });
+
+  it("없는 기사는 null", async () => {
+    expect(await getRiderSubmissionView("r-nobody", ["income"], "C")).toBeNull();
   });
 });

@@ -12,15 +12,13 @@ import { deriveSettlementVsDeposits, type RiderMetrics, type SettlementDepositBl
 import { getRider, getRiderMetrics, getRiderRecords, listApplications, listShareGrants } from "@/data/repository";
 import type { Application, Rider, ShareGrant } from "@/data/types";
 import { isWithin } from "@/lib/date";
-import { evaluateCredit, repaymentSources, type Grade, type HoldCode, type Reason, type ReasonCode } from "./engine";
+import { sharedCredit, sharedMetrics, type ShareItem, type SharedCredit, type SharedHoldCode, type SharedReason } from "./sharedCredit";
 
-type ShareItem = ShareGrant["items"][number];
+// 신용도 계산은 sharedCredit.ts에 있다. 기사의 「제출할 곳 고르기」 화면도 같은 계산을 쓴다.
+export { sharedMetrics };
 
-/** 렌털사 화면에만 있는 보류: 점수를 내는 데 꼭 필요한 항목을 기사가 공유하지 않았다 */
-export type PartnerHoldCode = HoldCode | "NOT_SHARED_INCOME" | "NOT_SHARED_ACTIVITY";
-
-/** 렌털사 화면에만 있는 이유: 상환 자료는 있지만 이 기관에 공유하지 않아 중립으로 반영했다 */
-export type PartnerReason = Omit<Reason, "code"> & { code: ReasonCode | "REPAY_NOT_SHARED" };
+export type PartnerHoldCode = SharedHoldCode;
+export type PartnerReason = SharedReason;
 
 /** 기사가 이 항목을 공유하지 않았으면 null */
 export interface FactReport {
@@ -44,9 +42,7 @@ export interface FactReport {
   warnings: string[];
 }
 
-export type PartnerCredit =
-  | { status: "scored"; score: number; grade: Grade; reasons: PartnerReason[]; badge: "pka_licensed_feature" }
-  | { status: "hold"; holds: PartnerHoldCode[] };
+export type PartnerCredit = SharedCredit;
 
 export type ApplicantReport =
   | { status: "no_consent"; riderId: string }
@@ -117,44 +113,8 @@ export function factReport(m: RiderMetrics, items: ShareItem[], vsDeposits: Sett
   };
 }
 
-/** 공유하지 않은 상환 자료(렌털 납부·SLIK 확인서·통신요금)를 "자료 없음"으로 지운 복사본 */
-export function sharedMetrics(m: RiderMetrics, items: ShareItem[]): RiderMetrics {
-  const out = { ...m };
-  if (!items.includes("rental_history")) {
-    out.rentalOnTimeRate = null;
-    out.rentalPaymentCount = 0;
-  }
-  if (!items.includes("slik_report")) {
-    out.slikKolektibilitas = null;
-    out.slikActiveFacilities = null;
-    out.slikParseConfidence = null;
-  }
-  if (!items.includes("telecom_bills")) {
-    out.telecomOnTimeRate = null;
-    out.telecomBillCount = 0;
-  }
-  return out;
-}
-
 /** 동의한 항목만으로 계산한 렌털사용 신용도 */
-export function partnerCredit(m: RiderMetrics, items: ShareItem[]): PartnerCredit {
-  const shareHolds: PartnerHoldCode[] = [];
-  if (!items.includes("income")) shareHolds.push("NOT_SHARED_INCOME");
-  if (!items.includes("activity")) shareHolds.push("NOT_SHARED_ACTIVITY");
-
-  const shared = sharedMetrics(m, items);
-  const credit = evaluateCredit(shared);
-  if (shareHolds.length || credit.status === "hold") {
-    return { status: "hold", holds: [...shareHolds, ...(credit.status === "hold" ? credit.holds : [])] };
-  }
-
-  // 상환 자료가 있는데 공유하지 않아 중립이 됐으면 "이력 없음"이 아니라 "공유된 이력 없음"으로 쓴다
-  const hiddenRepayment = repaymentSources(shared).length === 0 && repaymentSources(m).length > 0;
-  const reasons: PartnerReason[] = credit.reasons.map((r) =>
-    hiddenRepayment && r.code === "REPAY_NO_HISTORY" ? { ...r, code: "REPAY_NOT_SHARED" } : r,
-  );
-  return { status: "scored", score: credit.score, grade: credit.grade, reasons, badge: "pka_licensed_feature" };
-}
+export const partnerCredit = sharedCredit;
 
 /** 신청자 한 명의 리포트. 이 기관에 유효한 동의가 없으면 no_consent */
 export async function getApplicantReport(

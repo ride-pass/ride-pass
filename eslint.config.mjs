@@ -20,9 +20,11 @@ const riderCreditRule = {
     "**/credit/engine",
     "@/credit/partnerView",
     "**/credit/partnerView",
+    "@/credit/sharedCredit",
+    "**/credit/sharedCredit",
   ],
   message:
-    "기사 화면은 src/credit/riderView.ts의 getRiderCreditView()만 쓴다 (CLAUDE.md 2-4).",
+    "기사 화면은 src/credit/riderView.ts의 getRiderCreditView()·getRiderSubmissionView()만 쓴다 (CLAUDE.md 2-4).",
 };
 
 const eslintConfig = defineConfig([

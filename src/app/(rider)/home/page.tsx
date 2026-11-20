@@ -20,6 +20,7 @@ import { Card } from "@/components/ui/Card";
 import { ScreenSkeleton } from "@/components/ui/Skeleton";
 import { TabBar } from "@/components/ui/TabBar";
 import { APP_NAME, LOGO_HEIGHT, LOGO_PATH, LOGO_WIDTH } from "@/config/brand";
+import { CreditCriteria } from "@/components/credit/CreditCriteria";
 import { getRiderCreditView, type RiderCreditHold, type RiderCreditView } from "@/credit/riderView";
 import type { RiderActivity, RiderMetrics } from "@/data/derive";
 import {
@@ -150,12 +151,8 @@ export default function HomePage() {
 
         {credit.status === "scored" ? (
           <Card className="flex flex-col gap-2">
-            <p className="text-sm font-semibold">{t("creditPage.reasonsTitle")}</p>
-            <ol className="flex list-decimal flex-col gap-1 pl-5 text-sm">
-              {credit.reasons.map((r) => (
-                <li key={r.code}>{t(`credit.reasons.${r.code}`)}</li>
-              ))}
-            </ol>
+            {/* 이유 3개·평가 기준은 「평가 기준 보기」 창에서. 점수 옆에는 가장 큰 이유를 늘 둔다 (CLAUDE.md 8절) */}
+            <CreditCriteria reasons={credit.reasons} criteria={credit.criteria} grade={credit.grade} />
             <p className="text-[11px] text-muted">{t("credit.disclaimer")}</p>
           </Card>
         ) : null}

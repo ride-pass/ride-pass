@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { TabBar } from "@/components/ui/TabBar";
+import { CreditCriteria } from "@/components/credit/CreditCriteria";
 import { getRiderCreditView, type ReadinessFactor, type ReadinessMark, type RiderCreditView } from "@/credit/riderView";
 
 export default function CreditPage() {
@@ -68,23 +69,8 @@ export default function CreditPage() {
                 <ClipboardList className="size-5 text-brand-purple" aria-hidden />
                 {t("creditPage.reasonsTitle")}
               </p>
-              <ol className="flex flex-col gap-2">
-                {view.reasons.map((r, i) => (
-                  <li key={r.code} className="flex gap-3 rounded-2xl bg-canvas p-3 text-sm">
-                    <span className="grid size-6 shrink-0 place-items-center rounded-full bg-brand-purple text-xs font-bold text-white">
-                      {i + 1}
-                    </span>
-                    <span>
-                      {t(`credit.reasons.${r.code}`)}
-                      {r.sources?.length ? (
-                        <span className="block text-xs text-muted">
-                          {r.sources.map((s) => t(`credit.repaymentSources.${s}`)).join(" · ")}
-                        </span>
-                      ) : null}
-                    </span>
-                  </li>
-                ))}
-              </ol>
+              {/* 이유 3개·요인 6개·규칙·등급표는 「평가 기준 보기」 창에서 (CLAUDE.md 8절) */}
+              <CreditCriteria reasons={view.reasons} criteria={view.criteria} grade={view.grade} />
             </Card>
             <FactorList factors={view.factors} />
             <Improvement action={view.improvement} />
