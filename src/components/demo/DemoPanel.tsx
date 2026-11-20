@@ -1,12 +1,11 @@
 "use client";
 
 // 시연 조작판 (CLAUDE.md 4-8). 주소 뒤에 ?demo=1을 붙이면 화면 구석에 열린다.
-// 페르소나 바꾸기, 허가 단계 A ↔ C, 처음 상태로, 시연 단계로 바로 가기.
+// 페르소나 바꾸기, 처음 상태로, 시연 단계로 바로 가기. 허가 단계는 C(PKA 인가 후)로 고정이라 바꾸는 버튼이 없다 (2-4).
 
 import { ChevronDown, Columns2, RotateCcw, SlidersHorizontal, X } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import type { LicenseStage } from "@/config/licenseStage";
 import { createShareGrant, listRiders, listShareGrants, submitApplication } from "@/data/repository";
 import type { Rider } from "@/data/types";
 import { ENTRY_PARTNER_ID, useDemo, useT } from "./DemoProvider";
@@ -21,8 +20,6 @@ export const DEMO_STEPS: { step: number; href: string }[] = [
   { step: 7, href: "/partner/applicants" },
   { step: 8, href: "/kur" },
 ];
-
-const STAGES: LicenseStage[] = ["A", "C"];
 
 /** 분할 보기 화면 주소. 왼쪽 기사 폰, 오른쪽 렌털사 화면 */
 export const SPLIT_PATH = "/demo/split";
@@ -78,7 +75,7 @@ export function DemoPanel() {
         className="fixed right-4 bottom-28 z-50 flex items-center gap-1.5 print:hidden rounded-full bg-brand-navy px-3 py-2 text-xs font-semibold text-white shadow-lg"
       >
         <SlidersHorizontal className="size-4" aria-hidden />
-        {t("demo.open")} · {demo.stage}
+        {t("demo.open")}
       </button>
     );
   }
@@ -113,21 +110,6 @@ export function DemoPanel() {
         </select>
         <ChevronDown className="pointer-events-none absolute top-2.5 right-2 size-4" aria-hidden />
       </label>
-
-      <p className="mt-3 text-xs text-white/60">{t("demo.stage")}</p>
-      <div className="mt-1 grid grid-cols-2 gap-1 rounded-xl bg-white/10 p-1">
-        {STAGES.map((s) => (
-          <button
-            key={s}
-            type="button"
-            aria-pressed={demo.stage === s}
-            onClick={() => demo.setStage(s)}
-            className={`rounded-lg px-2 py-1.5 text-xs font-semibold ${demo.stage === s ? "bg-brand-lime text-lime-ink" : "text-white/80"}`}
-          >
-            {t(`demo.stages.${s}`)}
-          </button>
-        ))}
-      </div>
 
       <p className="mt-3 text-xs text-white/60">{t("demo.jump")}</p>
       <div className="mt-1 grid grid-cols-4 gap-1">
