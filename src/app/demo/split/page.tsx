@@ -4,6 +4,7 @@
 // 두 화면은 iframe이라 메모리가 따로지만, data/demoSync.ts가 변경 내용을 서로 전해 같은 상태를 유지한다.
 // 오른쪽에서 승인을 누르면 왼쪽 휴대폰에 바로 알림이 뜬다. 새로고침하면 둘 다 처음으로 돌아간다 (CLAUDE.md 4-8).
 // 조작판은 이 화면에만 뜨고(?demo=1), 시연 단계로 바로 가기는 해당 쪽 iframe만 옮긴다.
+// 처음 열면 왼쪽은 기사 홈, 오른쪽은 렌털사 신청자 목록이다.
 
 import { useT } from "@/components/demo/DemoProvider";
 import { StatusBar } from "@/components/shell/StatusBar";
@@ -16,7 +17,8 @@ export default function SplitPage() {
         <h1 className="text-xs font-semibold text-zinc-600">{t("demo.splitRider")}</h1>
         <div className="flex h-[min(844px,calc(100dvh-5rem))] w-[390px] flex-col overflow-hidden rounded-[48px] bg-canvas shadow-2xl ring-[10px] ring-brand-navy">
           <StatusBar />
-          <iframe src="/partner/apply?frame=rider" title={t("demo.splitRider")} className="min-h-0 w-full flex-1" />
+          {/* 기사 폰은 홈에서 시작한다. 시연 1단계(렌털 신청 화면)는 조작판 「시연 단계로 바로 가기」 1로 간다 */}
+          <iframe src="/home?frame=rider" title={t("demo.splitRider")} className="min-h-0 w-full flex-1" />
         </div>
       </section>
       <section className="flex min-w-0 flex-1 flex-col gap-2">
