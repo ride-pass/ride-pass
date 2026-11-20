@@ -27,19 +27,15 @@ import {
   type RiderSubmissionView,
 } from "@/credit/riderView";
 import { createShareGrant, getPartner, getRider, listApplications, listShareGrants, submitApplication } from "@/data/repository";
-import type { Application, Partner, Product, Rider, ShareGrant } from "@/data/types";
-import { addDays, isWithin } from "@/lib/date";
+import type { Application, Partner, Product } from "@/data/types";
+import { addDays } from "@/lib/date";
+import { defaultShareItems, isActiveGrant, type ShareItem } from "@/lib/shareItems";
 import { formatDate } from "@/lib/format";
 
-type ShareItem = ShareGrant["items"][number];
-
-/** 동의 화면(consent)의 기본값과 같은 순서 */
-const ALL_ITEMS: ShareItem[] = ["income", "activity", "rental_history", "bank_account", "slik_report", "telecom_bills"];
 const SHARE_DAYS = 30; // mockRepository.createShareGrant와 같은 기간
 
 const subscribeNever = () => () => {};
 const readProductParam = () => new URLSearchParams(window.location.search).get("product");
-const active = (g: ShareGrant) => g.revokedAt === null && isWithin(DEMO_TODAY, g.grantedAt, g.expiresAt);
 
 interface Target {
   product: Product;
@@ -76,10 +72,10 @@ export default function RecommendSendPage() {
         return;
       }
       const [rider, grants, apps] = await Promise.all([getRider(riderId), listShareGrants(riderId), listApplications(partner.id)]);
-      const entryGrant = grants.find((g) => g.partnerId === entryPartnerId && active(g));
-      const items = entryGrant?.items ?? ALL_ITEMS.filter((i) => i !== "bank_account" || (rider as Rider | null)?.hasBankAccount !== false);
+      const entryGrant = grants.find((g) => g.partnerId === entryPartnerId && isActiveGrant(g));
+      const items = defaultShareItems(rider, entryGrant);
       const sent = apps.find((a) => a.riderId === riderId && a.status !== "rejected") ?? null;
-      const hasGrant = grants.some((g) => g.partnerId === partner.id && active(g));
+      const hasGrant = grants.some((g) => g.partnerId === partner.id && isActiveGrant(g));
       setTarget({ product, offer, partner, items, sent, hasGrant });
       setSubmission(await getRiderSubmissionView(riderId, items, stage));
     })();
