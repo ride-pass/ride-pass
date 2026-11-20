@@ -81,7 +81,8 @@ export default function HistoryPage() {
         {grants.length === 0 ? (
           <Card className="flex flex-col items-center gap-3 text-center">
             <p className="text-sm text-muted">{t("history.empty")}</p>
-            <ButtonLink href="/consent">{t("history.startShare")}</ButtonLink>
+            {/* 렌털 신청 동의(/consent)가 아니라 기사가 직접 고르는 제출 화면으로 간다 */}
+            <ButtonLink href="/share">{t("history.startShare")}</ButtonLink>
           </Card>
         ) : null}
         {grants.map((g) => {

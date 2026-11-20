@@ -1,7 +1,7 @@
 "use client";
 
 // 시연 5단계 뒷부분: 제출할 곳을 기사가 고른다 (Figma "1. Pilih Mitra").
-// 신청한 렌털사 D는 3단계에서 동의를 받았다. 다른 곳을 고르면 같은 항목으로 동의를 한 번 더 확인한다.
+// 렌털 신청 흐름으로 들어왔으면 렌털사 D는 3단계에서 동의를 받았다(「신청한 곳」 배지). 홈에서 시작했으면 배지가 없다. 다른 곳을 고르면 같은 항목으로 동의를 한 번 더 확인한다.
 // 승인율·심사 시간·OJK 문구는 쓰지 않는다 (CLAUDE.md 6절).
 // 기관은 종류별로 묶고 대출(은행)을 맨 위에 둔다 (2026-11-20 멘토링: 대출이 메인). 이름 알파벳도 위에서부터 A → E.
 
@@ -16,11 +16,10 @@ import { BottomBar } from "@/components/ui/BottomBar";
 import { Button } from "@/components/ui/Button";
 import { IconTile } from "@/components/ui/IconTile";
 import { StepBar } from "@/components/ui/StepBar";
-import { DEMO_TODAY } from "@/config/demo";
 import { getRiderSubmissionView, type RiderSubmissionView } from "@/credit/riderView";
-import { createShareGrant, listPartners, listShareGrants, submitApplication } from "@/data/repository";
-import type { Partner, PartnerType, ShareGrant } from "@/data/types";
-import { isWithin } from "@/lib/date";
+import { createShareGrant, getRider, listPartners, listShareGrants, submitApplication } from "@/data/repository";
+import type { Partner, PartnerType, Rider, ShareGrant } from "@/data/types";
+import { defaultShareItems, isActiveGrant } from "@/lib/shareItems";
 
 const TYPE_ICON: Record<PartnerType, LucideIcon> = {
   ev_rental: Bike,
@@ -32,7 +31,6 @@ const TYPE_ICON: Record<PartnerType, LucideIcon> = {
 /** 묶음 순서: 대출이 먼저 */
 const TYPE_ORDER: PartnerType[] = ["bank", "installment", "ev_rental", "insurance"];
 
-const active = (g: ShareGrant) => g.revokedAt === null && isWithin(DEMO_TODAY, g.grantedAt, g.expiresAt);
 
 export default function SharePage() {
   const t = useT();
@@ -45,16 +43,19 @@ export default function SharePage() {
   const [confirmed, setConfirmed] = useState(false);
   const [busy, setBusy] = useState(false);
   const [submission, setSubmission] = useState<RiderSubmissionView | null>(null);
+  const [rider, setRider] = useState<Rider | null>(null);
 
   useEffect(() => {
     listPartners().then(setPartners);
     listShareGrants(riderId).then(setGrants);
+    getRider(riderId).then(setRider);
   }, [riderId]);
 
-  const grantFor = (id: string) => grants.find((g) => g.partnerId === id && active(g));
+  const grantFor = (id: string) => grants.find((g) => g.partnerId === id && isActiveGrant(g));
+  /** 렌털 신청 흐름(3단계 동의)으로 들어왔을 때만 있다. 홈에서 시작했으면 없다 */
   const entryGrant = grantFor(partnerId);
-  // 고른 곳 모두에 신청한 곳과 같은 항목이 간다 (submit 참고)
-  const items: ShareGrant["items"] = entryGrant?.items ?? ["income"];
+  // 고른 곳 모두에 같은 항목이 간다 (submit 참고). 렌털 동의가 없으면 올린 자료 전부 (lib/shareItems.ts)
+  const items: ShareGrant["items"] = defaultShareItems(rider, entryGrant);
   const itemsKey = items.join(",");
 
   useEffect(() => {
@@ -121,7 +122,7 @@ export default function SharePage() {
                         <span className="min-w-0 flex-1">
                           <span className="flex flex-wrap items-center gap-2 font-semibold">
                             {lang === "ko" ? p.nameKo : p.nameId}
-                            {p.id === partnerId ? <Badge tone="lime">{t("share.applied")}</Badge> : null}
+                            {p.id === partnerId && entryGrant ? <Badge tone="lime">{t("share.applied")}</Badge> : null}
                           </span>
                           <span className="mt-0.5 block text-sm text-muted">{t(`share.types.${p.type}`)}</span>
                           {grantFor(p.id) ? <span className="mt-1 block text-xs text-brand-purple">{t("share.consented")}</span> : null}
