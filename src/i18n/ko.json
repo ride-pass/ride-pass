@@ -334,7 +334,18 @@
     "items": "보낸 항목",
     "decision": "승인 여부는 받는 곳이 직접 정합니다.",
     "toCredit": "내 신용 상태 보기",
-    "toHome": "홈으로"
+    "toHome": "홈으로",
+    "next": {
+      "title": "다음에 일어날 일",
+      "sent": "보냄",
+      "viewed": "{partner} 확인",
+      "viewedDone": "{date}에 내 자료를 열람했습니다",
+      "viewedWait": "열람하면 알림으로 알려 드립니다",
+      "result": "결과 알림",
+      "resultWait": "승인 여부는 기관이 정합니다. 정해지면 알려 드립니다",
+      "approved": "신청이 승인되었습니다",
+      "rejected": "신청이 거절되었습니다"
+    }
   },
   "demo": {
     "open": "시연 조작판",

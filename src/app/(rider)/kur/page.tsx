@@ -46,10 +46,22 @@ export default function KurPage() {
     <div className="flex flex-1 flex-col">
       <AppHeader title={t("kur.header")} back="/home" />
       <main className="flex flex-col gap-4 px-4 pt-2 pb-6">
-        <Card tone="purple" className="flex flex-col gap-2">
-          <p className="text-sm text-white/80">{t("kur.subtitle")}</p>
-          <p className="text-2xl font-bold">{t("kur.summary", { met: summary.met, total: summary.total })}</p>
-          <p className="text-xs leading-relaxed text-white/70">{t("kur.bankDecides")}</p>
+        {/* 내 신용 상태와 같은 모양: 바탕 위 큰 숫자 + 조건 한 칸씩. 금리·한도 숫자는 넣지 않는다 (2-1) */}
+        <Card className="flex flex-col gap-3">
+          <p className="text-xs font-semibold text-brand-purple">{t("kur.subtitle")}</p>
+          <p className="flex items-baseline gap-1.5 tabular-nums">
+            <span className="text-[44px] leading-none font-bold text-brand-purple">{summary.met}</span>
+            <span className="text-xl font-bold text-muted">/ {summary.total}</span>
+          </p>
+          <p className="text-base font-semibold">{t("kur.summary", { met: summary.met, total: summary.total })}</p>
+          <span className="grid gap-1" style={{ gridTemplateColumns: `repeat(${summary.total}, minmax(0, 1fr))` }} aria-hidden>
+            {items
+              .filter((i) => i.group === "auto")
+              .map((i) => (
+                <span key={i.id} className={`h-2 rounded-full ${i.status === "met" ? "bg-brand-purple" : i.status === "unmet" ? "bg-danger/40" : "bg-lavender-strong"}`} />
+              ))}
+          </span>
+          <p className="text-xs leading-relaxed text-muted">{t("kur.bankDecides")}</p>
         </Card>
 
         {GROUPS.map((group) => (
