@@ -501,27 +501,39 @@
       "activeMonths": {
         "title": "Usaha berjalan minimal 6 bulan",
         "met": "Sudah aktif {months} bulan berturut-turut.",
-        "unmet": "Baru {months} bulan. Cek lagi setelah {min} bulan."
+        "unmet": "Baru {months} bulan. Cek lagi setelah {min} bulan. KUR nominal kecil bisa punya pengecualian, tanyakan ke bank."
       },
       "incomeProof": {
         "title": "Bukti penghasilan",
-        "met": "Slip penghasilan sudah ada.",
+        "met": "Slip penghasilan sudah ada. Mutasi rekening dan rekap penghasilan aplikasi juga bisa jadi bukti omzet.",
         "unmet": "Unggah layar setoran untuk membuat slip penghasilan."
+      },
+      "businessSize": {
+        "title": "Skala usaha (batas usaha mikro dan kecil)",
+        "met": "Penghasilan tahunanmu jauh di bawah batas skala usaha KUR.",
+        "unmet": "Unggah layar setoran untuk dicek."
       },
       "slik": {
         "title": "Riwayat SLIK baik",
         "met": "Kolektibilitas {kol} (Lancar).",
-        "partial": "Kolektibilitas {kol}. Bank akan mengecek ulang.",
-        "unmet": "Kolektibilitas {kol}. Selesaikan tunggakan terlebih dahulu.",
-        "needs_upload": "Unggah laporan SLIK untuk dicek."
+        "unmet": "Kolektibilitas {kol}. Tidak boleh ada tunggakan, selesaikan terlebih dahulu.",
+        "needs_upload": "Unggah laporan SLIK untuk dicek. Jika belum punya riwayat SLIK sama sekali, bank bisa memakai penilaian kredit lain."
+      },
+      "citizenAge": {
+        "title": "WNI, minimal 21 tahun atau sudah menikah",
+        "body": "Bank mengeceknya dari KTP."
+      },
+      "notCivilServant": {
+        "title": "Bukan ASN, TNI, atau Polri aktif",
+        "body": "Pensiunan atau yang akan pensiun tetap bisa mengajukan."
       },
       "noOtherLoan": {
-        "title": "Tidak punya KUR, pinjaman ultra mikro, atau pinjol lain",
-        "body": "Kredit konsumtif seperti cicilan bisa dikecualikan. Bank mengeceknya lewat SLIK."
+        "title": "Tidak punya pinjaman usaha lain",
+        "body": "Cicilan atau leasing motor untuk bekerja, pinjaman P2P, pinjaman ultra mikro, dan kredit konsumtif boleh selama tidak menunggak. Pinjaman program pemerintah sebelumnya harus sudah lunas. Bank mengeceknya lewat SLIK."
       },
       "bpjs": {
         "title": "Peserta BPJS Ketenagakerjaan",
-        "body": "Mungkin diwajibkan. Tanyakan ke bank."
+        "body": "Wajib untuk pinjaman besar, opsional untuk pinjaman kecil. Tanyakan ke bank."
       },
       "ektp": {
         "title": "e-KTP",
@@ -537,10 +549,10 @@
       },
       "npwp": {
         "title": "NPWP",
-        "body": "Mungkin diperlukan tergantung jumlah pinjaman. Tanyakan ke bank."
+        "body": "Diperlukan untuk pinjaman yang lebih besar. Tanyakan ke bank."
       }
     },
-    "sourceNote": "Syarat dirangkum dari informasi bank dan media tahun 2026. Bisa berbeda antarbank dan berubah sewaktu-waktu.",
+    "sourceNote": "Syarat dirangkum dari aturan KUR (Permenko 1/2026, berlaku 13 Januari 2026) dan informasi bank. Aturan khusus pengemudi ojol dijadwalkan terbit paling lambat 31 Desember 2026, jadi bisa berubah dan berbeda antarbank.",
     "toUpload": "Unggah laporan SLIK"
   },
   "tabs": {
