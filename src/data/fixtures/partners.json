@@ -18,6 +18,12 @@
     "type": "bank"
   },
   {
+    "id": "p-bank-f",
+    "nameKo": "은행 F",
+    "nameId": "Bank F",
+    "type": "bank"
+  },
+  {
     "id": "p-insurance-d",
     "nameKo": "보험사 D",
     "nameId": "Asuransi D",

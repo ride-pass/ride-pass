@@ -59,6 +59,8 @@ export const PARTNERS: Partner[] = [
   // TODO: 원어민 검수 (nameId)
   { id: "p-installment-b", nameKo: "할부사 B", nameId: "Mitra Cicilan B", type: "installment" },
   { id: "p-bank-c", nameKo: "은행 C", nameId: "Bank C", type: "bank" },
+  // 대출을 주로 내는 곳이 둘은 있어야 제출 화면·추천 화면에서 대출이 앞에 선다 (2026-11-20)
+  { id: "p-bank-f", nameKo: "은행 F", nameId: "Bank F", type: "bank" },
   { id: "p-insurance-d", nameKo: "보험사 D", nameId: "Asuransi D", type: "insurance" },
 ];
 

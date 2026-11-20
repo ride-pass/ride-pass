@@ -336,7 +336,7 @@
     "types": {
       "ev_rental": "전기 오토바이 렌털",
       "installment": "오토바이 할부",
-      "bank": "은행",
+      "bank": "운영자금·소액 대출",
       "insurance": "보험"
     },
     "extraConsent": "{names}에도 같은 항목을 30일 동안 보여 주는 데 동의합니다.",
@@ -352,7 +352,14 @@
         "NOT_SHARED_INCOME": "수입 명세서를 함께 보내지 않아 신용도를 낼 수 없습니다.",
         "NOT_SHARED_ACTIVITY": "활동 기록을 함께 보내지 않아 신용도를 낼 수 없습니다."
       }
-    }
+    },
+    "groups": {
+      "bank": "대출",
+      "installment": "할부",
+      "ev_rental": "렌털",
+      "insurance": "보험"
+    },
+    "mainGroup": "주요"
   },
   "done": {
     "title": "수입 명세서를 보냈습니다",

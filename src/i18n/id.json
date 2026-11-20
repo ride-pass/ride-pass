@@ -337,7 +337,7 @@
     "types": {
       "ev_rental": "Sewa motor listrik",
       "installment": "Cicilan motor",
-      "bank": "Bank",
+      "bank": "Pinjaman modal kerja & mikro",
       "insurance": "Asuransi"
     },
     "extraConsent": "Saya setuju menunjukkan data yang sama kepada {names} selama 30 hari.",
@@ -353,7 +353,14 @@
         "NOT_SHARED_INCOME": "Slip penghasilan tidak ikut dikirim, jadi skor kredit tidak bisa dihitung.",
         "NOT_SHARED_ACTIVITY": "Riwayat aktivitas tidak ikut dikirim, jadi skor kredit tidak bisa dihitung."
       }
-    }
+    },
+    "groups": {
+      "bank": "Pinjaman",
+      "installment": "Cicilan",
+      "ev_rental": "Sewa",
+      "insurance": "Asuransi"
+    },
+    "mainGroup": "Utama"
   },
   "done": {
     "title": "Slip penghasilan sudah dikirim",
