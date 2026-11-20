@@ -73,8 +73,6 @@
       "open": "Lihat kriteria penilaian",
       "title": "Kriteria penilaian",
       "topReason": "Alasan utama",
-      "reasonsTitle": "Alasan skor ini",
-      "factorsTitle": "Apa yang dinilai dan bobotnya",
       "factorsBody": "Enam faktor diubah ke nilai 0–1, dijumlahkan sesuai bobot, lalu diubah ke skala 400–900.",
       "weight": "{w}%",
       "rulesTitle": "Aturan yang diterapkan lebih dulu",
@@ -82,8 +80,12 @@
         "cap": "Jika setoran dan mutasi rekening tidak cocok atau ada tanda suntingan, atau ada tunggakan di lembaga keuangan pada SLIK (kolektibilitas 3 ke atas), skor maksimal 549.",
         "hold": "Jika riwayat kurang dari 60 hari atau foto terakhir buram, skor tidak dihitung dan penilaian ditunda."
       },
-      "gradesTitle": "Peringkat",
-      "gradeRange": "{from}–{to}"
+      "gradeRange": "{from}–{to}",
+      "tabs": {
+        "reasons": "Alasan",
+        "factors": "Bobot",
+        "grades": "Peringkat"
+      }
     }
   },
   "common": {
