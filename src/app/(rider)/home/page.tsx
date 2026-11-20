@@ -1,12 +1,13 @@
 "use client";
 
 // 기사 앱 홈 (Figma "RidePass 홈", CLAUDE.md 6절 표대로 바꿈). 기사가 매일 열어 보는 화면이다.
-// 위에서부터: 수입 명세서 카드 → (평가 보류 / C단계 이유) → 다음 할 일 → 「일한 흔적」 활동 지도 → 30일 단위 순수입 → 최근 활동.
+// 위에서부터: 수입 명세서 카드 → (평가 보류 / C단계 이유) → 「일한 흔적」 활동 지도 → 30일 단위 순수입 → 최근 활동.
+// 「다음 할 일」 카드는 2026-11-20 멘토링 뒤 뺐다. 개선 방법은 「내 신용」 화면에 있다.
 // 원형 게이지 자리는 getRiderCreditView()가 정한다. A: 신용 준비도 5개 중 ○개, C: 신용도 + 「PKA 인가 후 제공 기능」 배지.
 // "안전 운행 점수", 「맞춤 제휴 혜택」 상품 카드, "소액 대출"·"보험 할인"·"오토바이 할부" 타일은 넣지 않는다.
 // 바로 가기 타일은 하단 탭·각 카드의 링크와 겹쳐서 뺐다.
 
-import { Bell, ChevronRight, Lightbulb, TriangleAlert } from "lucide-react";
+import { Bell, TriangleAlert } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -21,7 +22,7 @@ import { ScreenSkeleton } from "@/components/ui/Skeleton";
 import { TabBar } from "@/components/ui/TabBar";
 import { APP_NAME, LOGO_HEIGHT, LOGO_PATH, LOGO_WIDTH } from "@/config/brand";
 import { CreditCriteria } from "@/components/credit/CreditCriteria";
-import { getRiderCreditView, type RiderCreditHold, type RiderCreditView } from "@/credit/riderView";
+import { getRiderCreditView, type RiderCreditView } from "@/credit/riderView";
 import type { RiderActivity, RiderMetrics } from "@/data/derive";
 import {
   getIncomeStatement,
@@ -37,16 +38,6 @@ import {
 import type { IncomeStatement } from "@/data/statement";
 import type { Application, Partner, Rider, SettlementCapture, ShareGrant } from "@/data/types";
 import { formatDate, formatRupiah } from "@/lib/format";
-
-type ActionCode = RiderCreditHold["actions"][number];
-
-/** 개선 방법마다 기사가 바로 할 수 있는 화면. 없으면 문구만 보여 준다 */
-const ACTION_HREF: Partial<Record<ActionCode, string>> = {
-  RETAKE_CLEAR_PHOTO: "/capture",
-  ADD_REPAYMENT_RECORDS: "/capture",
-  ADD_ALL_APP_SETTLEMENTS: "/capture",
-  KEEP_UPLOADING: "/capture",
-};
 
 const FEED_LIMIT = 4;
 
@@ -85,7 +76,6 @@ export default function HomePage() {
 
   if (!rider || !metrics || !activity || !statement || !credit || !feed) return <ScreenSkeleton />;
   const matched = metrics.depositMatchRate !== null && metrics.depositMatchRate >= 0.85;
-  const nextAction: ActionCode | null = credit.status === "hold" ? null : credit.improvement;
 
   return (
     <div className="flex flex-1 flex-col">
@@ -157,8 +147,6 @@ export default function HomePage() {
           </Card>
         ) : null}
 
-        {nextAction ? <NextAction code={nextAction} /> : null}
-
         <Card className="flex flex-col gap-3">
           <div className="flex items-baseline justify-between gap-2">
             <h2 className="font-bold">{t("home.trail.title")}</h2>
@@ -182,29 +170,6 @@ export default function HomePage() {
       </main>
       <TabBar />
     </div>
-  );
-}
-
-function NextAction({ code }: { code: ActionCode }) {
-  const t = useT();
-  const href = ACTION_HREF[code];
-  const body = (
-    <>
-      <Lightbulb className="mt-0.5 size-5 shrink-0 text-brand-purple" aria-hidden />
-      <span className="min-w-0 flex-1">
-        <span className="block text-xs font-semibold text-brand-purple">{t("home.next.title")}</span>
-        <span className="block text-sm">{t(`credit.actions.${code}`)}</span>
-      </span>
-      {href ? <ChevronRight className="mt-2 size-5 shrink-0 text-muted" aria-hidden /> : null}
-    </>
-  );
-  const cls = "flex items-start gap-3 rounded-3xl bg-lavender p-4";
-  return href ? (
-    <Link href={href} className={`${cls} transition active:scale-[0.99] active:bg-lavender-strong`}>
-      {body}
-    </Link>
-  ) : (
-    <section className={cls}>{body}</section>
   );
 }
 
