@@ -3,9 +3,9 @@
 // 추천 상품 (하단 탭 「추천」, 2026-11-20 멘토링 뒤 추가). 토스 대출 찾기처럼 내 등급으로 볼 수 있는 상품을 보여 준다.
 // 위에서부터: 내 신용도·볼 수 있는 상품 수 → 추천 3개 → 종류별 전체 상품(대출 먼저) → 지금은 어려운 상품.
 // CLAUDE.md 2-1: 모두 가상 상품, 금리는 등급별 "예시 금리"만. 한도·승인 가능성·"저금리"는 쓰지 않는다.
-// 버튼은 「이곳에 내 자료 보내기」뿐이다(제출할 곳 고르기로 간다). 대출을 이 앱에서 바로 신청시키지 않는다.
+// 버튼은 「이곳에 내 자료 보내기」뿐이다(/recommend/send: 그 기관 한 곳에만 동의하고 보낸다). 대출을 이 앱에서 바로 신청시키지 않는다.
 
-import { Bike, ChevronRight, CreditCard, Landmark, Lock, Shield, type LucideIcon } from "lucide-react";
+import { ChevronRight, Lock } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDemo, useT } from "@/components/demo/DemoProvider";
@@ -18,17 +18,11 @@ import { ScreenSkeleton } from "@/components/ui/Skeleton";
 import { TabBar } from "@/components/ui/TabBar";
 import { getRiderProductView, type LockedProduct, type ProductOffer, type RiderProductView } from "@/credit/riderView";
 import { getRider, listPartners } from "@/data/repository";
-import type { Partner, ProductCategory, Product } from "@/data/types";
-import { formatRupiah } from "@/lib/format";
+import { CATEGORY_ICON, PriceText, useProductText } from "@/components/recommend/ProductParts";
+import type { Partner, ProductCategory } from "@/data/types";
 
 const CATEGORIES: ProductCategory[] = ["loan", "installment", "rental", "insurance"];
 
-const CATEGORY_ICON: Record<ProductCategory, LucideIcon> = {
-  loan: Landmark,
-  installment: CreditCard,
-  rental: Bike,
-  insurance: Shield,
-};
 
 export default function RecommendPage() {
   const t = useT();
@@ -148,30 +142,6 @@ export default function RecommendPage() {
   );
 }
 
-function useProductText(product: Product) {
-  const t = useT();
-  return { name: t(`products.${product.id}.name`), desc: t(`products.${product.id}.desc`) };
-}
-
-/** 예시 금리 또는 예시 가격 한 줄 */
-function PriceText({ offer, big = false }: { offer: ProductOffer; big?: boolean }) {
-  const t = useT();
-  const { product, rate } = offer;
-  const label = rate !== null ? t("recommend.exampleRate") : t(`recommend.priceLabel.${product.examplePrice?.per ?? "day"}`);
-  const value =
-    rate !== null
-      ? t("recommend.rate", { r: rate })
-      : product.examplePrice
-        ? t(`recommend.price.${product.examplePrice.per}`, { amount: formatRupiah(product.examplePrice.amount) })
-        : "";
-  return (
-    <span className="flex flex-col items-end text-right">
-      <span className="text-[11px] text-muted">{label}</span>
-      <span className={`font-bold whitespace-nowrap text-brand-purple tabular-nums ${big ? "text-lg" : "text-sm"}`}>{value}</span>
-    </span>
-  );
-}
-
 function TopCard({ rank, offer, grade, partner }: { rank: number; offer: ProductOffer; grade: string; partner: string }) {
   const t = useT();
   const { name } = useProductText(offer.product);
@@ -193,7 +163,7 @@ function TopCard({ rank, offer, grade, partner }: { rank: number; offer: Product
         <p className="rounded-xl bg-canvas px-3 py-2 text-xs">
           {t(`recommend.reasons.${offer.reason}`, { g: grade, category: t(`recommend.categories.${offer.product.category}`) })}
         </p>
-        <ButtonLink href={`/share?partner=${offer.product.partnerId}`} variant="secondary">
+        <ButtonLink href={`/recommend/send?product=${offer.product.id}`} variant="secondary">
           {t("recommend.send")}
         </ButtonLink>
       </Card>
@@ -206,7 +176,7 @@ function OfferRow({ offer, partner }: { offer: ProductOffer; partner: string }) 
   const Icon = CATEGORY_ICON[offer.product.category];
   return (
     <li>
-      <Link href={`/share?partner=${offer.product.partnerId}`} className="flex items-center gap-3 py-3 active:opacity-70">
+      <Link href={`/recommend/send?product=${offer.product.id}`} className="flex items-center gap-3 py-3 active:opacity-70">
         <IconTile>
           <Icon className="size-5" aria-hidden />
         </IconTile>

@@ -725,7 +725,18 @@
     "empty": "Belum ada produk jenis ini untuk peringkatmu.",
     "hold": "Setelah penilaian selesai, kami rekomendasikan produk sesuai peringkatmu.",
     "notAvailable": "Layar ini tersedia setelah izin PKA.",
-    "disclaimer": "Semua produk fiktif dan bunga/tarif hanya contoh. Bunga dan persetujuan sebenarnya ditentukan tiap lembaga keuangan. Aplikasi ini tidak menyalurkan pinjaman langsung."
+    "disclaimer": "Semua produk fiktif dan bunga/tarif hanya contoh. Bunga dan persetujuan sebenarnya ditentukan tiap lembaga keuangan. Aplikasi ini tidak menyalurkan pinjaman langsung.",
+    "sendPage": {
+      "title": "Kirim dataku",
+      "consent": "Saya setuju menunjukkan data di atas kepada {partner} selama 30 hari (sampai {until}).",
+      "submit": "Setuju dan kirim",
+      "onlyHere": "Hanya dikirim ke {partner}. Tempat lain tidak bisa melihat, dan kamu bisa menariknya kapan saja di riwayat kirim.",
+      "already": "Sudah dikirim",
+      "pendingBody": "Menunggu hasil dari {partner}.",
+      "approvedBody": "{partner} menyetujui pengajuanmu.",
+      "toHistory": "Lihat riwayat kirim",
+      "notFound": "Produk tidak ditemukan. Pilih lagi di halaman rekomendasi."
+    }
   },
   "products": {
     "prod-bank-a-working": {
