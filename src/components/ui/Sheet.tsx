@@ -1,8 +1,10 @@
 "use client";
 
-// 아래에서 올라오는 확인 창. 바깥을 누르거나 Esc를 누르면 닫힌다.
+// 아래에서 올라오는 확인 창. 제목 옆 X, 바깥, Esc로 닫힌다.
+// 내용만큼만 열리고, 화면의 70%를 넘으면 창 안에서 스크롤한다.
 // 휴대폰 틀 안에서는 휴대폰 화면 안에서 올라온다 (PhoneFrame 참고).
 
+import { X } from "lucide-react";
 import { useEffect, useId, useRef, type ReactNode } from "react";
 import { useT } from "@/components/demo/DemoProvider";
 
@@ -46,11 +48,16 @@ export function Sheet({ open, onClose, title, children }: Props) {
         tabIndex={-1}
         className="relative w-full max-w-[390px] rounded-t-3xl bg-surface px-5 pt-3 pb-8 shadow-2xl outline-none motion-safe:animate-sheet-up"
       >
-        <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-line" aria-hidden />
-        <h2 id={titleId} className="text-lg font-bold">
-          {title}
-        </h2>
-        <div className="mt-3">{children}</div>
+        <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-line" aria-hidden />
+        <div className="flex items-center justify-between gap-2">
+          <h2 id={titleId} className="text-lg font-bold">
+            {title}
+          </h2>
+          <button type="button" onClick={onClose} aria-label={t("common.close")} className="-mr-2 rounded-full p-2 text-muted active:bg-lavender">
+            <X className="size-5" aria-hidden />
+          </button>
+        </div>
+        <div className="mt-3 max-h-[70dvh] overflow-y-auto">{children}</div>
       </div>
     </div>
   );
