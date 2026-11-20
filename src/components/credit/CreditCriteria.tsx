@@ -6,7 +6,7 @@
 // 신용 정보 타입은 riderView에서만 가져온다 (2-4).
 
 import { ChevronRight, CircleCheck, CircleX, TriangleAlert } from "lucide-react";
-import { useId, useState } from "react";
+import { useId, useState, type ReactNode } from "react";
 import { useT } from "@/components/demo/DemoProvider";
 import { Sheet } from "@/components/ui/Sheet";
 import type { CriteriaFactor, ReadinessMark, SharedReason } from "@/credit/riderView";
@@ -118,8 +118,9 @@ function CriteriaTabs({ reasons, criteria, grade }: Props) {
         ))}
       </div>
 
-      <div role="tabpanel" id={`${baseId}-${tab}`} aria-labelledby={`${baseId}-${tab}-tab`} className="flex flex-col gap-3">
-        {tab === "reasons" ? (
+      {/* 세 탭을 같은 칸에 겹쳐 두고 고른 것만 보인다. 칸 높이가 가장 긴 탭에 맞춰져 탭을 바꿔도 창 높이가 그대로다 */}
+      <div className="grid">
+        <TabPanel id="reasons" tab={tab} baseId={baseId}>
           <ol className="flex flex-col gap-2">
             {reasons.map((r, i) => (
               <li key={r.code} className="flex gap-3 rounded-2xl bg-canvas p-3 text-sm">
@@ -130,9 +131,9 @@ function CriteriaTabs({ reasons, criteria, grade }: Props) {
               </li>
             ))}
           </ol>
-        ) : null}
+        </TabPanel>
 
-        {tab === "factors" ? (
+        <TabPanel id="factors" tab={tab} baseId={baseId}>
           <>
             <p className="text-xs leading-relaxed text-muted">{t("credit.criteria.factorsBody")}</p>
             <ul className="flex flex-col divide-y divide-line">
@@ -154,9 +155,9 @@ function CriteriaTabs({ reasons, criteria, grade }: Props) {
               })}
             </ul>
           </>
-        ) : null}
+        </TabPanel>
 
-        {tab === "grades" ? (
+        <TabPanel id="grades" tab={tab} baseId={baseId}>
           <>
             <ul className="flex flex-col overflow-hidden rounded-2xl ring-1 ring-line">
               {GRADES.map((g) => (
@@ -179,10 +180,27 @@ function CriteriaTabs({ reasons, criteria, grade }: Props) {
               </ul>
             </div>
           </>
-        ) : null}
-
-        <p className="text-[11px] leading-relaxed text-muted">{t("credit.disclaimer")}</p>
+        </TabPanel>
       </div>
+
+      <p className="text-[11px] leading-relaxed text-muted">{t("credit.disclaimer")}</p>
+    </div>
+  );
+}
+
+/** 탭 하나의 내용. 고르지 않은 탭은 자리(높이)만 차지하고 보이지 않으며 읽기·포커스에서도 빠진다 */
+function TabPanel({ id, tab, baseId, children }: { id: Tab; tab: Tab; baseId: string; children: ReactNode }) {
+  const on = id === tab;
+  return (
+    <div
+      role="tabpanel"
+      id={`${baseId}-${id}`}
+      aria-labelledby={`${baseId}-${id}-tab`}
+      aria-hidden={!on}
+      inert={!on}
+      className={`flex flex-col gap-3 [grid-area:1/1] ${on ? "" : "invisible"}`}
+    >
+      {children}
     </div>
   );
 }
