@@ -1,4 +1,4 @@
-// 시연 화면 사이 상태 맞추기 (조작판 「분할 보기」: 왼쪽 기사 폰 + 오른쪽 렌털사 화면).
+// 시연 화면 사이 상태 맞추기 (같은 브라우저에 창을 여러 개 띄웠을 때).
 // 같은 브라우저의 다른 창·iframe끼리 BroadcastChannel로 "무엇을 바꿨는지"만 보낸다.
 // 받은 쪽은 같은 변경을 같은 순서로 자기 메모리 저장소에 다시 적용한다. 가짜 저장소는 같은 입력이면 같은 결과를 낸다.
 // localStorage 같은 브라우저 저장소는 쓰지 않는다. 새로고침하면 처음으로 돌아간다 (CLAUDE.md 4-8).
@@ -21,9 +21,6 @@ export const SYNCED_MUTATIONS = [
 
 type Mutation = (typeof SYNCED_MUTATIONS)[number];
 
-/** 분할 보기에서 어느 쪽 화면인지 (주소의 ?frame=) */
-export type FrameRole = "rider" | "partner";
-
 export interface DemoStatePatch {
   riderId?: string;
   lang?: Lang;
@@ -33,8 +30,7 @@ export interface DemoStatePatch {
 export type SyncMessage =
   | { type: "repo"; op: Mutation; args: unknown[] }
   | { type: "demo"; patch: DemoStatePatch }
-  | { type: "demo-reset" }
-  | { type: "nav"; target: FrameRole; href: string };
+  | { type: "demo-reset" };
 
 export interface SyncChannel {
   post(message: SyncMessage): void;

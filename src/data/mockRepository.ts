@@ -1,7 +1,7 @@
 // 커밋된 fixture JSON을 읽는 가짜 저장소 (CLAUDE.md 4-1, 4-8).
 // 화면은 이 파일을 직접 import하지 않고 repository.ts만 부른다.
 // 신청·동의·재촬영·알림 같은 바뀌는 상태는 메모리에만 둔다. 새로고침하면 처음으로 돌아간다.
-// createMockRepository()는 상태를 따로 가진 저장소를 하나 더 만든다 (분할 보기 동기화 테스트용, demoSync.test.ts).
+// createMockRepository()는 상태를 따로 가진 저장소를 하나 더 만든다 (창 사이 동기화 테스트용, demoSync.test.ts).
 
 import { DEMO_TODAY } from "@/config/demo";
 import { addDays } from "@/lib/date";
