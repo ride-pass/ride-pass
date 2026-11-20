@@ -7,8 +7,9 @@
 import { BadgeCheck, ChevronDown, RotateCcw, SlidersHorizontal, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { listApplications, listPartners, listRiders, recordApplicationView, setApplicationStatus } from "@/data/repository";
+import { listApplications, listPartners, listRiders, listShareGrants, recordApplicationView, setApplicationStatus } from "@/data/repository";
 import type { Rider } from "@/data/types";
+import { isActiveGrant } from "@/lib/shareItems";
 import { useDemo, useT } from "./DemoProvider";
 
 export const DEMO_STEPS: { step: number; href: string }[] = [
@@ -41,13 +42,17 @@ export function DemoPanel() {
     router.push("/home");
   };
 
-  /** 기관 쪽 연출: 지금 기사의 가장 최근 대기 중 신청을 기관이 열어 보고 승인한다. 기사 앱에 알림이 두 개 생긴다 */
+  /**
+   * 기관 쪽 연출: 지금 기사의 가장 최근 대기 중 신청을 기관이 열어 보고 승인한다. 기사 앱에 알림이 두 개 생긴다.
+   * 기사가 철회한 곳(유효한 동의가 없는 곳)은 자료를 볼 수 없으므로 고르지 않는다.
+   */
   const [approveNote, setApproveNote] = useState<"done" | "none" | null>(null);
   const approveLatest = async () => {
-    const partners = await listPartners();
+    const [partners, grants] = await Promise.all([listPartners(), listShareGrants(demo.riderId)]);
+    const canSee = new Set(grants.filter((g) => isActiveGrant(g)).map((g) => g.partnerId));
     const apps = (await Promise.all(partners.map((p) => listApplications(p.id))))
       .flat()
-      .filter((a) => a.riderId === demo.riderId && a.status === "pending")
+      .filter((a) => a.riderId === demo.riderId && a.status === "pending" && canSee.has(a.partnerId))
       .sort((a, b) => b.submittedAt.localeCompare(a.submittedAt));
     const latest = apps[0];
     if (!latest) {
