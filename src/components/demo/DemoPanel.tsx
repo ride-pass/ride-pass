@@ -37,7 +37,8 @@ export function DemoPanel() {
 
   const reset = async () => {
     await demo.reset();
-    router.push("/partner/apply");
+    // 링크 첫 화면과 같은 홈에서 다시 시작한다
+    router.push("/home");
   };
 
   /** 기관 쪽 연출: 지금 기사의 가장 최근 대기 중 신청을 기관이 열어 보고 승인한다. 기사 앱에 알림이 두 개 생긴다 */
