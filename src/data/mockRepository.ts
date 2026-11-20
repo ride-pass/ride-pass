@@ -15,6 +15,7 @@ import applications from "./fixtures/applications.json";
 import captures from "./fixtures/captures.json";
 import deposits from "./fixtures/deposits.json";
 import partners from "./fixtures/partners.json";
+import products from "./fixtures/products.json";
 import rentalPayments from "./fixtures/rentalPayments.json";
 import retakes from "./fixtures/retakes.json";
 import riders from "./fixtures/riders.json";
@@ -27,6 +28,7 @@ import telecomBills from "./fixtures/telecomBills.json";
 const fixtures = {
   riders,
   partners,
+  products,
   captures,
   deposits,
   rentalPayments,
@@ -126,6 +128,9 @@ export function createMockRepository(): Repository {
       return records ? buildIncomeStatement(records, DEMO_TODAY) : null;
     },
 
+    async listProducts() {
+      return copy(fixtures.products);
+    },
     async listPartners() {
       return copy(fixtures.partners);
     },

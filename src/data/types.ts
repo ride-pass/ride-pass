@@ -101,3 +101,19 @@ export interface Application {
   submittedAt: string;
   status: "pending" | "approved" | "rejected";  // 렌털사가 바꾼다
 }
+
+// 「추천」 화면의 가상 상품 (2026-11-20 멘토링 뒤 추가, CLAUDE.md 2-1).
+// 이름·설명은 i18n products.<id>. 금리·요금은 모두 예시이고, 실제 금리와 승인은 금융사가 정한다.
+export type ProductCategory = "loan" | "installment" | "rental" | "insurance";
+export type ProductGrade = "A" | "B" | "C" | "D" | "E";
+
+export interface Product {
+  id: string;                 // "prod-bank-c-working"
+  partnerId: string;
+  category: ProductCategory;
+  termMonths: [number, number] | null;  // 기간 (렌털·보험은 null)
+  /** 등급별 예시 연 금리(%). 없는 등급은 「지금은 어려운 상품」. 등급이 낮을수록 높다 */
+  exampleRateByGrade: Partial<Record<ProductGrade, number>> | null;
+  /** 금리 대신 보여 주는 예시 가격 (렌털: 하루, 보험: 월). 등급과 상관없다 */
+  examplePrice: { amount: number; per: "day" | "month" } | null;
+}

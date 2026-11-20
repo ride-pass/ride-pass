@@ -9,6 +9,7 @@ import type { IncomeStatement } from "./statement";
 import type {
   Application,
   Partner,
+  Product,
   Rider,
   SettlementCapture,
   ShareGrant,
@@ -51,6 +52,8 @@ export interface Repository {
 
   listPartners(): Promise<Partner[]>;
   getPartner(partnerId: string): Promise<Partner | null>;
+  /** 「추천」 화면의 가상 상품 */
+  listProducts(): Promise<Product[]>;
 
   /** 기관에 들어온 신청 (최근 제출 순) */
   listApplications(partnerId: string): Promise<Application[]>;
@@ -93,6 +96,7 @@ export const {
   getIncomeStatement,
   listPartners,
   getPartner,
+  listProducts,
   listApplications,
   submitApplication,
   setApplicationStatus,

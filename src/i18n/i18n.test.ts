@@ -25,6 +25,13 @@ const REQUIRED = {
   "credit.holds": ["NEED_RETAKE", "NEED_MORE_HISTORY", "NOT_SHARED_INCOME", "NOT_SHARED_ACTIVITY"],
   "credit.grades": ["A", "B", "C", "D", "E"],
   "credit.factors": ["repayment", "stability", "verifiedIncome", "incomeLevel", "continuity", "dataQuality"],
+  // 「추천」 화면 (credit/products.ts, fixtures/products.json)
+  "recommend.reasons": ["BEST_RATE_IN_CATEGORY", "GRADE_OK", "NO_GRADE_LIMIT"],
+  "recommend.categories": ["loan", "installment", "rental", "insurance"],
+  products: [
+    "prod-bank-c-working.name", "prod-bank-f-micro.name", "prod-installment-b-multi.name",
+    "prod-installment-b-moto.name", "prod-rental-a-ev.name", "prod-insurance-d-accident.name",
+  ],
 };
 
 describe("i18n", () => {

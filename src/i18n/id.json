@@ -589,6 +589,7 @@
     "home": "Beranda",
     "history": "Riwayat kirim",
     "credit": "Kreditku",
+    "recommend": "Rekomendasi",
     "my": "Profil"
   },
   "home": {
@@ -668,5 +669,70 @@
     "uploadBody": "Layar setoran · Laporan SLIK · Tagihan pulsa",
     "settings": "Pengaturan",
     "language": "Bahasa"
+  },
+  "recommend": {
+    "title": "Rekomendasi",
+    "badge": "Fitur setelah kemitraan penyalur",
+    "myCredit": "Skor kreditku {score} · {grade} {gradeName}",
+    "summary": "{n} produk bisa dilihat dengan peringkatku",
+    "topTitle": "Rekomendasi untuk {name}",
+    "topBody": "Dari produk yang bisa dilihat, pinjaman didahulukan, lalu contoh bunga terendah dalam jenis yang sama.",
+    "allTitle": "Produk untuk peringkatku",
+    "lockedTitle": "Belum bisa sekarang",
+    "lockedGrade": "Mulai peringkat {g}",
+    "lockedHow": "Cara menaikkan skor kreditmu",
+    "exampleRate": "Contoh bunga",
+    "rate": "{r}%/tahun",
+    "priceLabel": {
+      "day": "Contoh tarif",
+      "month": "Contoh premi"
+    },
+    "price": {
+      "day": "{amount}/hari",
+      "month": "{amount}/bulan"
+    },
+    "term": "{min}–{max} bulan",
+    "send": "Kirim dataku ke sini",
+    "reasons": {
+      "BEST_RATE_IN_CATEGORY": "Contoh bunga terendah untuk {category} di peringkat {g}",
+      "GRADE_OK": "Produk {category} untuk peringkat {g}",
+      "NO_GRADE_LIMIT": "Bisa dipakai tanpa melihat peringkat kredit"
+    },
+    "categories": {
+      "loan": "Pinjaman",
+      "installment": "Cicilan",
+      "rental": "Sewa",
+      "insurance": "Asuransi"
+    },
+    "empty": "Belum ada produk jenis ini untuk peringkatmu.",
+    "hold": "Setelah penilaian selesai, kami rekomendasikan produk sesuai peringkatmu.",
+    "notAvailable": "Layar ini tersedia setelah izin PKA.",
+    "disclaimer": "Semua produk fiktif dan bunga/tarif hanya contoh. Bunga dan persetujuan sebenarnya ditentukan tiap lembaga keuangan. Aplikasi ini tidak menyalurkan pinjaman langsung."
+  },
+  "products": {
+    "prod-bank-c-working": {
+      "name": "Pinjaman Modal Kerja Pengemudi",
+      "desc": "Untuk bensin, servis, dan perlengkapan kerja"
+    },
+    "prod-bank-f-micro": {
+      "name": "Pinjaman Mikro",
+      "desc": "Pinjaman jangka pendek untuk kebutuhan mendesak"
+    },
+    "prod-installment-b-multi": {
+      "name": "Pembiayaan Multiguna",
+      "desc": "Pembiayaan tanpa batasan tujuan"
+    },
+    "prod-installment-b-moto": {
+      "name": "Cicilan Motor",
+      "desc": "Beli motor baru dengan dicicil"
+    },
+    "prod-rental-a-ev": {
+      "name": "Sewa Motor Listrik",
+      "desc": "Sewa harian"
+    },
+    "prod-insurance-d-accident": {
+      "name": "Asuransi Kecelakaan Pengemudi",
+      "desc": "Biaya pengobatan cedera saat bekerja"
+    }
   }
 }

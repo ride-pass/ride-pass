@@ -2,13 +2,16 @@
 // A단계: 신용 준비도(요인별 ✓/△/✗)와 개선 방법만. 숫자 점수·등급은 결과에 아예 넣지 않는다.
 // C단계: 신용도·등급·이유·개선 방법 + 「PKA 인가 후 제공 기능」 배지 + 「평가 기준 보기」에 쓰는 요인 6개.
 // getRiderSubmissionView(): 「제출할 곳 고르기」에서 기관에 함께 가는 신용도. 렌털사 화면과 같은 계산(sharedCredit)이다.
+// getRiderProductView(): 「추천」 화면. 내 신용 등급으로 볼 수 있는 가상 상품과 추천 3개 (products.ts, CLAUDE.md 2-1).
 
 import { LICENSE_STAGE, type LicenseStage } from "@/config/licenseStage";
-import { getRiderMetrics } from "@/data/repository";
+import { getRiderMetrics, listProducts } from "@/data/repository";
+import { matchProducts, type ProductMatch } from "./products";
 import { sharedCreditResult, type ShareItem, type SharedCredit, type SharedReason } from "./sharedCredit";
 
 /** 기사 화면은 sharedCredit.ts를 직접 import하지 않으므로 필요한 타입만 여기서 내보낸다 */
 export type { SharedCredit, SharedReason };
+export type { LockedProduct, OfferReason, ProductMatch, ProductOffer } from "./products";
 import {
   evaluateCredit,
   type ActionCode,
@@ -150,4 +153,38 @@ export async function getRiderSubmissionView(
   if (stage === "A") return { stage: "A" };
   const { credit, factors } = sharedCreditResult(metrics, items);
   return { stage: "C", credit, criteria: credit.status === "scored" ? criteriaOf(factors) : null };
+}
+
+/** 「추천」 화면. 신용도가 있는 C단계에서만 상품을 고른다. 평가 보류면 추천하지 않는다 */
+export type RiderProductView =
+  | { stage: "A" }
+  | { stage: "C"; status: "hold"; holds: HoldCode[] }
+  | ({
+      stage: "C";
+      status: "scored";
+      score: number;
+      grade: Grade;
+      improvement: ActionCode;
+      badge: "pka_licensed_feature";
+    } & ProductMatch);
+
+/** 기사가 없으면 null */
+export async function getRiderProductView(
+  riderId: string,
+  stage: LicenseStage = LICENSE_STAGE,
+): Promise<RiderProductView | null> {
+  const metrics = await getRiderMetrics(riderId);
+  if (!metrics) return null;
+  if (stage === "A") return { stage: "A" };
+  const credit = evaluateCredit(metrics);
+  if (credit.status === "hold") return { stage: "C", status: "hold", holds: credit.holds };
+  return {
+    stage: "C",
+    status: "scored",
+    score: credit.score,
+    grade: credit.grade,
+    improvement: credit.improvement,
+    badge: "pka_licensed_feature",
+    ...matchProducts(await listProducts(), credit.grade),
+  };
 }
