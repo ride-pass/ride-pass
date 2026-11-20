@@ -30,6 +30,7 @@
       "REPAY_ON_TIME": "납부를 제때 해 왔습니다",
       "REPAY_LATE": "늦거나 빠진 납부가 있습니다",
       "REPAY_NO_HISTORY": "상환 이력이 없어 중립으로 반영했습니다",
+      "REPAY_NOT_SHARED": "공유된 상환 이력이 없어 중립으로 반영했습니다",
       "INCOME_STABLE": "달마다 수입이 고릅니다",
       "INCOME_VOLATILE": "달마다 수입 차이가 큽니다",
       "DEPOSIT_MATCHED": "정산 금액이 입금 내역과 맞습니다",
@@ -59,7 +60,9 @@
     "holds": {
       "title": "평가 보류",
       "NEED_RETAKE": "최근 촬영이 흐려서 읽을 수 없습니다",
-      "NEED_MORE_HISTORY": "기록이 60일보다 짧습니다"
+      "NEED_MORE_HISTORY": "기록이 60일보다 짧습니다",
+      "NOT_SHARED_INCOME": "기사가 수입 명세서를 공유하지 않아 신용도를 낼 수 없습니다",
+      "NOT_SHARED_ACTIVITY": "기사가 활동 기록을 공유하지 않아 신용도를 낼 수 없습니다"
     },
     "badge": {
       "pka_licensed_feature": "PKA 인가 후 제공 기능"

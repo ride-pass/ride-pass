@@ -16,12 +16,13 @@ const REQUIRED = {
     "INCOME_VERIFICATION_NEEDED", "SLIK_DELINQUENT", "REPAY_ON_TIME", "REPAY_LATE", "REPAY_NO_HISTORY",
     "INCOME_STABLE", "INCOME_VOLATILE", "DEPOSIT_MATCHED", "DEPOSIT_MISMATCH", "INCOME_HIGH",
     "INCOME_LOW", "LONG_HISTORY", "SHORT_HISTORY", "DATA_RELIABLE", "DATA_UNRELIABLE",
+    "REPAY_NOT_SHARED", // 렌털사 화면 전용 (partnerView)
   ],
   "credit.actions": [
     "ADD_REPAYMENT_RECORDS", "PAY_ON_TIME", "KEEP_STEADY_INCOME", "UPLOAD_BANK_STATEMENT",
     "ADD_ALL_APP_SETTLEMENTS", "KEEP_ACTIVE", "RETAKE_CLEAR_PHOTO", "KEEP_UPLOADING",
   ],
-  "credit.holds": ["NEED_RETAKE", "NEED_MORE_HISTORY"],
+  "credit.holds": ["NEED_RETAKE", "NEED_MORE_HISTORY", "NOT_SHARED_INCOME", "NOT_SHARED_ACTIVITY"],
   "credit.grades": ["A", "B", "C", "D", "E"],
   "credit.factors": ["repayment", "stability", "verifiedIncome", "incomeLevel", "continuity", "dataQuality"],
 };
