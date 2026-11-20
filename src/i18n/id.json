@@ -335,7 +335,18 @@
     "items": "Data yang dikirim",
     "decision": "Keputusan persetujuan ada di tangan penerima.",
     "toCredit": "Lihat status kreditku",
-    "toHome": "Ke beranda"
+    "toHome": "Ke beranda",
+    "next": {
+      "title": "Selanjutnya",
+      "sent": "Terkirim",
+      "viewed": "Dicek oleh {partner}",
+      "viewedDone": "Datamu dilihat pada {date}",
+      "viewedWait": "Kamu akan dapat notifikasi saat datamu dilihat",
+      "result": "Kabar hasil",
+      "resultWait": "Keputusan ada di tangan mitra. Kamu akan dikabari",
+      "approved": "Pengajuan disetujui",
+      "rejected": "Pengajuan ditolak"
+    }
   },
   "demo": {
     "open": "Panel demo",
