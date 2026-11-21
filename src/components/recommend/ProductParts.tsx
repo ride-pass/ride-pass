@@ -34,7 +34,7 @@ export function PriceText({ offer, big = false }: { offer: ProductOffer; big?: b
         : "";
   return (
     <span className="flex flex-col items-end text-right">
-      <span className="text-[11px] text-muted">{label}</span>
+      <span className="text-xs text-muted">{label}</span>
       <span className={`font-bold whitespace-nowrap text-brand-purple tabular-nums ${big ? "text-lg" : "text-sm"}`}>{value}</span>
     </span>
   );

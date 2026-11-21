@@ -5,7 +5,7 @@
 // CLAUDE.md 2-1: 모두 가상 상품, 금리는 등급별 "예시 금리"만. 한도·승인 가능성·"저금리"는 쓰지 않는다.
 // 버튼은 「이곳에 내 자료 보내기」뿐이다(/recommend/send: 그 기관 한 곳에만 동의하고 보낸다). 대출을 이 앱에서 바로 신청시키지 않는다.
 
-import { ChevronRight, Lock } from "lucide-react";
+import { ArrowRight, ChevronRight, Lock } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDemo, useT } from "@/components/demo/DemoProvider";
@@ -13,7 +13,6 @@ import { AppHeader } from "@/components/ui/AppHeader";
 import { Badge } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { IconTile } from "@/components/ui/IconTile";
 import { ScreenSkeleton } from "@/components/ui/Skeleton";
 import { TabBar } from "@/components/ui/TabBar";
 import { getRiderProductView, type LockedProduct, type ProductOffer, type RiderProductView } from "@/credit/riderView";
@@ -64,9 +63,7 @@ export default function RecommendPage() {
           <>
             <Card tone="purple" className="flex flex-col gap-2">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-lg bg-brand-lime px-2 py-0.5 text-[11px] font-semibold text-lime-ink">
-                  {t("credit.badge.pka_licensed_feature")}
-                </span>
+                <Badge tone="lime">{t("credit.badge.pka_licensed_feature")}</Badge>
               </div>
               <p className="text-sm text-white/80">
                 {t("recommend.myCredit", { score: view.score, grade: view.grade, gradeName: t(`credit.grades.${view.grade}`) })}
@@ -75,17 +72,16 @@ export default function RecommendPage() {
               <p className="text-[11px] leading-relaxed text-white/70">{t("credit.disclaimer")}</p>
             </Card>
 
-            <section className="flex flex-col gap-2">
-              <div className="px-1">
-                <h2 className="text-lg font-bold">{t("recommend.topTitle", { name: firstName })}</h2>
-                <p className="text-xs text-muted">{t("recommend.topBody")}</p>
-              </div>
-              <ol className="flex flex-col gap-2">
+            {/* 추천 3개는 카드 3장이 아니라 한 장 안의 순위 목록. 줄마다 「이곳에 내 자료 보내기」 하나 (2-1) */}
+            <Card className="flex flex-col gap-1">
+              <h2 className="text-lg font-bold">{t("recommend.topTitle", { name: firstName })}</h2>
+              <p className="text-sm text-muted">{t("recommend.topBody")}</p>
+              <ol className="mt-2 flex flex-col divide-y divide-line">
                 {view.top.map((offer, i) => (
-                  <TopCard key={offer.product.id} rank={i + 1} offer={offer} grade={view.grade} partner={partnerName(offer.product.partnerId)} />
+                  <TopRow key={offer.product.id} rank={i + 1} offer={offer} grade={view.grade} partner={partnerName(offer.product.partnerId)} />
                 ))}
               </ol>
-            </section>
+            </Card>
 
             <Card className="flex flex-col gap-3">
               <h2 className="font-bold">{t("recommend.allTitle")}</h2>
@@ -142,31 +138,35 @@ export default function RecommendPage() {
   );
 }
 
-function TopCard({ rank, offer, grade, partner }: { rank: number; offer: ProductOffer; grade: string; partner: string }) {
+function TopRow({ rank, offer, grade, partner }: { rank: number; offer: ProductOffer; grade: string; partner: string }) {
   const t = useT();
   const { name } = useProductText(offer.product);
   const term = offer.product.termMonths;
   return (
-    <li>
-      <Card className="flex flex-col gap-3">
+    <li className="flex items-start gap-3 py-4">
+      <span className="grid size-7 shrink-0 place-items-center rounded-full bg-brand-navy text-sm font-bold text-white tabular-nums">{rank}</span>
+      <div className="flex min-w-0 flex-1 flex-col gap-2">
         <div className="flex items-start gap-3">
-          <span className="grid size-7 shrink-0 place-items-center rounded-full bg-brand-navy text-sm font-bold text-white">{rank}</span>
           <span className="min-w-0 flex-1">
             <span className="block text-xs text-muted">
               {partner} · {t(`recommend.categories.${offer.product.category}`)}
             </span>
-            <span className="block font-bold">{name}</span>
+            <span className="block text-base font-bold">{name}</span>
             {term ? <span className="block text-xs text-muted">{t("recommend.term", { min: term[0], max: term[1] })}</span> : null}
           </span>
           <PriceText offer={offer} big />
         </div>
-        <p className="rounded-xl bg-canvas px-3 py-2 text-xs">
+        <p className="text-sm text-muted">
           {t(`recommend.reasons.${offer.reason}`, { g: grade, category: t(`recommend.categories.${offer.product.category}`) })}
         </p>
-        <ButtonLink href={`/recommend/send?product=${offer.product.id}`} variant="secondary">
+        <Link
+          href={`/recommend/send?product=${offer.product.id}`}
+          className="inline-flex min-h-11 items-center gap-1.5 self-start rounded-2xl bg-lavender px-4 text-sm font-semibold text-brand-purple transition active:scale-[0.98] active:bg-lavender-strong"
+        >
           {t("recommend.send")}
-        </ButtonLink>
-      </Card>
+          <ArrowRight className="size-4" aria-hidden />
+        </Link>
+      </div>
     </li>
   );
 }
@@ -177,13 +177,11 @@ function OfferRow({ offer, partner }: { offer: ProductOffer; partner: string }) 
   return (
     <li>
       <Link href={`/recommend/send?product=${offer.product.id}`} className="flex items-center gap-3 py-3 active:opacity-70">
-        <IconTile>
-          <Icon className="size-5" aria-hidden />
-        </IconTile>
+        <Icon className="size-5 shrink-0 self-start text-muted" aria-hidden />
         <span className="min-w-0 flex-1">
           <span className="block text-xs text-muted">{partner}</span>
-          <span className="block text-sm font-semibold">{name}</span>
-          <span className="block text-xs text-muted">{desc}</span>
+          <span className="block text-base font-semibold">{name}</span>
+          <span className="block text-sm text-muted">{desc}</span>
         </span>
         <PriceText offer={offer} />
       </Link>
@@ -196,14 +194,12 @@ function LockedRow({ locked, partner }: { locked: LockedProduct; partner: string
   const { name } = useProductText(locked.product);
   return (
     <li className="flex items-center gap-3 py-3 opacity-60">
-      <IconTile>
-        <Lock className="size-5" aria-hidden />
-      </IconTile>
+      <Lock className="size-5 shrink-0 text-muted" aria-hidden />
       <span className="min-w-0 flex-1">
         <span className="block text-xs text-muted">{partner}</span>
-        <span className="block text-sm font-semibold">{name}</span>
+        <span className="block text-base font-semibold">{name}</span>
       </span>
-      <span className="shrink-0 text-xs font-semibold text-muted">{t("recommend.lockedGrade", { g: locked.minGrade })}</span>
+      <span className="shrink-0 text-sm font-semibold text-muted">{t("recommend.lockedGrade", { g: locked.minGrade })}</span>
     </li>
   );
 }
