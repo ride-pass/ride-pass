@@ -2,7 +2,7 @@
 // 순수 함수만 둔다 (입력 → 출력, 부수효과 없음).
 
 import { DEMO_TODAY } from "@/config/demo";
-import { addDays, diffDays, isWithin, type IsoDate } from "@/lib/date";
+import { addDays, dayOfWeek, diffDays, isWithin, type IsoDate } from "@/lib/date";
 import type {
   Deposit,
   PlatformId,
@@ -240,8 +240,19 @@ export function deriveRiderMetrics(
 
 // ---- 홈 화면의 「일한 흔적」 활동 지도와 월별 순수입 막대 ----
 
-/** 활동 지도에 그리는 기간: 기준일까지 180일 */
+/** 활동 지도에 그리는 기간: 기준일까지 최대 180일 */
 export const ACTIVITY_MAP_DAYS = 180;
+
+/**
+ * 활동 지도의 첫날: 180일 전 날짜에서 가장 가까운 다음 월요일.
+ * 지도는 한 열 = 한 주(월요일 위 → 일요일 아래)라, 첫날이 월요일이 아니면 첫 열에 칸 몇 개만 아래에 붙어 깨져 보인다 (2026-11-21).
+ * 그래서 그리는 날 수는 174~180일이다.
+ */
+export function activityMapStart(today: IsoDate): IsoDate {
+  const earliest = addDays(today, -(ACTIVITY_MAP_DAYS - 1));
+  const toMonday = (8 - dayOfWeek(earliest)) % 7; // dayOfWeek: 0 = 일요일, 1 = 월요일
+  return addDays(earliest, toMonday);
+}
 /** 월별 순수입 막대 개수 (30일 단위) */
 export const MONTH_BAR_COUNT = 6;
 
@@ -265,7 +276,7 @@ export interface MonthBlockNet {
 }
 
 export interface RiderActivity {
-  /** 오래된 날 → 기준일, ACTIVITY_MAP_DAYS개 */
+  /** 오래된 날(월요일) → 기준일, 174~180개 (activityMapStart) */
   daily: DailyActivity[];
   /** 정산 기록이 있는 날 수 (daily 기간 안) */
   activeDays: number;
@@ -287,8 +298,7 @@ export function deriveRiderActivity(
   }
 
   const daily: DailyActivity[] = [];
-  for (let i = ACTIVITY_MAP_DAYS - 1; i >= 0; i--) {
-    const date = addDays(today, -i);
+  for (let date = activityMapStart(today); date <= today; date = addDays(date, 1)) {
     const day = byDate.get(date);
     daily.push({
       date,

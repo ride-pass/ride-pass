@@ -3,6 +3,7 @@
 
 import { describe, expect, it } from "vitest";
 import { DEMO_TODAY } from "@/config/demo";
+import { dayOfWeek } from "@/lib/date";
 import { ACTIVITY_MAP_DAYS, MONTH_BAR_COUNT, deriveRiderActivity, deriveRiderMetrics, deriveSettlementVsDeposits } from "./derive";
 import { mockRepository } from "./mockRepository";
 
@@ -15,7 +16,10 @@ describe("deriveRiderActivity", () => {
       const activity = deriveRiderActivity(records, DEMO_TODAY);
       const metrics = deriveRiderMetrics(records, DEMO_TODAY);
 
-      expect(activity.daily).toHaveLength(ACTIVITY_MAP_DAYS);
+      // 지도는 월요일에 시작해 기준일에 끝나고, 180일을 넘지 않는다 (첫 열이 7칸으로 꽉 찬다)
+      expect(dayOfWeek(activity.daily[0].date)).toBe(1);
+      expect(activity.daily.length).toBeGreaterThanOrEqual(ACTIVITY_MAP_DAYS - 6);
+      expect(activity.daily.length).toBeLessThanOrEqual(ACTIVITY_MAP_DAYS);
       expect(activity.daily.at(-1)!.date).toBe(DEMO_TODAY);
       expect(activity.months).toHaveLength(MONTH_BAR_COUNT);
 
