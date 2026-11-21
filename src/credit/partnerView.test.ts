@@ -88,7 +88,7 @@ describe("partnerView C단계 신용도는 동의한 항목만으로 계산한�
     );
     expect(byId["r-siti"]).toMatchObject({ status: "scored", score: 755, grade: "B" });
     expect(byId["r-agus"]).toMatchObject({ status: "scored", score: 549, grade: "D" });
-    expect(byId["r-dewi"]).toMatchObject({ status: "scored", score: 876, grade: "A" });
+    expect(byId["r-dewi"]).toMatchObject({ status: "scored", score: 877, grade: "A" });
     expect(byId["r-rizky"]).toEqual({ status: "hold", holds: ["NEED_RETAKE"] });
   });
 

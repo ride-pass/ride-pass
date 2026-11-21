@@ -248,8 +248,6 @@
     "noCapture": "Tidak ada layar setoran untuk difoto",
     "reading": "AI sedang membaca…",
     "frameHint": "Posisikan ringkasan setoran harian di dalam bingkai",
-    "grid": "Kisi",
-    "flip": "Ganti kamera",
     "shoot": "Foto",
     "blurryTitle": "Foto buram, tidak terbaca",
     "blurryBody": "Ada pantulan cahaya atau goyangan. Foto ulang di tempat yang terang.",
@@ -280,8 +278,6 @@
     "guide3Body": "Layar yang diedit atau milik orang lain akan diberi peringatan pemalsuan.",
     "next": "Buat slip penghasilan",
     "demo": "Demo: adegan memotret layar setoran fiktif. Kamera sungguhan tidak dipakai.",
-    "frontCam": "Kamera depan",
-    "backCam": "Kamera belakang",
     "searching": "Mencari layar setoran…",
     "locked": "Layar setoran ditemukan",
     "steps": {
@@ -617,7 +613,8 @@
       "title": "Penghasilan bersih per 30 hari",
       "avg": "Rata-rata 3 bulan terakhir {amount}",
       "aria": "{from}–{to}: {amount}",
-      "partialNote": "Batang abu-abu: periode yang masih mencakup hari sebelum kamu mulai bekerja."
+      "partialNote": "Baris pudar = periode yang mencakup hari sebelum mulai bekerja.",
+      "spread": "Per 30 hari: terendah {min} · tertinggi {max}"
     },
     "feed": {
       "title": "Aktivitas terbaru",

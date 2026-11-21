@@ -13,7 +13,6 @@ import {
   CameraOff,
   CircleCheck,
   FileText,
-  Grid3x3,
   Lightbulb,
   Loader2,
   RefreshCw,
@@ -106,8 +105,6 @@ export default function CapturePage() {
   const [phases, setPhases] = useState<Record<string, Phase>>({});
   const [slik, setSlik] = useState<DocPhase>("idle");
   const [telecom, setTelecom] = useState<DocPhase>("idle");
-  const [grid, setGrid] = useState(false);
-  const [front, setFront] = useState(false);
   /** 모서리가 잠긴 촬영 id (화면이 바뀌거나 다시 찍으면 다시 잠근다) */
   const [lockedId, setLockedId] = useState<string | null>(null);
   /** 읽는 중 지금 인식 상자가 켜진 칸 */
@@ -197,16 +194,6 @@ export default function CapturePage() {
         <div className="relative overflow-hidden rounded-3xl bg-brand-navy p-6">
           <FrameCorners locked={locked || phase !== "aim"} />
           <FrameStatus phase={phase} locked={locked} reading={reading} />
-          <span className="absolute top-4 right-10 z-10 rounded-full bg-black/40 px-2 py-0.5 text-[11px] text-white">
-            {front ? t("capture.frontCam") : t("capture.backCam")}
-          </span>
-          {grid ? (
-            <div className="pointer-events-none absolute inset-6 z-10 grid grid-cols-3 grid-rows-3" aria-hidden>
-              {Array.from({ length: 9 }, (_, i) => (
-                <span key={i} className="border border-white/30" />
-              ))}
-            </div>
-          ) : null}
           {capture ? (
             <div className="relative mt-4">
               <FakeSettlementScreen capture={capture} blurred={weak} highlight={highlight} highlightTone={weak && phase !== "reading" ? "weak" : "ok"} />
@@ -219,16 +206,8 @@ export default function CapturePage() {
           <p className="mt-4 text-center text-xs text-white/80">{t("capture.frameHint")}</p>
         </div>
 
-        <div className="flex items-center justify-around">
-          <button
-            type="button"
-            aria-pressed={grid}
-            onClick={() => setGrid((g) => !g)}
-            className={`flex flex-col items-center gap-1 rounded-xl px-3 py-1 text-xs ${grid ? "text-brand-purple" : "text-muted"}`}
-          >
-            <Grid3x3 className="size-5" aria-hidden />
-            {t("capture.grid")}
-          </button>
+        {/* 셔터 하나만. 격자·카메라 전환은 시연에 쓰지 않아 뺐다 (2026-11-21) */}
+        <div className="flex items-center justify-center">
           <button
             type="button"
             onClick={shoot}
@@ -237,14 +216,6 @@ export default function CapturePage() {
             className="grid size-20 place-items-center rounded-full bg-brand-purple text-white ring-8 ring-brand-lime/60 disabled:opacity-40"
           >
             {phase === "reading" ? <Loader2 className="size-8 animate-spin" aria-hidden /> : <Camera className="size-8" aria-hidden />}
-          </button>
-          <button
-            type="button"
-            onClick={() => setFront((f) => !f)}
-            className="flex flex-col items-center gap-1 rounded-xl px-3 py-1 text-xs text-muted"
-          >
-            <RefreshCw className="size-5" aria-hidden />
-            {t("capture.flip")}
           </button>
         </div>
 
