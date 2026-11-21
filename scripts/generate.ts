@@ -16,7 +16,7 @@ import type {
   SlikReport,
   TelecomBill,
 } from "@/data/types";
-import { addDays, dayOfWeek, parseIsoDate, type IsoDate } from "@/lib/date";
+import { addDays, dayOfWeek, diffDays, parseIsoDate, type IsoDate } from "@/lib/date";
 import { createRandom, type Random } from "./random";
 
 /** 생성 기간: 기준일 포함 지난 180일 */
@@ -84,7 +84,7 @@ export interface PersonaSpec {
   platformShares: Partial<Record<PlatformId, number>>;
   /** 최근 30일 순수입 목표값 (Rp) */
   monthlyNetTarget: number;
-  /** 매주 쉬는 요일 (0 = 일요일) */
+  /** 첫 주에 쉬는 요일 (0 = 일요일). 다음 주부터는 restDayOf()가 주마다 바꾼다 */
   restWeekday: number;
   /** 입금액 / 정산 순수입. r-agus만 0.45 */
   depositRatio: number;
@@ -219,6 +219,19 @@ const round2 = (n: number) => Math.round(n * 100) / 100;
 const compact = (iso: IsoDate) => iso.replaceAll("-", "");
 const shortId = (riderId: string) => riderId.replace(/^r-/, "");
 
+/** 주마다 쉬는 요일을 바꾸는 순서. 매주 같은 요일에 쉬면 「일한 흔적」 달력에 회색 줄이 가로로 이어진다 (2026-11-21) */
+const REST_SHIFT = [0, 3, 5, 1, 6, 2, 4] as const;
+/** 주 번호를 세는 기준 월요일 */
+const WEEK_ANCHOR: IsoDate = "2026-01-05";
+
+/** 그날이 쉬는 날인지. 일주일(월~일)에 하루 쉬고, 쉬는 요일은 주마다 바뀐다. 기준일(오늘)은 쉬지 않는다(Rizky 재촬영 장면이 오늘 정산에 걸려 있다) */
+function isRestDay(p: PersonaSpec, d: IsoDate, today: IsoDate): boolean {
+  if (d === today) return false;
+  const week = Math.floor(diffDays(WEEK_ANCHOR, d) / 7);
+  const shift = REST_SHIFT[((week % REST_SHIFT.length) + REST_SHIFT.length) % REST_SHIFT.length];
+  return dayOfWeek(d) === (p.restWeekday + shift) % 7;
+}
+
 function generateCaptures(p: PersonaSpec, rng: Random, today: IsoDate): SettlementCapture[] {
   const out: SettlementCapture[] = [];
   const windowStart = addDays(today, -(SEED_DAYS - 1));
@@ -226,7 +239,7 @@ function generateCaptures(p: PersonaSpec, rng: Random, today: IsoDate): Settleme
   const dailyBase = p.monthlyNetTarget / WORK_DAYS_PER_30;
 
   for (let d = start; d <= today; d = addDays(d, 1)) {
-    if (dayOfWeek(d) === p.restWeekday) continue;
+    if (isRestDay(p, d, today)) continue;
     const dayNet = dailyBase * rng.range(1 - DAILY_JITTER, 1 + DAILY_JITTER);
 
     for (const platform of p.rider.platforms) {

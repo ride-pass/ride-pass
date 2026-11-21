@@ -14,7 +14,7 @@
     "providerLabel": "통신사 F",
     "month": "2026-07",
     "dueDate": "2026-07-15",
-    "paidDate": "2026-07-14",
+    "paidDate": "2026-07-12",
     "amount": 75000
   },
   {
@@ -23,7 +23,7 @@
     "providerLabel": "통신사 F",
     "month": "2026-08",
     "dueDate": "2026-08-15",
-    "paidDate": "2026-08-14",
+    "paidDate": "2026-08-15",
     "amount": 75000
   },
   {
@@ -32,7 +32,7 @@
     "providerLabel": "통신사 F",
     "month": "2026-09",
     "dueDate": "2026-09-15",
-    "paidDate": "2026-09-15",
+    "paidDate": "2026-09-12",
     "amount": 75000
   },
   {
@@ -41,7 +41,7 @@
     "providerLabel": "통신사 F",
     "month": "2026-10",
     "dueDate": "2026-10-15",
-    "paidDate": "2026-10-12",
+    "paidDate": "2026-10-13",
     "amount": 75000
   },
   {
@@ -50,7 +50,7 @@
     "providerLabel": "통신사 F",
     "month": "2026-11",
     "dueDate": "2026-11-15",
-    "paidDate": "2026-11-12",
+    "paidDate": "2026-11-13",
     "amount": 75000
   }
 ]
