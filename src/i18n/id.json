@@ -614,7 +614,10 @@
       "avg": "Rata-rata 3 bulan terakhir {amount}",
       "aria": "{from}–{to}: {amount}",
       "partialNote": "Baris pudar = periode yang mencakup hari sebelum mulai bekerja.",
-      "spread": "Per 30 hari: terendah {min} · tertinggi {max}"
+      "spread": "Per 30 hari: terendah {min} · tertinggi {max}",
+      "change": "{arrow} {p}%",
+      "upAria": "Naik {p}% dari 30 hari sebelumnya",
+      "downAria": "Turun {p}% dari 30 hari sebelumnya"
     },
     "feed": {
       "title": "Aktivitas terbaru",

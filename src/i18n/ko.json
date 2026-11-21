@@ -613,7 +613,10 @@
       "avg": "최근 3개월 월평균 {amount}",
       "aria": "{from}~{to}: {amount}",
       "partialNote": "옅은 줄은 활동을 시작하기 전 날이 섞인 기간입니다.",
-      "spread": "30일 구간 중 가장 적을 때 {min} · 가장 많을 때 {max}"
+      "spread": "30일 구간 중 가장 적을 때 {min} · 가장 많을 때 {max}",
+      "change": "{arrow} {p}%",
+      "upAria": "지난 30일보다 {p}% 늘었습니다",
+      "downAria": "지난 30일보다 {p}% 줄었습니다"
     },
     "feed": {
       "title": "최근 활동",
