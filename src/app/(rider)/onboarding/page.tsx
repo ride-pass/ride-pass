@@ -53,7 +53,7 @@ export default function OnboardingPage() {
         <p className="text-base leading-relaxed text-muted">{t(`onboarding.${slide.key}Body`)}</p>
       </div>
 
-      <div className="mt-auto flex flex-col gap-2 pt-8">
+      <div data-bottom-dock className="mt-auto flex flex-col gap-2 pt-8">
         {last ? (
           <ButtonLink href="/login" icon={<ArrowRight className="size-5" aria-hidden />}>
             {t("common.start")}
