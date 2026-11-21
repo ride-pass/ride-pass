@@ -89,7 +89,7 @@ export default function SharePage() {
         <div>
           <Badge tone="lavender">{t("share.step")}</Badge>
           <h2 className="mt-3 text-2xl font-bold">{t("share.title")}</h2>
-          <p className="mt-2 text-[15px] leading-relaxed text-muted">{t("share.body")}</p>
+          <p className="mt-2 text-base leading-relaxed text-muted">{t("share.body")}</p>
         </div>
 
         <SendCard items={items} submission={submission} />

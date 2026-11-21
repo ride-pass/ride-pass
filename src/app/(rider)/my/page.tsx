@@ -11,7 +11,6 @@ import { useDemo, useT } from "@/components/demo/DemoProvider";
 import { LangToggle } from "@/components/demo/LangToggle";
 import { AppHeader } from "@/components/ui/AppHeader";
 import { Card } from "@/components/ui/Card";
-import { IconTile } from "@/components/ui/IconTile";
 import { ScreenSkeleton } from "@/components/ui/Skeleton";
 import { TabBar } from "@/components/ui/TabBar";
 import { buildKurChecklist, kurSummary } from "@/data/kur";
@@ -60,7 +59,7 @@ export default function MyPage() {
               <ListChecks className="size-6 shrink-0 text-brand-purple" aria-hidden />
               <div className="min-w-0 flex-1">
                 <p className="font-bold">{t("kur.header")}</p>
-                <p className="text-xs text-muted">{t("kur.subtitle")}</p>
+                <p className="text-xs text-brand-navy/75">{t("kur.subtitle")}</p>
               </div>
               <ChevronRight className="size-5 shrink-0 text-muted" aria-hidden />
             </div>
@@ -91,10 +90,8 @@ export default function MyPage() {
               title={t("notices.title")}
               right={unread ? <span className="rounded-full bg-danger px-2 py-0.5 text-[11px] font-bold text-white tabular-nums">{unread}</span> : null}
             />
-            <li className="flex items-center gap-3 py-3">
-              <IconTile>
-                <Globe className="size-5" aria-hidden />
-              </IconTile>
+            <li className="flex min-h-14 items-center gap-3 py-3">
+              <Globe className="size-5 shrink-0 text-muted" aria-hidden />
               <span className="flex-1 text-sm font-medium">{t("my.language")}</span>
               <LangToggle />
             </li>
@@ -109,10 +106,8 @@ export default function MyPage() {
 function Row({ href, icon: Icon, title, sub, right }: { href: string; icon: LucideIcon; title: string; sub?: string; right?: ReactNode }) {
   return (
     <li>
-      <Link href={href} className="flex items-center gap-3 py-3 active:opacity-70">
-        <IconTile>
-          <Icon className="size-5" aria-hidden />
-        </IconTile>
+      <Link href={href} className="flex min-h-14 items-center gap-3 py-3 active:opacity-70">
+        <Icon className="size-5 shrink-0 text-muted" aria-hidden />
         <span className="min-w-0 flex-1">
           <span className="block text-sm font-medium">{title}</span>
           {sub ? <span className="block truncate text-xs text-muted">{sub}</span> : null}

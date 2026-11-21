@@ -55,7 +55,7 @@ export default function ShareDonePage() {
         ))}
       </div>
       <main className="flex flex-col items-center gap-4 px-4 pt-8">
-        <span className="grid size-24 place-items-center rounded-full bg-brand-purple text-brand-lime shadow-lg">
+        <span className="grid size-24 place-items-center rounded-full bg-brand-purple text-brand-lime">
           <CheckCircle2 className="size-12" aria-hidden />
         </span>
         <h1 className="text-center text-2xl font-bold">{t("done.title")}</h1>

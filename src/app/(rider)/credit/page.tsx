@@ -65,10 +65,10 @@ export default function CreditPage() {
               <p className="text-[11px] leading-relaxed text-white/70">{t("credit.disclaimer")}</p>
             </Card>
             <Card className="flex flex-col gap-3">
-              <p className="flex items-center gap-2 font-semibold">
+              <h2 className="flex items-center gap-2 font-semibold">
                 <ClipboardList className="size-5 text-brand-purple" aria-hidden />
                 {t("creditPage.reasonsTitle")}
-              </p>
+              </h2>
               {/* 이유 3개·요인 6개·규칙·등급표는 「평가 기준 보기」 창에서 (CLAUDE.md 8절) */}
               <CreditCriteria reasons={view.reasons} criteria={view.criteria} grade={view.grade} />
             </Card>
@@ -97,11 +97,11 @@ function FactorList({ factors }: { factors: ReadinessFactor[] }) {
   const t = useT();
   return (
     <Card className="flex flex-col gap-3">
-      <p className="flex items-center gap-2 font-semibold">
+      <h2 className="flex items-center gap-2 font-semibold">
         <BadgeCheck className="size-5 text-brand-purple" aria-hidden />
         {t("creditPage.factorsTitle")}
-      </p>
-      <ul className="flex flex-col gap-3">
+      </h2>
+      <ul className="flex flex-col gap-4">
         {factors.map((f) => {
           const m = MARK[f.mark];
           const Icon = m.icon;
@@ -116,7 +116,7 @@ function FactorList({ factors }: { factors: ReadinessFactor[] }) {
               </div>
               <div className="grid grid-cols-3 gap-1" aria-hidden>
                 {[0, 1, 2].map((i) => (
-                  <span key={i} className={`h-2 rounded-full ${i < m.bars ? "bg-brand-purple" : "bg-line"}`} />
+                  <span key={i} className={`h-1.5 rounded-full ${i < m.bars ? "bg-brand-purple" : "bg-line"}`} />
                 ))}
               </div>
             </li>

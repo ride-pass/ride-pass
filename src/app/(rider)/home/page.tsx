@@ -109,7 +109,7 @@ export default function HomePage() {
             {rider.displayName.charAt(0)}
           </span>
           <div>
-            <p className="text-lg font-bold">{t("home.hello", { name: rider.displayName.split(" ")[0] })}</p>
+            <h1 className="text-lg font-bold">{t("home.hello", { name: rider.displayName.split(" ")[0] })}</h1>
             <p className="text-sm text-muted">
               {rider.area} · {rider.platforms.map((p) => t(`platforms.${p}`)).join(", ")}
             </p>
@@ -120,7 +120,7 @@ export default function HomePage() {
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <p className="text-xs text-white/70">{t("home.monthlyNet")}</p>
-              <p className="mt-1 text-[26px] leading-tight font-bold whitespace-nowrap tabular-nums">{formatRupiah(metrics.monthlyNet)}</p>
+              <p className="mt-1 text-2xl leading-tight font-bold whitespace-nowrap tabular-nums">{formatRupiah(metrics.monthlyNet)}</p>
               <p className={`mt-1 flex items-center gap-1 text-xs ${matched ? "text-brand-lime" : "text-white"}`}>
                 {matched ? null : <TriangleAlert className="size-3.5" aria-hidden />}
                 {matched ? t("home.depositMatched") : t("home.depositMismatch")}
@@ -276,16 +276,15 @@ function FeedList({ items }: { items: FeedItem[] }) {
 
 type RowId = "trail" | "income" | "feed";
 
-/** 목록 한 줄의 겉모양: 굵은 제목 + 요약 한 줄, 오른쪽 아이콘 + 화살표 (팀원 스케치·네이버 목록) */
+/** 목록 한 줄의 겉모양: 왼쪽 회색 아이콘, 굵은 제목 + 요약 한 줄, 오른쪽 화살표 (팀원 스케치·네이버 목록).
+ *  아이콘은 연보라 타일 없이 그대로 둔다 — 줄마다 같은 타일이 반복되면 아이콘이 내용보다 먼저 보인다 */
 function RowFace({ icon: Icon, title, sub, chevron }: { icon: LucideIcon; title: string; sub: string; chevron: ReactNode }) {
   return (
     <>
+      <Icon className="mt-0.5 size-5 shrink-0 self-start text-muted" aria-hidden />
       <span className="min-w-0 flex-1">
-        <span className="block text-[17px] font-bold">{title}</span>
+        <span className="block text-base font-bold">{title}</span>
         <span className="mt-0.5 block text-sm text-muted">{sub}</span>
-      </span>
-      <span className="grid size-11 shrink-0 place-items-center rounded-2xl bg-lavender text-brand-purple">
-        <Icon className="size-5" aria-hidden />
       </span>
       {chevron}
     </>
@@ -376,7 +375,7 @@ function CreditBadge({ view }: { view: RiderCreditView }) {
       </span>
       {/* 신용도 옆 「PKA 인가 후 제공 기능」 배지 (CLAUDE.md 2-4). 게이지 칸 폭 안에서 두 줄로 접힌다 */}
       {view.status === "scored" ? (
-        <span className="rounded-lg bg-brand-lime px-2 py-0.5 text-[11px] leading-tight font-semibold text-lime-ink">
+        <span className="rounded-full bg-brand-lime px-2.5 py-1 text-[11px] leading-tight font-semibold text-balance text-lime-ink">
           {t("credit.badge.pka_licensed_feature")}
         </span>
       ) : null}
