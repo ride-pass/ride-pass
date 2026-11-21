@@ -111,7 +111,7 @@ function CriteriaTabs({ reasons, criteria, grade }: Props) {
             aria-selected={tab === id}
             aria-controls={`${baseId}-${id}`}
             onClick={() => setTab(id)}
-            className={`rounded-xl px-2 py-2 text-sm font-semibold transition ${tab === id ? "bg-surface text-brand-navy shadow-sm" : "text-muted"}`}
+            className={`rounded-xl px-2 py-2 text-sm font-semibold transition ${tab === id ? "bg-surface text-brand-navy" : "text-muted"}`}
           >
             {t(`credit.criteria.tabs.${id}`)}
           </button>

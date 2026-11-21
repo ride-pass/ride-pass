@@ -91,7 +91,7 @@ export default function VerifyPage() {
       <AppHeader title={t("verify.header")} />
       {smsShown ? (
         <div className="fixed inset-x-0 top-3 z-30 mx-auto w-full max-w-[390px] px-3 md:top-12">
-          <div role="status" className="flex items-start gap-3 rounded-2xl bg-surface p-3 shadow-xl ring-1 ring-line motion-safe:animate-toast-in">
+          <div role="status" className="flex items-start gap-3 rounded-2xl bg-surface p-3 shadow-xl motion-safe:animate-toast-in">
             <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-lime-ink text-white">
               <MessageSquare className="size-5" aria-hidden />
             </span>
@@ -115,7 +115,7 @@ export default function VerifyPage() {
         </IconTile>
         <div className="text-center">
           <h2 className="text-2xl font-bold">{t("verify.title")}</h2>
-          <p className="mt-2 text-[15px] text-muted">{t("verify.body")}</p>
+          <p className="mt-2 text-base text-muted">{t("verify.body")}</p>
         </div>
         <p className="flex items-center gap-2 rounded-full bg-surface px-4 py-2 text-sm font-semibold ring-1 ring-line">
           <Smartphone className="size-4 text-brand-purple" aria-hidden />

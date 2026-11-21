@@ -26,7 +26,7 @@ export default function LoginPage() {
         <Image src={LOGO_PATH} alt={APP_NAME} width={LOGO_WIDTH} height={LOGO_HEIGHT} priority className="h-auto w-40" />
         <div>
           <h2 className="text-2xl font-bold">{t("login.title")}</h2>
-          <p className="mt-2 text-[15px] text-muted">{t("login.body")}</p>
+          <p className="mt-2 text-base text-muted">{t("login.body")}</p>
         </div>
 
         <label className="flex flex-col gap-2">

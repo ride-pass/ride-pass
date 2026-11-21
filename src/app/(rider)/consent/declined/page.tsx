@@ -16,7 +16,7 @@ export default function ConsentDeclinedPage() {
       <main className="flex flex-1 flex-col items-center justify-center gap-4 px-8 text-center">
         <CircleCheck className="size-14 text-brand-purple" aria-hidden />
         <h2 className="text-xl font-bold">{t("consent.declinedTitle")}</h2>
-        <p className="text-[15px] leading-relaxed text-muted">{t("consent.declinedBody")}</p>
+        <p className="text-base leading-relaxed text-muted">{t("consent.declinedBody")}</p>
       </main>
       <BottomBar>
         <ButtonLink href="/partner/apply">{t("consent.backToApply")}</ButtonLink>

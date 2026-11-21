@@ -33,7 +33,7 @@ export default function OnboardingPage() {
       </div>
 
       <div className="mt-8 grid aspect-square place-items-center rounded-[40px] bg-lavender text-brand-purple">
-        <span className="relative grid size-44 place-items-center rounded-full bg-surface shadow-sm">
+        <span className="relative grid size-44 place-items-center rounded-full bg-surface">
           {slide.art}
           <span className="absolute -top-1 -right-1 grid size-10 place-items-center rounded-full bg-brand-lime text-lime-ink">
             <Sparkles className="size-5" aria-hidden />
@@ -50,7 +50,7 @@ export default function OnboardingPage() {
       <div className="mt-6 flex flex-col items-center gap-3 text-center">
         <Badge tone="lime">{t(`onboarding.${slide.key}Chip`)}</Badge>
         <h1 className="text-2xl leading-snug font-bold">{t(`onboarding.${slide.key}Title`)}</h1>
-        <p className="text-[15px] leading-relaxed text-muted">{t(`onboarding.${slide.key}Body`)}</p>
+        <p className="text-base leading-relaxed text-muted">{t(`onboarding.${slide.key}Body`)}</p>
       </div>
 
       <div className="mt-auto flex flex-col gap-2 pt-8">

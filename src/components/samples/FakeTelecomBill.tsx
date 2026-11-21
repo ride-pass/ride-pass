@@ -11,7 +11,7 @@ export function FakeTelecomBill({ bills }: { bills: TelecomBill[] }) {
   const t = useT();
   const { lang } = useDemo();
   return (
-    <div className="rounded-2xl bg-surface p-4 text-xs text-brand-navy shadow ring-1 ring-line">
+    <div className="rounded-2xl bg-surface p-4 text-xs text-brand-navy shadow">
       <p className="mb-2 rounded bg-danger-soft px-2 py-1 text-center font-semibold text-danger">
         {t("samples.fakeLabel")}
       </p>

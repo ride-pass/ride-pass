@@ -114,7 +114,7 @@ export default function HistoryPage() {
                 );
               })()}
               {app ? (
-                <p className="rounded-xl bg-canvas px-3 py-2 text-sm">
+                <p className="rounded-2xl bg-canvas px-3 py-2 text-sm">
                   {t("history.appStatus")} <span className="font-semibold">{t(`applicants.status.${app.status}`)}</span>
                 </p>
               ) : null}

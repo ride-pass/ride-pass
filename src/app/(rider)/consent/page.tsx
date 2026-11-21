@@ -89,7 +89,7 @@ export default function ConsentPage() {
         <div>
           <Badge tone="lavender">{t("consent.step")}</Badge>
           <h2 className="mt-3 text-2xl font-bold">{t("consent.title")}</h2>
-          <p className="mt-2 text-[15px] leading-relaxed text-muted">{t("consent.body")}</p>
+          <p className="mt-2 text-base leading-relaxed text-muted">{t("consent.body")}</p>
         </div>
 
         <Card className="flex flex-col gap-4">

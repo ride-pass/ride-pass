@@ -45,7 +45,7 @@ export default function IncomeStatementPage() {
         <StepBar current={3} total={4} />
       </div>
       <main className="flex flex-col gap-3 px-4 pb-2 print:p-0">
-        <article className="flex flex-col gap-5 rounded-lg bg-surface px-5 py-6 text-sm shadow-[0_1px_3px_rgb(0_0_0/0.08)] ring-1 ring-line print:gap-2.5 print:rounded-none print:p-0 print:text-[12px] print:shadow-none print:ring-0">
+        <article className="flex flex-col gap-5 rounded-lg bg-surface px-5 py-6 text-sm ring-1 ring-line print:gap-2.5 print:rounded-none print:p-0 print:text-[12px] print:ring-0">
           {/* 머리: 발행 서비스와 발급번호 */}
           <header className="flex items-start justify-between gap-3 border-b-2 border-brand-navy pb-3">
             <Image src={LOGO_PATH} alt={APP_NAME} width={LOGO_WIDTH} height={LOGO_HEIGHT} className="h-auto w-24" />

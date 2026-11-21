@@ -196,7 +196,7 @@ export default function CapturePage() {
         <div className="relative overflow-hidden rounded-3xl bg-brand-navy p-6">
           <FrameCorners locked={locked || phase !== "aim"} />
           <FrameStatus phase={phase} locked={locked} reading={reading} />
-          <span className="absolute top-4 right-10 z-10 rounded-full bg-black/40 px-2 py-0.5 text-[10px] text-white">
+          <span className="absolute top-4 right-10 z-10 rounded-full bg-black/40 px-2 py-0.5 text-[11px] text-white">
             {front ? t("capture.frontCam") : t("capture.backCam")}
           </span>
           {grid ? (
@@ -384,7 +384,7 @@ function OptionalDoc(props: {
             ) : null}
           </div>
           {phase === "done" ? (
-            <p className="flex items-center gap-2 rounded-xl bg-lavender p-3 text-sm font-semibold text-brand-purple motion-safe:animate-rise">
+            <p className="flex items-center gap-2 rounded-2xl bg-lavender p-3 text-sm font-semibold text-brand-purple motion-safe:animate-rise">
               <CircleCheck className="size-4 shrink-0" aria-hidden />
               {result}
             </p>
