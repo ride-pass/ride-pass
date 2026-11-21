@@ -5,6 +5,8 @@
 // 연출 순서: 프레임 모서리가 정산 화면에 맞춰 잠김 → 셔터 플래시 → 인식 줄이 훑으며 날짜·금액·건수에 차례로 인식 상자
 // → 결과 칸이 하나씩 채워지고 인식 신뢰도를 보여 준다. 실제 OCR은 하지 않는다 (CLAUDE.md 5절: 기본은 연출).
 // r-rizky: 최신 촬영이 흐려서 재촬영 요청 → 다시 찍으면 통과.
+// 2026-11-21 새 디자인 기준(6절): 앱 고르기는 글자 탭 + 보라 밑줄, 선택 자료·찍는 법은 카드·아이콘 타일 없는 구분선 줄,
+// 샘플 고르기는 줄 오른쪽의 작은 버튼. 흰 카드는 읽기 결과(또는 재촬영 요청) 하나.
 
 import {
   Camera,
@@ -37,7 +39,6 @@ import { BottomBar } from "@/components/ui/BottomBar";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { DemoNote } from "@/components/ui/DemoNote";
-import { IconTile } from "@/components/ui/IconTile";
 import { StepBar } from "@/components/ui/StepBar";
 import { ScreenSkeleton } from "@/components/ui/Skeleton";
 import type { RiderRecords } from "@/data/derive";
@@ -166,16 +167,16 @@ export default function CapturePage() {
       <AppHeader title={t("capture.header")} />
       <StepBar current={2} total={4} />
       <main className="flex flex-col gap-4 px-4">
-        <p className="flex items-start gap-3 rounded-2xl bg-surface p-4 text-sm ring-1 ring-line">
-          <ImageOff className="mt-0.5 size-5 shrink-0 text-brand-purple" aria-hidden />
+        <p className="flex items-start gap-2 text-sm">
+          <ImageOff className="mt-0.5 size-4 shrink-0 text-muted" aria-hidden />
           <span>
             <span className="font-semibold">{t("capture.inAppOnlyTitle")}</span>
-            <span className="mt-0.5 block text-muted">{t("capture.inAppOnlyBody")}</span>
+            <span className="text-muted"> · {t("capture.inAppOnlyBody")}</span>
           </span>
         </p>
 
         {today.length > 1 ? (
-          <div className="flex gap-2" role="tablist">
+          <div className="flex border-b border-line" role="tablist">
             {today.map((c, i) => (
               <button
                 key={c.id}
@@ -183,7 +184,7 @@ export default function CapturePage() {
                 role="tab"
                 aria-selected={i === active}
                 onClick={() => setActive(i)}
-                className={`flex flex-1 items-center justify-center gap-1.5 rounded-full px-3 py-2 text-sm font-semibold ${i === active ? "bg-brand-purple text-white" : "bg-surface text-muted ring-1 ring-line"}`}
+                className={`-mb-px flex min-h-11 flex-1 items-center justify-center gap-1.5 border-b-2 text-sm font-semibold ${i === active ? "border-brand-purple text-brand-navy" : "border-transparent text-muted"}`}
               >
                 {phases[c.id] === "done" ? <CircleCheck className="size-4" aria-hidden /> : null}
                 {t(`platforms.${c.platform}`)}
@@ -248,7 +249,7 @@ export default function CapturePage() {
         </div>
 
         {phase === "blurry" && capture ? (
-          <Card className="flex flex-col gap-3 ring-2 ring-danger">
+          <Card className="flex flex-col gap-3">
             <p className="flex items-center gap-2 font-semibold text-danger">
               <CameraOff className="size-5" aria-hidden />
               {t("capture.blurryTitle")}
@@ -263,8 +264,11 @@ export default function CapturePage() {
 
         {phase === "done" && capture ? <ResultCard key={capture.id} capture={capture} /> : null}
 
-        <section className="flex flex-col gap-2">
-          <h3 className="px-1 text-sm font-semibold text-muted">{t("capture.optionalTitle")}</h3>
+        <section aria-labelledby="capture-optional" className="mt-4">
+          <h3 id="capture-optional" className="text-base font-bold">
+            {t("capture.optionalTitle")}
+          </h3>
+          <ul className="mt-1 flex flex-col divide-y divide-line border-b border-line">
           <OptionalDoc
             icon={FileText}
             title={t("capture.slikTitle")}
@@ -302,31 +306,32 @@ export default function CapturePage() {
               onTime: bills.filter((b) => b.paidDate !== null && b.paidDate <= b.dueDate).length,
             })}
           />
+          </ul>
         </section>
 
-        <Card className="flex flex-col gap-3">
-          <p className="flex items-center gap-2 font-semibold">
-            <Lightbulb className="size-5 text-brand-purple" aria-hidden />
+        <section aria-labelledby="capture-guide" className="mt-4 pb-6">
+          <h3 id="capture-guide" className="flex items-center gap-2 text-base font-bold">
+            <Lightbulb className="size-5 text-muted" aria-hidden />
             {t("capture.guideTitle")}
-          </p>
-          {(
-            [
-              [Sun, "guide1"],
-              [Maximize, "guide2"],
-              [TriangleAlert, "guide3"],
-            ] as [LucideIcon, string][]
-          ).map(([Icon, key]) => (
-            <div key={key} className="flex gap-3">
-              <IconTile>
-                <Icon className="size-5" aria-hidden />
-              </IconTile>
-              <div>
-                <p className="text-sm font-semibold">{t(`capture.${key}Title`)}</p>
-                <p className="text-sm text-muted">{t(`capture.${key}Body`)}</p>
-              </div>
-            </div>
-          ))}
-        </Card>
+          </h3>
+          <ul className="mt-1 flex flex-col divide-y divide-line">
+            {(
+              [
+                [Sun, "guide1"],
+                [Maximize, "guide2"],
+                [TriangleAlert, "guide3"],
+              ] as [LucideIcon, string][]
+            ).map(([Icon, key]) => (
+              <li key={key} className="flex gap-3 py-3">
+                <Icon className="mt-0.5 size-5 shrink-0 text-muted" aria-hidden />
+                <div>
+                  <p className="text-base font-semibold">{t(`capture.${key}Title`)}</p>
+                  <p className="text-sm text-muted">{t(`capture.${key}Body`)}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
       </main>
 
       <BottomBar>
@@ -352,24 +357,26 @@ function OptionalDoc(props: {
   const t = useT();
   const { icon: Icon, title, body, available, phase, onPick, preview, result } = props;
   return (
-    <Card className="flex flex-col gap-3 p-4">
+    <li className="flex flex-col gap-3 py-3">
       <div className="flex items-center gap-3">
-        <IconTile>
-          <Icon className="size-5" aria-hidden />
-        </IconTile>
+        <Icon className="size-5 shrink-0 self-start text-muted" aria-hidden />
         <div className="min-w-0 flex-1">
-          <p className="flex items-center gap-2 font-semibold">
-            {title}
-            <Badge tone="neutral">{t("capture.optional")}</Badge>
-          </p>
+          {/* 섹션 제목이 이미 「선택 자료」라 줄마다 「선택」 배지는 달지 않는다 */}
+          <p className="text-base leading-snug font-semibold">{title}</p>
           <p className="mt-0.5 text-sm text-muted">{available ? body : t("capture.noSample")}</p>
         </div>
+        {phase === "idle" ? (
+          <button
+            type="button"
+            disabled={!available}
+            onClick={onPick}
+            className="min-h-10 shrink-0 rounded-full bg-lavender px-3.5 text-sm font-semibold text-brand-purple transition active:scale-[0.98] disabled:bg-line disabled:text-brand-navy/60"
+          >
+            {t("capture.pickSample")}
+          </button>
+        ) : null}
       </div>
-      {phase === "idle" ? (
-        <Button variant="secondary" disabled={!available} onClick={onPick}>
-          {t("capture.pickSample")}
-        </Button>
-      ) : (
+      {phase !== "idle" ? (
         <>
           <div className="relative">
             {preview}
@@ -384,14 +391,14 @@ function OptionalDoc(props: {
             ) : null}
           </div>
           {phase === "done" ? (
-            <p className="flex items-center gap-2 rounded-2xl bg-lavender p-3 text-sm font-semibold text-brand-purple motion-safe:animate-rise">
+            <p className="flex items-center gap-2 text-sm font-semibold text-lime-ink motion-safe:animate-rise">
               <CircleCheck className="size-4 shrink-0" aria-hidden />
               {result}
             </p>
           ) : null}
         </>
-      )}
-    </Card>
+      ) : null}
+    </li>
   );
 }
 
@@ -472,7 +479,7 @@ function ResultCard({ capture }: { capture: SettlementCapture }) {
           {t("capture.resultBadge")}
         </Badge>
       </div>
-      <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 rounded-2xl bg-canvas p-4 text-sm">
+      <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 border-y border-line py-3 text-sm">
         {rows.map(([label, value, cls], i) => (
           <div key={label} className="contents">
             <dt className="text-muted motion-safe:animate-rise" style={{ animationDelay: `${i * 90}ms` }}>

@@ -4,7 +4,7 @@ import type { ComponentProps, ReactNode } from "react";
 type Variant = "primary" | "secondary" | "ghost" | "danger";
 
 const VARIANT: Record<Variant, string> = {
-  primary: "bg-brand-purple text-white active:brightness-95 disabled:bg-lavender-strong disabled:text-muted",
+  primary: "bg-brand-purple text-white active:brightness-95 disabled:bg-lavender-strong disabled:text-brand-navy/70",
   secondary: "bg-lavender text-brand-purple active:bg-lavender-strong disabled:text-muted",
   ghost: "bg-transparent text-muted underline-offset-4 hover:underline",
   danger: "bg-danger text-white active:brightness-95",

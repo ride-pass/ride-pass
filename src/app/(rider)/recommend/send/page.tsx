@@ -4,19 +4,19 @@
 // 상품 확인 → 함께 보내는 내용 → 동의 한 줄 → 「동의하고 보내기」 → 공유 완료(/share/done).
 // 무엇을(자료 목록)·누구에게(기관)·얼마 동안(30일)을 한 화면에 둔다 (CLAUDE.md 3절 3단계와 같은 원칙).
 // 보내는 자료: 렌털 신청 때 동의한 항목이 있으면 그대로, 없으면 동의 화면 기본값(올린 자료 전부).
+// 2026-11-21 새 디자인 기준(6절): 상품은 카드 없이 바탕 위에(아이콘 타일 없음), 흰 카드는 「함께 보내는 내용」 하나, 동의는 구분선 줄.
 // 금리는 예시 금리만, 대출을 이 앱에서 실행하지 않는다 (2-1). 이미 보낸 곳이면 다시 보내지 않고 상태만 보여 준다(철회한 곳은 다시 보낼 수 있다).
 
 import { CircleCheck } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { useDemo, useT } from "@/components/demo/DemoProvider";
-import { CATEGORY_ICON, PriceText, useProductText } from "@/components/recommend/ProductParts";
+import { PriceText, useProductText } from "@/components/recommend/ProductParts";
 import { SendCard } from "@/components/share/SendCard";
 import { AppHeader } from "@/components/ui/AppHeader";
 import { BottomBar } from "@/components/ui/BottomBar";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { IconTile } from "@/components/ui/IconTile";
 import { ScreenSkeleton } from "@/components/ui/Skeleton";
 import { DEMO_TODAY } from "@/config/demo";
 import {
@@ -88,7 +88,7 @@ export default function RecommendSendPage() {
       <div className="flex flex-1 flex-col">
         <AppHeader title={t("recommend.sendPage.title")} back="/recommend" />
         <main className="px-4 pt-2">
-          <Card className="text-sm text-muted">{t("recommend.sendPage.notFound")}</Card>
+          <p className="text-base text-muted">{t("recommend.sendPage.notFound")}</p>
         </main>
       </div>
     );
@@ -99,7 +99,7 @@ export default function RecommendSendPage() {
       <div className="flex flex-1 flex-col">
         <AppHeader title={t("recommend.sendPage.title")} back="/recommend" />
         <main className="flex flex-col gap-3 px-4 pt-2">
-          <Card className="text-sm text-muted">{t("recommend.hold")}</Card>
+          <p className="text-base text-muted">{t("recommend.hold")}</p>
           <ButtonLink href="/recommend" variant="secondary">
             {t("recommend.title")}
           </ButtonLink>
@@ -123,13 +123,13 @@ export default function RecommendSendPage() {
   return (
     <div className="flex flex-1 flex-col">
       <AppHeader title={t("recommend.sendPage.title")} back="/recommend" />
-      <main className="flex flex-col gap-4 px-4 pt-2 pb-6">
-        <ProductCard product={target.product} offer={target.offer} partner={partnerName} />
+      <main className="flex flex-col gap-6 px-4 pt-2 pb-6">
+        <ProductSummary product={target.product} offer={target.offer} partner={partnerName} />
 
         {locked && view?.stage === "C" && view.status === "scored" ? (
-          <Card className="text-sm text-muted">
+          <p className="text-base font-semibold text-muted">
             {t("recommend.lockedGrade", { g: view.locked.find((l) => l.product.id === target.product.id)?.minGrade ?? "" })}
-          </Card>
+          </p>
         ) : null}
 
         {!locked && target.sent ? (
@@ -152,20 +152,22 @@ export default function RecommendSendPage() {
         {!locked && !target.sent ? (
           <>
             <SendCard items={target.items} submission={submission} />
-            <p className="px-1 text-xs leading-relaxed text-muted">{t("recommend.sendPage.onlyHere", { partner: partnerName })}</p>
-            <label className="flex items-start gap-3 rounded-2xl bg-lavender p-4">
-              <input
-                type="checkbox"
-                checked={confirmed}
-                onChange={(e) => setConfirmed(e.target.checked)}
-                className="mt-0.5 size-5 accent-brand-purple"
-              />
-              <span className="text-sm">{t("recommend.sendPage.consent", { partner: partnerName, until })}</span>
-            </label>
+            <div>
+              <p className="text-sm leading-relaxed text-muted">{t("recommend.sendPage.onlyHere", { partner: partnerName })}</p>
+              <label className="mt-3 flex min-h-14 cursor-pointer items-start gap-3 border-y border-line py-4">
+                <input
+                  type="checkbox"
+                  checked={confirmed}
+                  onChange={(e) => setConfirmed(e.target.checked)}
+                  className="mt-0.5 size-5 shrink-0 accent-brand-purple"
+                />
+                <span className="text-base font-medium">{t("recommend.sendPage.consent", { partner: partnerName, until })}</span>
+              </label>
+            </div>
           </>
         ) : null}
 
-        <p className="px-1 text-xs leading-relaxed text-muted">{t("recommend.disclaimer")}</p>
+        <p className="text-xs leading-relaxed text-muted">{t("recommend.disclaimer")}</p>
       </main>
       {!locked && !target.sent ? (
         <BottomBar>
@@ -178,27 +180,22 @@ export default function RecommendSendPage() {
   );
 }
 
-function ProductCard({ product, offer, partner }: { product: Product; offer: ProductOffer | null; partner: string }) {
+/** 보낼 상품: 카드 없이 바탕 위에. 예시 금리가 이 화면의 데이터 한 곳(보라) */
+function ProductSummary({ product, offer, partner }: { product: Product; offer: ProductOffer | null; partner: string }) {
   const t = useT();
   const { name, desc } = useProductText(product);
-  const Icon = CATEGORY_ICON[product.category];
   const term = product.termMonths;
   return (
-    <Card className="flex flex-col gap-3">
-      <div className="flex items-start gap-3">
-        <IconTile>
-          <Icon className="size-5" aria-hidden />
-        </IconTile>
-        <span className="min-w-0 flex-1">
-          <span className="block text-xs text-muted">
-            {partner} · {t(`recommend.categories.${product.category}`)}
-          </span>
-          <span className="block text-lg font-bold">{name}</span>
-          <span className="block text-sm text-muted">{desc}</span>
-          {term ? <span className="mt-1 block text-xs text-muted">{t("recommend.term", { min: term[0], max: term[1] })}</span> : null}
+    <section className="flex items-start gap-3">
+      <span className="min-w-0 flex-1">
+        <span className="block text-sm text-muted">
+          {partner} · {t(`recommend.categories.${product.category}`)}
         </span>
-        {offer ? <PriceText offer={offer} big /> : null}
-      </div>
-    </Card>
+        <span className="mt-0.5 block text-2xl leading-tight font-bold">{name}</span>
+        <span className="mt-1 block text-sm text-muted">{desc}</span>
+        {term ? <span className="mt-0.5 block text-xs text-muted">{t("recommend.term", { min: term[0], max: term[1] })}</span> : null}
+      </span>
+      {offer ? <PriceText offer={offer} big /> : null}
+    </section>
   );
 }

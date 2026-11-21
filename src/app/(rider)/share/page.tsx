@@ -4,8 +4,10 @@
 // 렌털 신청 흐름으로 들어왔으면 렌털사 D는 3단계에서 동의를 받았다(「신청한 곳」 배지). 홈에서 시작했으면 배지가 없다. 다른 곳을 고르면 같은 항목으로 동의를 한 번 더 확인한다.
 // 승인율·심사 시간·OJK 문구는 쓰지 않는다 (CLAUDE.md 6절).
 // 기관은 종류별로 묶고 대출(은행)을 맨 위에 둔다 (2026-11-20 멘토링: 대출이 메인). 이름 알파벳도 위에서부터 A → E.
+// 2026-11-21 새 디자인 기준(6절): 흰 카드는 「함께 보내는 내용」 하나. 기관은 묶음 제목 아래 아이콘 타일 없는 구분선 줄,
+// 고르면 오른쪽 원이 보라 체크로 바뀐다(컨트롤의 켜진 상태).
 
-import { Bike, Building2, CreditCard, Landmark, Shield, Check, type LucideIcon } from "lucide-react";
+import { Check } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDemo, useT } from "@/components/demo/DemoProvider";
@@ -14,19 +16,11 @@ import { AppHeader } from "@/components/ui/AppHeader";
 import { Badge } from "@/components/ui/Badge";
 import { BottomBar } from "@/components/ui/BottomBar";
 import { Button } from "@/components/ui/Button";
-import { IconTile } from "@/components/ui/IconTile";
 import { StepBar } from "@/components/ui/StepBar";
 import { getRiderSubmissionView, type RiderSubmissionView } from "@/credit/riderView";
 import { createShareGrant, getRider, listPartners, listShareGrants, submitApplication } from "@/data/repository";
 import type { Partner, PartnerType, Rider, ShareGrant } from "@/data/types";
 import { defaultShareItems, isActiveGrant } from "@/lib/shareItems";
-
-const TYPE_ICON: Record<PartnerType, LucideIcon> = {
-  ev_rental: Bike,
-  installment: CreditCard,
-  bank: Landmark,
-  insurance: Shield,
-};
 
 /** 묶음 순서: 대출이 먼저 */
 const TYPE_ORDER: PartnerType[] = ["bank", "installment", "ev_rental", "insurance"];
@@ -84,29 +78,27 @@ export default function SharePage() {
   return (
     <div className="flex flex-1 flex-col">
       <AppHeader title={t("share.header")} />
-      <StepBar current={4} total={4} />
-      <main className="flex flex-col gap-4 px-4">
-        <div>
-          <Badge tone="lavender">{t("share.step")}</Badge>
-          <h2 className="mt-3 text-2xl font-bold">{t("share.title")}</h2>
-          <p className="mt-2 text-base leading-relaxed text-muted">{t("share.body")}</p>
-        </div>
+      <StepBar current={4} total={4} label={t("share.step")} />
+      <main className="flex flex-col px-4 pb-6">
+        <h2 className="text-2xl leading-tight font-bold">{t("share.title")}</h2>
+        <p className="mt-2 text-base leading-relaxed text-muted">{t("share.body")}</p>
 
-        <SendCard items={items} submission={submission} />
+        <div className="mt-6">
+          <SendCard items={items} submission={submission} />
+        </div>
 
         {TYPE_ORDER.map((type) => {
           const group = partners.filter((p) => p.type === type).sort((a, b) => a.nameKo.localeCompare(b.nameKo));
           if (group.length === 0) return null;
           const main = type === "bank";
           return (
-            <section key={type} className={`flex flex-col gap-2 ${main ? "rounded-[28px] bg-lavender p-2" : ""}`}>
-              <h3 className={`flex items-center gap-2 px-2 pt-1 font-bold ${main ? "text-base" : "text-sm text-muted"}`}>
+            <section key={type} aria-labelledby={`share-${type}`} className={main ? "mt-8" : "mt-6"}>
+              <h3 id={`share-${type}`} className="flex items-center gap-2 text-base font-bold">
                 {t(`share.groups.${type}`)}
-                {main ? <Badge tone="lime">{t("share.mainGroup")}</Badge> : null}
+                {main ? <Badge tone="lavender">{t("share.mainGroup")}</Badge> : null}
               </h3>
-              <ul className="flex flex-col gap-2">
+              <ul className="mt-1 flex flex-col divide-y divide-line border-b border-line">
                 {group.map((p) => {
-                  const Icon = TYPE_ICON[p.type] ?? Building2;
                   const on = picked.has(p.id);
                   return (
                     <li key={p.id}>
@@ -114,20 +106,19 @@ export default function SharePage() {
                         type="button"
                         aria-pressed={on}
                         onClick={() => toggle(p.id)}
-                        className={`flex w-full items-center gap-3 rounded-3xl bg-surface p-4 text-left ring-2 transition ${on ? "ring-brand-purple" : "ring-transparent"}`}
+                        className="flex min-h-16 w-full items-center gap-3 py-3 text-left active:opacity-70"
                       >
-                        <IconTile>
-                          <Icon className="size-5" aria-hidden />
-                        </IconTile>
                         <span className="min-w-0 flex-1">
-                          <span className="flex flex-wrap items-center gap-2 font-semibold">
+                          <span className="flex flex-wrap items-center gap-2 text-base font-semibold">
                             {lang === "ko" ? p.nameKo : p.nameId}
-                            {p.id === partnerId && entryGrant ? <Badge tone="lime">{t("share.applied")}</Badge> : null}
+                            {p.id === partnerId && entryGrant ? <Badge tone="neutral">{t("share.applied")}</Badge> : null}
                           </span>
                           <span className="mt-0.5 block text-sm text-muted">{t(`share.types.${p.type}`)}</span>
-                          {grantFor(p.id) ? <span className="mt-1 block text-xs text-brand-purple">{t("share.consented")}</span> : null}
+                          {grantFor(p.id) ? <span className="mt-0.5 block text-xs text-brand-purple">{t("share.consented")}</span> : null}
                         </span>
-                        <span className={`grid size-7 shrink-0 place-items-center rounded-full ${on ? "bg-brand-purple text-white" : "bg-line"}`}>
+                        <span
+                          className={`grid size-7 shrink-0 place-items-center rounded-full transition ${on ? "bg-brand-purple text-white" : "ring-2 ring-line-strong ring-inset"}`}
+                        >
                           {on ? <Check className="size-4" strokeWidth={3} aria-hidden /> : null}
                         </span>
                       </button>
@@ -140,14 +131,14 @@ export default function SharePage() {
         })}
 
         {needsConsent.length > 0 ? (
-          <label className="flex items-start gap-3 rounded-2xl bg-lavender p-4">
+          <label className="mt-6 flex min-h-14 cursor-pointer items-start gap-3 border-y border-line py-4">
             <input
               type="checkbox"
               checked={confirmed}
               onChange={(e) => setConfirmed(e.target.checked)}
-              className="mt-0.5 size-5 accent-brand-purple"
+              className="mt-0.5 size-5 shrink-0 accent-brand-purple"
             />
-            <span className="text-sm">
+            <span className="text-base font-medium">
               {t("share.extraConsent", {
                 names: partners
                   .filter((p) => needsConsent.includes(p.id))
@@ -158,7 +149,7 @@ export default function SharePage() {
           </label>
         ) : null}
 
-        <p className="px-1 text-center text-sm text-muted">{t("share.onlyPicked")}</p>
+        <p className="mt-4 text-sm text-muted">{t("share.onlyPicked")}</p>
       </main>
 
       <BottomBar>
