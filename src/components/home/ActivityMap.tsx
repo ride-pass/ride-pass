@@ -13,9 +13,10 @@ import { formatMonth, formatRupiah, formatShortDate } from "@/lib/format";
 
 type Level = "before" | "rest" | 1 | 2 | 3;
 
+// 쉰 날은 크림 바탕에서도 칸이 보이게 line-strong, 활동 시작 전은 한 단계 옅게 (CLAUDE.md 6절: 390px에서 흐릿하지 않게)
 const CELL: Record<string, string> = {
-  before: "bg-line/40",
-  rest: "bg-line",
+  before: "bg-line",
+  rest: "bg-line-strong",
   1: "bg-brand-purple/35",
   2: "bg-brand-purple/65",
   3: "bg-brand-purple",
@@ -75,7 +76,7 @@ export function ActivityMap({ daily }: { daily: DailyActivity[] }) {
       <div
         role="img"
         aria-label={t("home.trail.aria", { n: activeDays })}
-        className="grid grid-flow-col grid-rows-7 gap-[3px]"
+        className="grid grid-flow-col grid-rows-7 gap-[2px]"
         style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
         onClick={(e) => {
           const i = (e.target as HTMLElement).dataset.index;
@@ -90,7 +91,7 @@ export function ActivityMap({ daily }: { daily: DailyActivity[] }) {
             key={c.day.date}
             data-index={c.index}
             aria-hidden
-            className={`aspect-square cursor-pointer rounded-[3px] ${CELL[String(c.level)]} ${c.index === picked ? "outline-2 outline-offset-1 outline-brand-navy" : ""}`}
+            className={`aspect-square cursor-pointer rounded-[2px] ${CELL[String(c.level)]} ${c.index === picked ? "outline-2 outline-offset-1 outline-brand-navy" : ""}`}
           />
         ))}
       </div>

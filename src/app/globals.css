@@ -13,6 +13,7 @@
   --color-surface: #ffffff; /* 카드 */
   --color-lavender-strong: #d7d0f5; /* 눌림, 선택 테두리 (Soft를 한 단계 진하게) */
   --color-line: #e8e6e0; /* 구분선, 입력칸 테두리 */
+  --color-line-strong: #d3d0c6; /* 크림 바탕 위에서도 보이는 빈 칸: 쉰 날, 지난 막대 (CLAUDE.md 6절) */
   --color-muted: #6e6c78; /* 보조 글자 */
   --color-lime-ink: #3f5a0f; /* 라임 바탕 위 글자 */
   --color-danger: #d14343; /* 경고 */
@@ -26,6 +27,11 @@
   --font-sans: var(--font-pretendard), system-ui, sans-serif;
 
   --breakpoint-app: 390px; /* Figma 기준 화면 폭 */
+
+  /* 글자 크기는 다섯 단계만 쓴다 (CLAUDE.md 6절): figure 40 · 2xl 24 · base 16 · sm 14 · xs 12 (+ 11은 배지·각주만) */
+  --text-figure: 2.5rem; /* 금액·점수 같은 핵심 숫자. tabular-nums와 함께 */
+  --text-figure--line-height: 1;
+  --text-figure--letter-spacing: -0.02em;
 
   /* 움직임은 반응으로만 쓴다: 화면 전환, 바텀시트, 토스트. 쓰는 곳은 motion-safe:로 감싼다 */
   /* backwards: 끝나면 transform이 남지 않는다. 남으면 화면 안의 바텀시트(fixed)가 화면이 아니라 이 틀에 붙는다 */

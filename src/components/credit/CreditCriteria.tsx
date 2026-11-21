@@ -55,19 +55,20 @@ export function CreditCriteria({ reasons, criteria, grade }: Props) {
   const top = reasons[0];
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-1">
       {top ? (
-        <div className="rounded-2xl bg-canvas p-3 text-sm">
-          <p className="text-xs font-semibold text-muted">{t("credit.criteria.topReason")}</p>
-          <p className="mt-0.5 font-medium">
+        <>
+          <p className="text-xs text-muted">{t("credit.criteria.topReason")}</p>
+          <p className="text-lg leading-snug font-semibold">
             <ReasonText reason={top} />
           </p>
-        </div>
+        </>
       ) : null}
+      {/* 상자 없이 글자 링크. 높이 44px로 누르기 쉽게 */}
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="flex items-center justify-between rounded-2xl px-3 py-2.5 text-sm font-semibold text-brand-purple ring-1 ring-line transition active:scale-[0.99]"
+        className="-mx-1 flex min-h-11 items-center gap-0.5 self-start rounded-lg px-1 text-sm font-semibold text-brand-purple active:opacity-70"
       >
         {t("credit.criteria.open")}
         <ChevronRight className="size-4" aria-hidden />

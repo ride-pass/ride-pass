@@ -1,6 +1,6 @@
 "use client";
 
-// 30일 단위 순수입 막대 6개 (오래된 구간 → 최근 구간). 최근 구간만 보라로 칠하고 금액을 단다.
+// 30일 단위 순수입 막대 6개 (오래된 구간 → 최근 구간). 최근 구간만 보라로 칠하고 금액을 단다. 지난 구간은 무채색 (CLAUDE.md 6절).
 // 첫 활동일 이전 날이 섞인 구간은 회색으로 그린다. 신용도 엔진도 그 구간은 평균·안정성 계산에서 뺀다 (derive.ts).
 
 import { useDemo, useT } from "@/components/demo/DemoProvider";
@@ -20,7 +20,7 @@ export function MonthBars({ months }: { months: MonthBlockNet[] }) {
       <ol className="grid grid-cols-6 items-end gap-2" style={{ height: BAR_AREA_PX + 20 }}>
         {months.map((m, i) => {
           const h = Math.max(4, Math.round((m.net / max) * BAR_AREA_PX));
-          const color = i === latest ? "bg-brand-purple" : m.partial ? "bg-line" : "bg-lavender-strong";
+          const color = i === latest ? "bg-brand-purple" : m.partial ? "bg-line" : "bg-line-strong";
           return (
             <li
               key={m.end}
@@ -36,7 +36,7 @@ export function MonthBars({ months }: { months: MonthBlockNet[] }) {
                   {formatRupiahCompact(m.net, lang)}
                 </span>
               ) : null}
-              <span className={`w-full rounded-md ${color}`} style={{ height: h }} />
+              <span className={`w-full rounded-t-[4px] ${color}`} style={{ height: h }} />
             </li>
           );
         })}
