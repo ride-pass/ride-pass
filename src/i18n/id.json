@@ -613,7 +613,8 @@
       "title": "Penghasilan bersih per 30 hari",
       "avg": "Rata-rata 3 bulan terakhir {amount}",
       "aria": "{from}–{to}: {amount}",
-      "partialNote": "Batang abu-abu: periode yang masih mencakup hari sebelum kamu mulai bekerja."
+      "partialNote": "Baris pudar = periode yang mencakup hari sebelum mulai bekerja.",
+      "spread": "Per 30 hari: terendah {min} · tertinggi {max}"
     },
     "feed": {
       "title": "Aktivitas terbaru",
