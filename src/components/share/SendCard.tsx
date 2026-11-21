@@ -5,7 +5,7 @@
 
 import { useT } from "@/components/demo/DemoProvider";
 import { CreditCriteria } from "@/components/credit/CreditCriteria";
-import { Badge } from "@/components/ui/Badge";
+import { PkaBadge } from "@/components/credit/PkaBadge";
 import { Card } from "@/components/ui/Card";
 import { APP_NAME } from "@/config/brand";
 import type { RiderSubmissionView } from "@/credit/riderView";
@@ -36,7 +36,7 @@ export function SendCard({ items, submission }: { items: ShareGrant["items"]; su
         <div className="flex flex-col gap-2 border-t border-line pt-3">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <span className="text-sm font-semibold text-brand-purple">{t("share.send.creditTitle", { app: APP_NAME })}</span>
-            <Badge tone="lime">{t("credit.badge.pka_licensed_feature")}</Badge>
+            <PkaBadge />
           </div>
           {credit.status === "scored" && submission?.stage === "C" && submission.criteria ? (
             <>
