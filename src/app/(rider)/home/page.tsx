@@ -108,8 +108,8 @@ export default function HomePage() {
           {rider.area} · {rider.platforms.map((p) => t(`platforms.${p}`)).join(", ")}
         </p>
 
-        {/* 순수입: 카드 없이 바탕 위에. 숫자 하나가 이 화면에서 가장 크다 */}
-        <section aria-labelledby="home-income" className="mt-5">
+        {/* 순수입(사실) 카드. 아래 신용도(평가) 카드와 같은 모양으로 두 장을 붙여 둔다 (CLAUDE.md 6-3). 숫자 하나가 이 화면에서 가장 크다 */}
+        <section aria-labelledby="home-income" className="mt-5 rounded-3xl bg-surface p-4">
           <h2 id="home-income" className="text-sm text-muted">
             {t("home.monthlyNet")}
           </h2>
@@ -132,7 +132,7 @@ export default function HomePage() {
         </section>
 
         {credit.status === "hold" ? (
-          <section className="mt-5 flex flex-col gap-2 rounded-3xl bg-surface p-4">
+          <section className="mt-3 flex flex-col gap-2 rounded-3xl bg-surface p-4">
             <h2 className="flex items-center gap-1.5 font-bold">
               <Info className="size-5 text-danger" aria-hidden />
               {t("credit.holds.title")}
@@ -262,7 +262,7 @@ function CreditCard({ view, onReason }: { view: Exclude<RiderCreditView, { statu
   const ratio = view.status === "readiness" ? view.metCount / view.totalCount : (view.score - 400) / 500;
   const top = view.status === "scored" ? view.reasons[0] : undefined;
   return (
-    <section aria-labelledby="home-credit" className="mt-5 rounded-3xl bg-surface px-4 pt-3 pb-3">
+    <section aria-labelledby="home-credit" className="mt-3 rounded-3xl bg-surface px-4 pt-3 pb-3">
       <div className="flex items-center justify-between gap-2">
         <Link href="/credit" id="home-credit" className="-ml-1 flex min-h-9 items-center gap-0.5 rounded-lg px-1 text-sm text-muted active:opacity-70">
           {view.status === "readiness" ? t("credit.readiness.title") : t("tabs.credit")}
