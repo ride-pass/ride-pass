@@ -113,8 +113,9 @@ export default function HomePage() {
           <h2 id="home-income" className="text-sm text-muted">
             {t("home.monthlyNet")}
           </h2>
-          <p className="mt-1 text-figure font-bold whitespace-nowrap tabular-nums">{formatRupiah(metrics.monthlyNet)}</p>
-          <p className={`mt-2 flex items-center gap-1 text-sm font-medium ${matched ? "text-lime-ink" : "text-danger"}`}>
+          {/* 입금 내역과 차이가 크면 정산 화면 금액은 아직 검증 전이라 회색으로 낮추고, 경고 줄을 굵게 둔다 (4-4 경고 규칙) */}
+          <p className={`mt-1 text-figure font-bold whitespace-nowrap tabular-nums ${matched ? "" : "text-muted"}`}>{formatRupiah(metrics.monthlyNet)}</p>
+          <p className={`mt-2 flex items-center gap-1 text-sm ${matched ? "font-medium text-lime-ink" : "font-semibold text-danger"}`}>
             {matched ? <CircleCheck className="size-4" aria-hidden /> : <TriangleAlert className="size-4" aria-hidden />}
             {matched ? t("home.depositMatched") : t("home.depositMismatch")}
           </p>
