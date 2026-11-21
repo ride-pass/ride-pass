@@ -248,8 +248,6 @@
     "noCapture": "Tidak ada layar setoran untuk difoto",
     "reading": "AI sedang membaca…",
     "frameHint": "Posisikan ringkasan setoran harian di dalam bingkai",
-    "grid": "Kisi",
-    "flip": "Ganti kamera",
     "shoot": "Foto",
     "blurryTitle": "Foto buram, tidak terbaca",
     "blurryBody": "Ada pantulan cahaya atau goyangan. Foto ulang di tempat yang terang.",
@@ -280,8 +278,6 @@
     "guide3Body": "Layar yang diedit atau milik orang lain akan diberi peringatan pemalsuan.",
     "next": "Buat slip penghasilan",
     "demo": "Demo: adegan memotret layar setoran fiktif. Kamera sungguhan tidak dipakai.",
-    "frontCam": "Kamera depan",
-    "backCam": "Kamera belakang",
     "searching": "Mencari layar setoran…",
     "locked": "Layar setoran ditemukan",
     "steps": {
