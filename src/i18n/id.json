@@ -600,9 +600,9 @@
     "viewStatement": "Lihat slip penghasilan",
     "trail": {
       "title": "Jejak kerja",
-      "summary": "{n} hari kerja dalam 180 hari terakhir",
+      "summary": "{n} hari kerja dalam {d} hari terakhir",
       "streak": "{m} bulan berturut-turut",
-      "aria": "Peta aktivitas 180 hari terakhir. {n} hari kerja.",
+      "aria": "Peta aktivitas {d} hari terakhir. {n} hari kerja.",
       "dayDetail": "{date} · {net} · {trips} order",
       "dayOff": "{date} · Libur",
       "dayBefore": "{date} · Belum mulai",

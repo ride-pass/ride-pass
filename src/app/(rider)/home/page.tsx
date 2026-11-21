@@ -153,7 +153,7 @@ export default function HomePage() {
             {t("home.trail.title")}
           </h2>
           <p className="mt-0.5 text-sm text-muted">
-            {t("home.trail.summary", { n: activity.activeDays })} · {t("home.trail.streak", { m: metrics.consecutiveActiveMonths })}
+            {t("home.trail.summary", { n: activity.activeDays, d: activity.daily.length })} · {t("home.trail.streak", { m: metrics.consecutiveActiveMonths })}
           </p>
           <div className="mt-3">
             <ActivityMap daily={activity.daily} />

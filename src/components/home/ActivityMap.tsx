@@ -75,7 +75,7 @@ export function ActivityMap({ daily }: { daily: DailyActivity[] }) {
       </div>
       <div
         role="img"
-        aria-label={t("home.trail.aria", { n: activeDays })}
+        aria-label={t("home.trail.aria", { n: activeDays, d: daily.length })}
         className="grid grid-flow-col grid-rows-7 gap-[2px]"
         style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
         onClick={(e) => {

@@ -599,9 +599,9 @@
     "viewStatement": "수입 명세서 보기",
     "trail": {
       "title": "일한 흔적",
-      "summary": "최근 180일 중 {n}일 일했습니다",
+      "summary": "최근 {d}일 중 {n}일 일했습니다",
       "streak": "연속 {m}개월",
-      "aria": "최근 180일 활동 지도. {n}일 일했습니다.",
+      "aria": "최근 {d}일 활동 지도. {n}일 일했습니다.",
       "dayDetail": "{date} · {net} · {trips}건",
       "dayOff": "{date} · 쉰 날",
       "dayBefore": "{date} · 활동 시작 전",
