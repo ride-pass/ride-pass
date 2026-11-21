@@ -35,7 +35,8 @@ export function PriceText({ offer, big = false }: { offer: ProductOffer; big?: b
   return (
     <span className="flex flex-col items-end text-right">
       <span className="text-xs text-muted">{label}</span>
-      <span className={`font-bold whitespace-nowrap text-brand-purple tabular-nums ${big ? "text-lg" : "text-sm"}`}>{value}</span>
+      {/* 보라는 1위 카드의 큰 금리 한 곳만 (데이터 한 곳, CLAUDE.md 6절). 목록의 금리는 남색 */}
+      <span className={`font-bold whitespace-nowrap tabular-nums ${big ? "text-2xl text-brand-purple" : "text-base text-brand-navy"}`}>{value}</span>
     </span>
   );
 }
