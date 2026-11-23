@@ -16,8 +16,8 @@ import { FakeIdebDocument } from "@/components/samples/FakeIdebDocument";
 import { FakeRentalStatement } from "@/components/samples/FakeRentalStatement";
 import { FakeSettlementScreen } from "@/components/samples/FakeSettlementScreen";
 import { FakeTelecomBill } from "@/components/samples/FakeTelecomBill";
-import { ButtonLink } from "@/components/ui/Button";
-import { Sheet } from "@/components/ui/Sheet";
+import { Button } from "@/components/ui/Button";
+import { Sheet, useSheetNavigate } from "@/components/ui/Sheet";
 import type { ReadinessFactor, ReadinessFactorId } from "@/credit/riderView";
 import { deriveSettlementVsDeposits, type RiderActivity, type RiderMetrics, type RiderRecords } from "@/data/derive";
 import { getIncomeStatement, getRiderActivity, getRiderMetrics, getRiderRecords, listPartners } from "@/data/repository";
@@ -153,11 +153,7 @@ export function FactorDocsSheet({ factor, tip, onClose }: Props) {
                 })}
               </ul>
             )}
-            {content.link ? (
-              <ButtonLink href={content.link.href} variant="secondary" className="mt-3">
-                {content.link.label}
-              </ButtonLink>
-            ) : null}
+            {content.link ? <SheetLink href={content.link.href} label={content.link.label} /> : null}
           </section>
 
           {tip !== undefined ? (
@@ -177,6 +173,16 @@ export function FactorDocsSheet({ factor, tip, onClose }: Props) {
         </div>
       ) : null}
     </Sheet>
+  );
+}
+
+/** 창 안 링크: 창을 먼저 닫아 뒤로 가기용 기록을 지운 뒤 이동한다 (Sheet의 useSheetNavigate) */
+function SheetLink({ href, label }: { href: string; label: string }) {
+  const navigate = useSheetNavigate();
+  return (
+    <Button variant="secondary" className="mt-3" onClick={() => navigate?.(href)}>
+      {label}
+    </Button>
   );
 }
 
