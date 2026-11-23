@@ -595,6 +595,8 @@
   "home": {
     "hello": "Halo, {name}",
     "monthlyNet": "Penghasilan bersih 30 hari",
+    "verifiedIncome": "Penghasilan terverifikasi",
+    "unverifiedIncome": "Belum terverifikasi",
     "depositMatched": "Cocok dengan mutasi",
     "depositMismatch": "Selisih besar dengan mutasi",
     "viewStatement": "Lihat slip penghasilan",

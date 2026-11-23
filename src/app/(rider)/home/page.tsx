@@ -1,7 +1,7 @@
 "use client";
 
 // 기사 앱 홈. 기사가 매일 열어 보는 화면이다. 2026-11-21 새 디자인 기준(CLAUDE.md 6절)으로 다시 짰다.
-// 위에서부터 크림 바탕 위에 바로: 순수입(40px 숫자 + 명세서 버튼) → 신용도 카드(이 화면의 유일한 흰 카드) →
+// 위에서부터: 신용도 카드 → 순수입 카드(「검증된 소득」 칩 + 40px 숫자 + 명세서 버튼), 흰 카드 두 장 (2026-11-23 순서 바꿈) →
 // 일한 흔적(180일 근무 달력, 늘 펼침) → 30일 단위 순수입 → 최근 활동.
 // 390×844 첫 화면 아래쪽에 「일한 흔적」 제목과 달력 윗부분이 보이도록 위쪽 여백을 조인다.
 // 신용도 자리는 getRiderCreditView()가 정한다. A: 신용 준비도 5개 중 ○개, C: 신용도 + 「PKA 인가 후 제공 기능」 배지
@@ -108,9 +108,29 @@ export default function HomePage() {
           {rider.area} · {rider.platforms.map((p) => t(`platforms.${p}`)).join(", ")}
         </p>
 
-        {/* 순수입(사실) 카드. 아래 신용도(평가) 카드와 같은 모양으로 두 장을 붙여 둔다 (CLAUDE.md 6-3). 숫자 하나가 이 화면에서 가장 크다 */}
-        <section aria-labelledby="home-income" className="mt-5 rounded-3xl bg-surface p-4">
-          <h2 id="home-income" className="text-sm text-muted">
+        {credit.status === "hold" ? (
+          <section className="mt-5 flex flex-col gap-2 rounded-3xl bg-surface p-4">
+            <h2 className="flex items-center gap-1.5 font-bold">
+              <Info className="size-5 text-danger" aria-hidden />
+              {t("credit.holds.title")}
+            </h2>
+            <p className="text-sm text-muted">{credit.holds.map((h) => t(`credit.holds.${h}`)).join(" · ")}</p>
+            <ButtonLink href="/capture">{t("creditPage.goRetake")}</ButtonLink>
+          </section>
+        ) : (
+          <CreditCard view={credit} onReason={() => setCriteriaOpen(true)} />
+        )}
+        {credit.status === "scored" ? (
+          <CriteriaSheet open={criteriaOpen} onClose={() => setCriteriaOpen(false)} reasons={credit.reasons} criteria={credit.criteria} grade={credit.grade} />
+        ) : null}
+
+        {/* 순수입(사실) 카드. 위 신용도(평가) 카드와 같은 모양으로 두 장을 붙여 둔다 (CLAUDE.md 6-3) */}
+        <section aria-labelledby="home-income" className="mt-3 rounded-3xl bg-surface p-4">
+          {/* 입금 내역과 맞을 때만 「검증된 소득」. 차이가 크면 검증했다고 쓰지 않는다 (2026-11-23 팀 의견, 4-4) */}
+          <Badge tone={matched ? "lime" : "neutral"} icon={matched ? <CircleCheck className="size-3.5" aria-hidden /> : undefined}>
+            {matched ? t("home.verifiedIncome") : t("home.unverifiedIncome")}
+          </Badge>
+          <h2 id="home-income" className="mt-2 text-sm text-muted">
             {t("home.monthlyNet")}
           </h2>
           {/* 입금 내역과 차이가 크면 정산 화면 금액은 아직 검증 전이라 회색으로 낮추고, 경고 줄을 굵게 둔다 (4-4 경고 규칙) */}
@@ -130,22 +150,6 @@ export default function HomePage() {
             </Link>
           </div>
         </section>
-
-        {credit.status === "hold" ? (
-          <section className="mt-3 flex flex-col gap-2 rounded-3xl bg-surface p-4">
-            <h2 className="flex items-center gap-1.5 font-bold">
-              <Info className="size-5 text-danger" aria-hidden />
-              {t("credit.holds.title")}
-            </h2>
-            <p className="text-sm text-muted">{credit.holds.map((h) => t(`credit.holds.${h}`)).join(" · ")}</p>
-            <ButtonLink href="/capture">{t("creditPage.goRetake")}</ButtonLink>
-          </section>
-        ) : (
-          <CreditCard view={credit} onReason={() => setCriteriaOpen(true)} />
-        )}
-        {credit.status === "scored" ? (
-          <CriteriaSheet open={criteriaOpen} onClose={() => setCriteriaOpen(false)} reasons={credit.reasons} criteria={credit.criteria} grade={credit.grade} />
-        ) : null}
 
         {/* 일한 흔적: 이 앱만의 데이터. 접지 않고 늘 펼쳐 둔다 */}
         <section aria-labelledby="home-trail" className="mt-7">
@@ -254,7 +258,7 @@ function FeedList({ items }: { items: FeedItem[] }) {
 }
 
 /**
- * 신용도 카드: 이 화면의 유일한 흰 카드. 단계별 표시는 riderView가 정한다 (2-4).
+ * 신용도 카드: 홈 맨 위 흰 카드. 단계별 표시는 riderView가 정한다 (2-4).
  * 위: 「내 신용 ›」(내 신용 화면으로) + PKA 배지 / 가운데: 점수 40px + 작은 원형 표시 / 아래: 가장 큰 이유 한 줄 + 시연용 표기
  */
 function CreditCard({ view, onReason }: { view: Exclude<RiderCreditView, { status: "hold" }>; onReason: () => void }) {
@@ -262,7 +266,7 @@ function CreditCard({ view, onReason }: { view: Exclude<RiderCreditView, { statu
   const ratio = view.status === "readiness" ? view.metCount / view.totalCount : (view.score - 400) / 500;
   const top = view.status === "scored" ? view.reasons[0] : undefined;
   return (
-    <section aria-labelledby="home-credit" className="mt-3 rounded-3xl bg-surface px-4 pt-3 pb-3">
+    <section aria-labelledby="home-credit" className="mt-5 rounded-3xl bg-surface px-4 pt-3 pb-3">
       <div className="flex items-center justify-between gap-2">
         <Link href="/credit" id="home-credit" className="-ml-1 flex min-h-9 items-center gap-0.5 rounded-lg px-1 text-sm text-muted active:opacity-70">
           {view.status === "readiness" ? t("credit.readiness.title") : t("tabs.credit")}
