@@ -66,7 +66,9 @@ describe("partnerView (CLAUDE.md 2-4)", () => {
     expect((await getApplicantReport(PARTNER, "r-budi", "A"))?.status).toBe("no_consent");
   });
 
+  // 2026-11-23부터 앱은 자료가 없는 항목을 보내지 않지만, 기관 리포트는 그런 동의도 안전하게 다룬다
   it("공유했지만 자료가 없으면 none (Agus 렌털 이력)", async () => {
+    await repo.createShareGrant({ riderId: "r-agus", partnerId: PARTNER, items: ["income", "activity", "rental_history"] });
     const report = await getApplicantReport(PARTNER, "r-agus", "A");
     expect(report?.status === "shared" && report.facts.rental).toBe("none");
   });

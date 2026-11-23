@@ -18,9 +18,9 @@ import { BottomBar } from "@/components/ui/BottomBar";
 import { Button } from "@/components/ui/Button";
 import { StepBar } from "@/components/ui/StepBar";
 import { getRiderSubmissionView, type RiderSubmissionView } from "@/credit/riderView";
-import { createShareGrant, getRider, listPartners, listShareGrants, submitApplication } from "@/data/repository";
-import type { Partner, PartnerType, Rider, ShareGrant } from "@/data/types";
-import { defaultShareItems, isActiveGrant } from "@/lib/shareItems";
+import { createShareGrant, getRider, getRiderMetrics, listPartners, listShareGrants, submitApplication } from "@/data/repository";
+import type { Partner, PartnerType, ShareGrant } from "@/data/types";
+import { defaultShareItems, isActiveGrant, shareDataOf, type ShareData } from "@/lib/shareItems";
 
 /** 묶음 순서: 대출이 먼저 */
 const TYPE_ORDER: PartnerType[] = ["bank", "installment", "ev_rental", "insurance"];
@@ -37,19 +37,19 @@ export default function SharePage() {
   const [confirmed, setConfirmed] = useState(false);
   const [busy, setBusy] = useState(false);
   const [submission, setSubmission] = useState<RiderSubmissionView | null>(null);
-  const [rider, setRider] = useState<Rider | null>(null);
+  const [data, setData] = useState<ShareData | null>(null);
 
   useEffect(() => {
     listPartners().then(setPartners);
     listShareGrants(riderId).then(setGrants);
-    getRider(riderId).then(setRider);
+    Promise.all([getRider(riderId), getRiderMetrics(riderId)]).then(([r, m]) => setData(r && m ? shareDataOf(r, m) : null));
   }, [riderId]);
 
   const grantFor = (id: string) => grants.find((g) => g.partnerId === id && isActiveGrant(g));
   /** 렌털 신청 흐름(3단계 동의)으로 들어왔을 때만 있다. 홈에서 시작했으면 없다 */
   const entryGrant = grantFor(partnerId);
-  // 고른 곳 모두에 같은 항목이 간다 (submit 참고). 렌털 동의가 없으면 올린 자료 전부 (lib/shareItems.ts)
-  const items: ShareGrant["items"] = defaultShareItems(rider, entryGrant);
+  // 고른 곳 모두에 같은 항목이 간다 (submit 참고). 렌털 동의가 없으면 올린 자료 전부, 자료가 없는 항목은 빼고 (lib/shareItems.ts)
+  const items: ShareGrant["items"] = defaultShareItems(data, entryGrant);
   const itemsKey = items.join(",");
 
   useEffect(() => {

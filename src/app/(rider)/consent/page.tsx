@@ -17,10 +17,11 @@ import { Button } from "@/components/ui/Button";
 import { StepBar } from "@/components/ui/StepBar";
 import { Toggle } from "@/components/ui/Toggle";
 import { DEMO_TODAY } from "@/config/demo";
-import { createShareGrant, getPartner, getRider } from "@/data/repository";
-import type { Partner, Rider, ShareGrant } from "@/data/types";
+import { createShareGrant, getPartner, getRider, getRiderMetrics } from "@/data/repository";
+import type { Partner, ShareGrant } from "@/data/types";
 import { addDays } from "@/lib/date";
 import { formatDate } from "@/lib/format";
+import { hasShareData, shareDataOf, type ShareData } from "@/lib/shareItems";
 
 type ShareItem = ShareGrant["items"][number];
 
@@ -40,17 +41,18 @@ export default function ConsentPage() {
   const router = useRouter();
   const { riderId, partnerId, lang } = useDemo();
   const [partner, setPartner] = useState<Partner | null>(null);
-  const [rider, setRider] = useState<Rider | null>(null);
+  // 항목마다 자료가 있는지. 없는 항목은 잠그고 「이 시연 인물은 해당 자료가 없습니다」 (2026-11-23)
+  const [data, setData] = useState<ShareData | null>(null);
   const [selected, setSelected] = useState<Set<ShareItem>>(new Set(ITEMS.map((i) => i.id)));
   const [confirmed, setConfirmed] = useState(false);
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
     getPartner(partnerId).then(setPartner);
-    getRider(riderId).then(setRider);
+    Promise.all([getRider(riderId), getRiderMetrics(riderId)]).then(([r, m]) => setData(r && m ? shareDataOf(r, m) : null));
   }, [partnerId, riderId]);
 
-  const available = (id: ShareItem) => id !== "bank_account" || rider?.hasBankAccount !== false;
+  const available = (id: ShareItem) => data === null || hasShareData(id, data);
   const toggle = (id: ShareItem, on: boolean) =>
     setSelected((s) => {
       const next = new Set(s);

@@ -66,14 +66,16 @@ export function DemoPanel() {
   };
 
   if (!open) {
+    // 768px 미만(휴대폰 틀 없음)에서는 아래쪽 주 버튼을 가리지 않게 오른쪽 가장자리 세로 가운데에 아이콘 탭으로 붙인다 (2026-11-23).
+    // 768px 이상(노트북 시연)은 휴대폰 틀 밖 오른쪽 아래 그대로. 글자는 좁은 폭에서 화면 읽기용으로만 남긴다
     return (
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="fixed right-4 bottom-28 z-50 flex items-center gap-1.5 print:hidden rounded-full bg-brand-navy px-3 py-2 text-xs font-semibold text-white shadow-lg"
+        className="fixed top-1/2 right-0 z-50 flex -translate-y-1/2 items-center gap-1.5 rounded-l-full bg-brand-navy py-2 pr-1 pl-1.5 text-xs font-semibold text-white shadow-lg md:top-auto md:right-4 md:bottom-28 md:translate-y-0 md:rounded-full md:px-3 md:py-2 print:hidden"
       >
         <SlidersHorizontal className="size-4" aria-hidden />
-        {t("demo.open")}
+        <span className="sr-only md:not-sr-only">{t("demo.open")}</span>
       </button>
     );
   }

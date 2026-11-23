@@ -20,7 +20,6 @@
     "items": [
       "income",
       "activity",
-      "rental_history",
       "bank_account",
       "telecom_bills"
     ],
@@ -50,7 +49,6 @@
     "items": [
       "income",
       "activity",
-      "rental_history",
       "bank_account",
       "telecom_bills"
     ],

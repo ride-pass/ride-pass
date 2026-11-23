@@ -26,10 +26,10 @@ import {
   type RiderProductView,
   type RiderSubmissionView,
 } from "@/credit/riderView";
-import { createShareGrant, getPartner, getRider, listApplications, listShareGrants, submitApplication } from "@/data/repository";
+import { createShareGrant, getPartner, getRider, getRiderMetrics, listApplications, listShareGrants, submitApplication } from "@/data/repository";
 import type { Application, Partner, Product } from "@/data/types";
 import { addDays } from "@/lib/date";
-import { defaultShareItems, isActiveGrant, type ShareItem } from "@/lib/shareItems";
+import { defaultShareItems, isActiveGrant, shareDataOf, type ShareItem } from "@/lib/shareItems";
 import { formatDate } from "@/lib/format";
 
 const SHARE_DAYS = 30; // mockRepository.createShareGrant와 같은 기간
@@ -71,9 +71,15 @@ export default function RecommendSendPage() {
         setTarget("missing");
         return;
       }
-      const [rider, grants, apps] = await Promise.all([getRider(riderId), listShareGrants(riderId), listApplications(partner.id)]);
+      const [rider, metrics, grants, apps] = await Promise.all([
+        getRider(riderId),
+        getRiderMetrics(riderId),
+        listShareGrants(riderId),
+        listApplications(partner.id),
+      ]);
       const entryGrant = grants.find((g) => g.partnerId === entryPartnerId && isActiveGrant(g));
-      const items = defaultShareItems(rider, entryGrant);
+      // 자료가 없는 항목은 보내지 않는다 (2026-11-23)
+      const items = defaultShareItems(rider && metrics ? shareDataOf(rider, metrics) : null, entryGrant);
       const hasGrant = grants.some((g) => g.partnerId === partner.id && isActiveGrant(g));
       // 철회했으면(유효한 동의 없음) 신청 기록이 남아 있어도 다시 보낼 수 있다. 다시 보내면 새 동의를 만들고 대기 중 신청을 그대로 쓴다
       const sent = hasGrant ? (apps.find((a) => a.riderId === riderId && a.status !== "rejected") ?? null) : null;
