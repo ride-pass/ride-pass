@@ -22,7 +22,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { ScreenSkeleton } from "@/components/ui/Skeleton";
 import { TabBar } from "@/components/ui/TabBar";
 import { APP_NAME, LOGO_HEIGHT, LOGO_PATH, LOGO_WIDTH } from "@/config/brand";
-import { CriteriaSheet, ReasonText } from "@/components/credit/CreditCriteria";
+import { CriteriaSheet } from "@/components/credit/CreditCriteria";
 import { PkaBadge } from "@/components/credit/PkaBadge";
 import { getRiderCreditView, type RiderCreditView } from "@/credit/riderView";
 import type { RiderActivity, RiderMetrics } from "@/data/derive";
@@ -267,7 +267,6 @@ function FeedList({ items }: { items: FeedItem[] }) {
 function CreditCard({ view, onReason }: { view: Exclude<RiderCreditView, { status: "hold" }>; onReason: () => void }) {
   const t = useT();
   const ratio = view.status === "readiness" ? view.metCount / view.totalCount : (view.score - 400) / 500;
-  const top = view.status === "scored" ? view.reasons[0] : undefined;
   return (
     <section aria-labelledby="home-credit" className="mt-5 rounded-3xl bg-surface px-4 pt-3 pb-3">
       <div className="flex items-center justify-between gap-2">
@@ -301,19 +300,16 @@ function CreditCard({ view, onReason }: { view: Exclude<RiderCreditView, { statu
         </span>
         <Ring ratio={ratio} />
       </Link>
-      {top ? (
+      {/* 2026-11-23: 홈에서는 「가장 큰 이유」 문장을 빼고 「평가 기준 보기 ›」만 둔다 (팀 의견: 홈에선 군더더기).
+          누르면 이유 3개·요인·등급표 창이 열려 "설명 없는 점수는 만들지 않는다"(4-5)는 지킨다. 이유 문장은 내 신용 화면에 그대로 */}
+      {view.status === "scored" ? (
         <button
           type="button"
           onClick={onReason}
-          className="mt-3 flex w-full items-center gap-3 border-t border-line pt-2.5 text-left active:opacity-70"
+          className="mt-3 flex min-h-9 w-full items-center justify-between gap-3 border-t border-line pt-2 text-left text-sm font-semibold text-muted active:opacity-70"
         >
-          <span className="min-w-0 flex-1">
-            <span className="block text-xs text-muted">{t("credit.criteria.topReason")}</span>
-            <span className="block text-sm font-semibold">
-              <ReasonText reason={top} />
-            </span>
-          </span>
-          <ChevronRight className="size-5 shrink-0 text-muted" aria-hidden />
+          {t("credit.criteria.open")}
+          <ChevronRight className="size-4 shrink-0" aria-hidden />
         </button>
       ) : null}
       {view.status === "scored" ? <p className="mt-2 text-[11px] leading-snug text-muted">{t("credit.disclaimer")}</p> : null}
