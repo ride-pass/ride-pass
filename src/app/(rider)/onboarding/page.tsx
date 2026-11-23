@@ -2,14 +2,16 @@
 
 // 시연 2단계 앞부분: 온보딩 3장. 문구는 CLAUDE.md 6절 표대로 Figma에서 바꾼다.
 // 사진 대신 아이콘 일러스트를 쓴다 (실존 인물 사진 금지, 2-3).
+// 2026-11-23: 처음 보는 사람이 "일한 기록 → 신용도"를 바로 읽도록 1장 칩은 슬로건(brand.ts SLOGAN), 3장은 신용도·대출까지 말한다.
 
 import { ArrowRight, Bike, FileCheck2, Lock, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useState, type ReactNode } from "react";
-import { useT } from "@/components/demo/DemoProvider";
+import { useDemo, useT } from "@/components/demo/DemoProvider";
 import { LangToggle } from "@/components/demo/LangToggle";
 import { Badge } from "@/components/ui/Badge";
 import { Button, ButtonLink } from "@/components/ui/Button";
+import { SLOGAN } from "@/config/brand";
 
 const SLIDES: { key: string; art: ReactNode }[] = [
   { key: "slide1", art: <Bike className="size-24" strokeWidth={1.5} aria-hidden /> },
@@ -19,6 +21,7 @@ const SLIDES: { key: string; art: ReactNode }[] = [
 
 export default function OnboardingPage() {
   const t = useT();
+  const { lang } = useDemo();
   const [index, setIndex] = useState(0);
   const slide = SLIDES[index];
   const last = index === SLIDES.length - 1;
@@ -48,7 +51,7 @@ export default function OnboardingPage() {
       </div>
 
       <div className="mt-6 flex flex-col items-center gap-3 text-center">
-        <Badge tone="lime">{t(`onboarding.${slide.key}Chip`)}</Badge>
+        <Badge tone="lime">{slide.key === "slide1" ? SLOGAN[lang] : t(`onboarding.${slide.key}Chip`)}</Badge>
         <h1 className="text-2xl leading-snug font-bold">{t(`onboarding.${slide.key}Title`)}</h1>
         <p className="text-base leading-relaxed text-muted">{t(`onboarding.${slide.key}Body`)}</p>
       </div>

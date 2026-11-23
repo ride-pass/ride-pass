@@ -19,13 +19,14 @@ import { FakeTelecomBill } from "@/components/samples/FakeTelecomBill";
 import { Button } from "@/components/ui/Button";
 import { Sheet, useSheetNavigate } from "@/components/ui/Sheet";
 import type { ReadinessFactor, ReadinessFactorId } from "@/credit/riderView";
-import { deriveSettlementVsDeposits, type RiderActivity, type RiderMetrics, type RiderRecords } from "@/data/derive";
+import { DEPOSIT_LAG_DAYS, deriveSettlementVsDeposits, type RiderActivity, type RiderMetrics, type RiderRecords } from "@/data/derive";
 import { getIncomeStatement, getRiderActivity, getRiderMetrics, getRiderRecords, listPartners } from "@/data/repository";
 import type { IncomeStatement } from "@/data/statement";
 import type { Partner, SettlementCapture } from "@/data/types";
 import type { Lang } from "@/i18n/lang";
 import { DEMO_TODAY } from "@/config/demo";
-import { formatDate, formatRupiah, formatShortDate } from "@/lib/format";
+import { addDays } from "@/lib/date";
+import { formatDate, formatRupiah, formatRupiah100, formatShortDate } from "@/lib/format";
 
 type T = ReturnType<typeof useT>;
 
@@ -300,10 +301,15 @@ function stabilityContent({ records, activity }: Data, t: T, lang: Lang): Conten
 function verifiedIncomeContent({ records, metrics }: Data, t: T, lang: Lang): Content {
   const block = deriveSettlementVsDeposits(records).at(-1);
   const rate = metrics.depositMatchRate;
+  // 홈의 「최근 30일 순수입」(오늘 포함)과 기간이 하루 다르므로 날짜를 붙인다: 오늘 정산분은 다음 날 입금된다 (derive depositMatch)
+  const span = (from: string, to: string) => ({ from: formatShortDate(from, lang), to: formatShortDate(to, lang) });
   const facts: Fact[] = block
     ? [
-        { label: t("creditPage.docs.settled"), value: formatRupiah(block.settled) },
-        { label: t("creditPage.docs.deposited"), value: formatRupiah(block.deposited) },
+        { label: t("creditPage.docs.settled", span(block.start, block.end)), value: formatRupiah(block.settled) },
+        {
+          label: t("creditPage.docs.deposited", span(addDays(block.start, DEPOSIT_LAG_DAYS), addDays(block.end, DEPOSIT_LAG_DAYS))),
+          value: formatRupiah(block.deposited),
+        },
         {
           label: t("creditPage.docs.matchRate"),
           value: rate === null ? "—" : `${Math.round(rate * 100)}%`,
@@ -329,7 +335,7 @@ function verifiedIncomeContent({ records, metrics }: Data, t: T, lang: Lang): Co
 
 function incomeLevelContent({ records, metrics, statement }: Data, t: T, lang: Lang): Content {
   const facts: Fact[] = [
-    { label: t("creditPage.docs.avg3m"), value: formatRupiah(metrics.avgMonthlyNet3m) },
+    { label: t("creditPage.docs.avg3m"), value: formatRupiah100(metrics.avgMonthlyNet3m) },
     { label: t("home.monthlyNet"), value: formatRupiah(metrics.monthlyNet) },
     ...statement.lines.map((l) => ({ label: t("creditPage.docs.appNet", { app: t(`platforms.${l.platform}`) }), value: formatRupiah(l.net) })),
   ];

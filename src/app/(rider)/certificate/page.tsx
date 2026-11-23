@@ -14,7 +14,6 @@ import { useDemo, useT } from "@/components/demo/DemoProvider";
 import { AppHeader } from "@/components/ui/AppHeader";
 import { BottomBar } from "@/components/ui/BottomBar";
 import { Button, ButtonLink } from "@/components/ui/Button";
-import { DemoNote } from "@/components/ui/DemoNote";
 import { QrCode } from "@/components/ui/QrCode";
 import { StepBar } from "@/components/ui/StepBar";
 import { ScreenSkeleton } from "@/components/ui/Skeleton";
@@ -22,7 +21,7 @@ import { APP_NAME, LOGO_HEIGHT, LOGO_PATH, LOGO_WIDTH } from "@/config/brand";
 import { getIncomeStatement, getRider } from "@/data/repository";
 import type { IncomeStatement } from "@/data/statement";
 import type { Rider } from "@/data/types";
-import { formatDate, formatRupiah } from "@/lib/format";
+import { formatDate, formatRupiah, formatRupiah100 } from "@/lib/format";
 
 export default function IncomeStatementPage() {
   const t = useT();
@@ -104,7 +103,7 @@ export default function IncomeStatementPage() {
             <ul className="flex flex-col divide-y divide-line rounded-md ring-1 ring-line">
               <Check ok label={t("statement.activeDays")} value={t("statement.activeDaysValue", { n: s.activeDays })} />
               <Check ok label={t("statement.platforms")} value={t("statement.platformsValue", { n: s.platformCount })} />
-              <Check ok label={t("statement.avg3mLabel")} value={formatRupiah(s.avgMonthlyNet3m)} />
+              <Check ok label={t("statement.avg3mLabel")} value={formatRupiah100(s.avgMonthlyNet3m)} />
               <Check
                 ok={s.depositMatched}
                 label={t("statement.deposit")}
@@ -136,8 +135,8 @@ export default function IncomeStatementPage() {
 
       <div className="contents print:hidden">
         <BottomBar>
+          {/* QR 시연 표기는 명세서 안(인쇄에도 나옴)에만 둔다. 아래 바에 같은 문장을 또 두지 않는다 (2026-11-23) */}
           <ButtonLink href="/share">{t("statement.next")}</ButtonLink>
-          <DemoNote>{t("statement.demo")}</DemoNote>
         </BottomBar>
       </div>
     </div>

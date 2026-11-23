@@ -26,7 +26,8 @@ export function PhoneFrame({ children, watchers }: { children: ReactNode; watche
 
   return (
     <div className="md:flex md:min-h-dvh md:items-center md:justify-center md:py-8 print:block print:p-0">
-      <div className="relative mx-auto flex min-h-dvh w-full max-w-[390px] flex-col overflow-x-clip bg-canvas md:h-[min(844px,calc(100dvh-4rem))] md:min-h-0 md:w-[390px] md:max-w-none md:transform-gpu md:overflow-hidden md:rounded-[48px] md:shadow-2xl md:ring-[10px] md:ring-brand-navy print:h-auto print:min-h-0 print:w-full print:max-w-none print:transform-none print:overflow-visible print:rounded-none print:bg-surface print:shadow-none print:ring-0">
+      {/* id: 바텀시트가 이 화면 맨 위층에 그려지도록 portal 대상으로 쓴다 (Sheet.tsx) */}
+      <div id="phone-screen" className="relative mx-auto flex min-h-dvh w-full max-w-[390px] flex-col overflow-x-clip bg-canvas md:h-[min(844px,calc(100dvh-4rem))] md:min-h-0 md:w-[390px] md:max-w-none md:transform-gpu md:overflow-hidden md:rounded-[48px] md:shadow-2xl md:ring-[10px] md:ring-brand-navy print:h-auto print:min-h-0 print:w-full print:max-w-none print:transform-none print:overflow-visible print:rounded-none print:bg-surface print:shadow-none print:ring-0">
         <StatusBar />
         <div ref={scroller} className="flex flex-1 flex-col md:min-h-0 md:overflow-y-auto md:overscroll-contain md:[scrollbar-width:none] print:overflow-visible">
           <ToastProvider>

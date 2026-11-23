@@ -12,6 +12,11 @@ export function formatRupiah(amount: number): string {
   return `${rounded < 0 ? "-" : ""}Rp ${digits}`;
 }
 
+/** 평균처럼 계산한 금액은 100루피아 단위로 맞춰 보여 준다 (정산 금액과 같은 단위, 2026-11-23). 5190567 → "Rp 5.190.600" */
+export function formatRupiah100(amount: number): string {
+  return formatRupiah(Math.round(amount / 100) * 100);
+}
+
 // 인도네시아어 월 약어
 // TODO: 원어민 검수
 const ID_MONTHS = [
