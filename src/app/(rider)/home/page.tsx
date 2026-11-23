@@ -39,7 +39,7 @@ import {
 } from "@/data/repository";
 import type { IncomeStatement } from "@/data/statement";
 import type { Application, Partner, Rider, SettlementCapture, ShareGrant } from "@/data/types";
-import { formatDate, formatRupiah } from "@/lib/format";
+import { formatDate, formatRupiah, formatRupiah100 } from "@/lib/format";
 
 const FEED_LIMIT = 4;
 
@@ -141,7 +141,10 @@ export default function HomePage() {
           </p>
           {/* 인니어처럼 버튼 글자가 길면 발급번호 아래로 내려간다 (발급번호는 자르지 않는다) */}
           <div className="mt-3 flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
-            <span className="font-mono text-xs whitespace-nowrap text-muted">{statement.issueNo}</span>
+            {/* 코드만 있으면 무엇인지 몰라서 「발급번호」를 붙인다 (2026-11-23) */}
+            <span className="text-xs whitespace-nowrap text-muted">
+              {t("home.issueNo")} <span className="font-mono">{statement.issueNo}</span>
+            </span>
             <Link
               href="/certificate"
               className="ml-auto inline-flex min-h-11 shrink-0 items-center rounded-full bg-brand-purple px-5 text-sm font-semibold text-white transition active:scale-[0.98]"
@@ -168,7 +171,7 @@ export default function HomePage() {
           <h2 id="home-months" className="text-base font-bold">
             {t("home.months.title")}
           </h2>
-          <p className="mt-0.5 text-sm text-muted">{t("home.months.avg", { amount: formatRupiah(metrics.avgMonthlyNet3m) })}</p>
+          <p className="mt-0.5 text-sm text-muted">{t("home.months.avg", { amount: formatRupiah100(metrics.avgMonthlyNet3m) })}</p>
           <div className="mt-4">
             <MonthBars months={activity.months} />
           </div>

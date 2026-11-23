@@ -76,7 +76,7 @@
       "weight": "{w}%",
       "rulesTitle": "먼저 적용하는 규칙",
       "rules": {
-        "cap": "정산과 입금이 맞지 않거나 수정 흔적이 있을 때, 또는 SLIK에 금융기관 연체 기록(콜렉터빌리티 3 이상)이 있을 때는 549점을 넘지 않습니다.",
+        "cap": "정산과 입금이 맞지 않거나 수정 흔적이 있을 때, 또는 SLIK에 금융기관 연체 기록(연체 등급 3 이상)이 있을 때는 549점을 넘지 않습니다.",
         "hold": "기록이 60일보다 짧거나 최근 촬영이 흐리면 점수를 내지 않고 평가를 보류합니다."
       },
       "gradeRange": "{from}~{to}점",
@@ -85,6 +85,10 @@
         "factors": "반영 비율",
         "grades": "등급"
       }
+    },
+    "badgeInfo": {
+      "body1": "PKA(Pemeringkat Kredit Alternatif)는 인도네시아 금융감독청(OJK)이 내주는 대안신용평가업 허가입니다. 금융사·렌털사에 신용도를 주려면 이 허가가 필요합니다.",
+      "body2": "이 화면은 {app}가 허가를 받은 뒤의 모습을 시연으로 보여 줍니다. 점수는 가설 모델이고, 승인 여부는 각 기관이 정합니다."
     }
   },
   "common": {
@@ -119,15 +123,14 @@
     "openHistory": "{app}에서 제출 이력 보기"
   },
   "onboarding": {
-    "slide1Chip": "어느 앱이든 정산 화면을 찍으면 됩니다",
     "slide1Title": "어느 앱에서 일하든, 내 수입을 명세서로",
-    "slide1Body": "앱 계정을 연결하지 않아도 됩니다. 정산 화면을 찍으면 급여명세서 형식의 수입 명세서를 만들어 드립니다.",
+    "slide1Body": "앱 계정을 연결하지 않아도 됩니다. 정산 화면을 찍으면 급여명세서 형식의 수입 명세서를 만들고, 그 기록으로 신용도를 매깁니다.",
     "slide2Chip": "언제든 철회할 수 있습니다",
     "slide2Title": "내 자료는 내가 고른 곳에만",
     "slide2Body": "무엇을, 누구에게, 며칠 동안 보여 줄지 직접 정합니다. 보여 준 뒤에도 언제든 철회할 수 있습니다.",
     "slide3Chip": "승인 여부는 각 기관이 정합니다",
-    "slide3Title": "수입 명세서 하나로 렌털·할부 신청 서류 끝",
-    "slide3Body": "렌털사·할부사에 낼 수입 증빙을 한 번에 준비하세요. 입금 내역과 대조한 수입이 함께 들어갑니다.",
+    "slide3Title": "수입 명세서와 신용도로 대출·렌털 신청 준비",
+    "slide3Body": "은행·할부사·렌털사 중 고른 곳에 수입 명세서와 신용도를 함께 보낼 수 있습니다. 신용도는 입금 내역과 대조한 수입과 납부 기록으로 매깁니다.",
     "haveAccount": "이미 계정이 있으신가요?",
     "login": "로그인"
   },
@@ -198,7 +201,7 @@
       },
       "rental_history": {
         "title": "렌털 납부 기록",
-        "body": "렌털 일할 납부를 제때 했는지"
+        "body": "하루 단위 렌털료를 제때 냈는지"
       },
       "bank_account": {
         "title": "입금 계좌 확인",
@@ -206,7 +209,7 @@
       },
       "slik_report": {
         "title": "SLIK 확인서",
-        "body": "올린 확인서의 콜렉터빌리티와 남은 대출·할부 건수"
+        "body": "인도네시아 공식 신용조회 기록의 연체 등급과 남은 대출·할부 건수"
       },
       "telecom_bills": {
         "title": "통신요금 납부 기록",
@@ -222,7 +225,8 @@
     "declinedTitle": "동의하지 않으셨습니다",
     "declinedBody": "렌털 신청은 그대로 진행됩니다. 수입 증빙은 렌털사에 직접 내실 수 있습니다.",
     "backToApply": "렌털 신청 화면으로",
-    "reconsider": "다시 보기"
+    "reconsider": "다시 보기",
+    "creditNote": "켜 둔 항목으로 계산한 신용도(400~900)와 그 이유도 함께 보입니다. 꺼 둔 항목은 계산에 넣지 않습니다."
   },
   "samples": {
     "fakeLabel": "가상 예시 (시연용)",
@@ -236,7 +240,7 @@
     "idebName": "이름",
     "idebDate": "발급일",
     "idebFacilities": "남은 대출·할부",
-    "idebWorst": "최악 콜렉터빌리티",
+    "idebWorst": "가장 나쁜 연체 등급",
     "telecomTitle": "{provider} 요금 납부 내역",
     "unpaid": "미납",
     "watermark": "SAMPLE · CONTOH",
@@ -276,8 +280,8 @@
     "optionalTitle": "선택 자료 (올리면 상환 이력에 반영됩니다)",
     "optional": "선택",
     "slikTitle": "SLIK 확인서 (PDF) 올리기",
-    "slikBody": "OJK에서 받은 내 확인서를 올리면 함께 반영됩니다",
-    "slikResult": "콜렉터빌리티 {kol} ({label}) · 남은 대출·할부 {n}건",
+    "slikBody": "인도네시아 공식 신용조회 기록입니다. OJK에서 받은 내 확인서를 올리면 함께 반영됩니다",
+    "slikResult": "연체 등급 {kol} ({label}) · 남은 대출·할부 {n}건",
     "telecomTitle": "통신요금 납부 내역 올리기",
     "telecomBody": "후불 요금제 납부 기록을 올리면 상환 이력이 생깁니다",
     "telecomResult": "최근 {n}개월 중 {onTime}개월 제때 납부",
@@ -380,7 +384,6 @@
     "title": "수입 명세서를 보냈습니다",
     "revocable": "언제든 철회할 수 있습니다",
     "to": "받는 곳",
-    "shareId": "공유 번호",
     "sentAt": "보낸 날",
     "until": "볼 수 있는 기간",
     "items": "보낸 항목",
@@ -397,7 +400,8 @@
       "resultWait": "승인 여부는 기관이 정합니다. 정해지면 알려 드립니다",
       "approved": "신청이 승인되었습니다",
       "rejected": "신청이 거절되었습니다"
-    }
+    },
+    "creditItem": "신용도와 이유"
   },
   "demo": {
     "open": "시연 조작판",
@@ -445,9 +449,9 @@
         "continuity": "활동 연속성 근거 자료"
       },
       "about": {
-        "repayment": "렌털 납부·SLIK 확인서·통신요금 납부 기록에서 제때 낸 비율로 계산합니다.",
+        "repayment": "렌털 납부, SLIK 확인서(인도네시아 공식 신용조회 기록), 통신요금 납부 기록에서 제때 낸 비율로 계산합니다.",
         "stability": "최근 6개 구간(30일 단위) 순수입이 얼마나 고른지로 계산합니다.",
-        "verifiedIncome": "정산 화면의 순수입과 실제 입금 내역이 얼마나 맞는지로 계산합니다.",
+        "verifiedIncome": "정산 화면의 순수입과 실제 입금 내역이 얼마나 맞는지로 계산합니다. 정산은 다음 날 입금되므로, 입금은 하루 뒤로 민 같은 길이 기간과 비교합니다.",
         "incomeLevel": "최근 3개월(30일 단위) 평균 순수입으로 계산합니다.",
         "continuity": "첫 정산 기록부터 긴 공백 없이 일한 개월 수로 계산합니다."
       },
@@ -459,7 +463,7 @@
       "rentalMeta": "{partner} · 하루 단위 {n}회",
       "slik": "SLIK 확인서 (iDeb)",
       "slikMeta": "발급 {issued} · 올린 날 {uploaded}",
-      "slikValue": "콜렉터빌리티 {kol} ({label})",
+      "slikValue": "연체 등급 {kol} ({label})",
       "telecom": "통신요금 납부 내역",
       "telecomMeta": "{provider} · {from} ~ {to}",
       "period": "{from} ~ {to}",
@@ -469,8 +473,8 @@
       "appCapture": "{app} 정산 화면",
       "settlementResult": "순수입 {net} · {n}건",
       "settlementBlurry": "흐려서 읽지 못함 · 다시 찍기 필요",
-      "settled": "최근 30일 정산 순수입",
-      "deposited": "같은 기간 실제 입금",
+      "settled": "정산 순수입 ({from}~{to})",
+      "deposited": "실제 입금 ({from}~{to})",
       "matchRate": "입금 일치율",
       "deposit": "입금 내역",
       "depositMeta": "{source} · {n}건",
@@ -517,7 +521,7 @@
       "rental": "렌털 납부",
       "rateValue": "정시 {rate} · {n}건",
       "slik": "SLIK",
-      "slikValue": "콜렉터빌리티 {kol} ({label}) · 남은 {n}건",
+      "slikValue": "연체 등급 {kol} ({label}) · 남은 {n}건",
       "telecom": "통신요금",
       "telecomValue": "정시 {rate} · {n}개월"
     },
@@ -608,8 +612,8 @@
       },
       "slik": {
         "title": "SLIK 기록 양호",
-        "met": "콜렉터빌리티 {kol} (정상)입니다.",
-        "unmet": "콜렉터빌리티 {kol}입니다. 연체 기록이 있으면 안 되니 먼저 정리해야 합니다.",
+        "met": "연체 등급 {kol} (정상)입니다.",
+        "unmet": "연체 등급 {kol}입니다. 연체 기록이 있으면 안 되니 먼저 정리해야 합니다.",
         "needs_upload": "SLIK 확인서를 올리면 확인됩니다. SLIK 기록이 아예 없으면 은행이 다른 신용평가로 확인할 수 있습니다."
       },
       "citizenAge": {
@@ -709,7 +713,8 @@
       "reason": {
         "title": "신용도 이유"
       }
-    }
+    },
+    "issueNo": "발급번호"
   },
   "history": {
     "header": "제출 이력",
@@ -804,6 +809,10 @@
       "approvedBody": "{partner}에서 신청을 승인했어요.",
       "toHistory": "제출 이력 보기",
       "notFound": "상품을 찾을 수 없습니다. 추천 화면에서 다시 골라 주세요."
+    },
+    "badgeInfo": {
+      "body1": "금융상품을 연결해 주려면 PKA 인가와 별도로 금융상품 중개 허가나 각 금융사와의 제휴가 필요합니다.",
+      "body2": "이 화면의 상품과 금리는 모두 가상 예시입니다. 이 앱은 대출을 직접 실행하지 않고, 기사님이 고른 곳에 자료만 보냅니다."
     }
   },
   "products": {

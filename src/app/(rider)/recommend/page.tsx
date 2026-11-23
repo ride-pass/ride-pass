@@ -12,7 +12,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDemo, useT } from "@/components/demo/DemoProvider";
 import { AppHeader } from "@/components/ui/AppHeader";
-import { Badge } from "@/components/ui/Badge";
+import { InfoBadge } from "@/components/ui/InfoBadge";
 import { ButtonLink } from "@/components/ui/Button";
 import { ScreenSkeleton } from "@/components/ui/Skeleton";
 import { TabBar } from "@/components/ui/TabBar";
@@ -48,7 +48,7 @@ export default function RecommendPage() {
 
   return (
     <div className="flex flex-1 flex-col">
-      <AppHeader title={t("recommend.title")} back={false} large right={<Badge tone="lavender">{t("recommend.badge")}</Badge>} />
+      <AppHeader title={t("recommend.title")} back={false} large right={<InfoBadge label={t("recommend.badge")} body={[t("recommend.badgeInfo.body1"), t("recommend.badgeInfo.body2")]} />} />
       <main className="flex flex-col px-4 pt-3 pb-10">
         {view.stage === "A" ? <p className="text-sm text-muted">{t("recommend.notAvailable")}</p> : null}
 

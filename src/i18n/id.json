@@ -86,6 +86,10 @@
         "factors": "Bobot",
         "grades": "Peringkat"
       }
+    },
+    "badgeInfo": {
+      "body1": "PKA (Pemeringkat Kredit Alternatif) adalah izin dari OJK untuk usaha penilaian kredit alternatif. Izin ini diperlukan untuk memberi skor kredit kepada lembaga keuangan atau rental.",
+      "body2": "Layar ini menunjukkan tampilan {app} setelah mendapat izin tersebut, untuk demo. Skor ini model hipotesis, dan keputusan tetap di tangan masing-masing lembaga."
     }
   },
   "common": {
@@ -120,15 +124,14 @@
     "openHistory": "Lihat riwayat kirim di {app}"
   },
   "onboarding": {
-    "slide1Chip": "Cukup foto layar setoran dari aplikasi mana pun",
     "slide1Title": "Dari aplikasi mana pun, penghasilanmu jadi slip",
-    "slide1Body": "Tidak perlu menghubungkan akun aplikasi. Foto layar setoran, lalu kami buatkan slip penghasilan seperti slip gaji.",
+    "slide1Body": "Tidak perlu menghubungkan akun aplikasi. Foto layar setoran, lalu kami buatkan slip penghasilan seperti slip gaji dan menilai skor kredit dari catatan itu.",
     "slide2Chip": "Bisa ditarik kapan saja",
     "slide2Title": "Datamu hanya untuk tempat yang kamu pilih",
     "slide2Body": "Kamu sendiri yang menentukan apa, untuk siapa, dan berapa lama data ditunjukkan. Izin bisa ditarik kapan saja.",
     "slide3Chip": "Keputusan persetujuan ada di tiap mitra",
-    "slide3Title": "Satu slip penghasilan untuk pengajuan sewa dan cicilan",
-    "slide3Body": "Siapkan bukti penghasilan untuk mitra rental dan cicilan sekaligus, lengkap dengan penghasilan yang sudah dicocokkan dengan mutasi rekening.",
+    "slide3Title": "Siap ajukan pinjaman dan sewa dengan slip dan skor kredit",
+    "slide3Body": "Kirim slip penghasilan dan skor kredit ke bank, mitra cicilan, atau rental yang kamu pilih. Skor dinilai dari penghasilan yang dicocokkan dengan mutasi dan riwayat bayar.",
     "haveAccount": "Sudah punya akun?",
     "login": "Masuk"
   },
@@ -207,7 +210,7 @@
       },
       "slik_report": {
         "title": "Laporan SLIK",
-        "body": "Kolektibilitas dan jumlah pinjaman/cicilan aktif dari laporan yang diunggah"
+        "body": "Kolektibilitas dan jumlah pinjaman/cicilan aktif dari laporan kredit resmi (SLIK) yang diunggah"
       },
       "telecom_bills": {
         "title": "Riwayat bayar tagihan pulsa",
@@ -223,7 +226,8 @@
     "declinedTitle": "Kamu tidak memberi persetujuan",
     "declinedBody": "Pengajuan sewa tetap berjalan. Bukti penghasilan bisa kamu serahkan langsung ke mitra rental.",
     "backToApply": "Kembali ke pengajuan sewa",
-    "reconsider": "Lihat lagi"
+    "reconsider": "Lihat lagi",
+    "creditNote": "Skor kredit (400–900) dan alasannya, dihitung dari data yang kamu nyalakan, juga akan terlihat. Data yang dimatikan tidak ikut dihitung."
   },
   "samples": {
     "fakeLabel": "Contoh fiktif (demo)",
@@ -277,7 +281,7 @@
     "optionalTitle": "Dokumen tambahan (masuk ke riwayat pembayaran)",
     "optional": "Opsional",
     "slikTitle": "Unggah laporan SLIK (PDF)",
-    "slikBody": "Unggah laporan milikmu dari OJK agar ikut dihitung",
+    "slikBody": "Laporan riwayat kredit resmi Indonesia. Unggah laporan milikmu dari OJK agar ikut dihitung",
     "slikResult": "Kolektibilitas {kol} ({label}) · {n} pinjaman/cicilan aktif",
     "telecomTitle": "Unggah riwayat bayar pulsa",
     "telecomBody": "Riwayat bayar pascabayar membangun riwayat pembayaran",
@@ -381,7 +385,6 @@
     "title": "Slip penghasilan sudah dikirim",
     "revocable": "Izin bisa ditarik kapan saja",
     "to": "Penerima",
-    "shareId": "Nomor berbagi",
     "sentAt": "Tanggal kirim",
     "until": "Berlaku sampai",
     "items": "Data yang dikirim",
@@ -398,7 +401,8 @@
       "resultWait": "Keputusan ada di tangan mitra. Kamu akan dikabari",
       "approved": "Pengajuan disetujui",
       "rejected": "Pengajuan ditolak"
-    }
+    },
+    "creditItem": "Skor kredit dan alasannya"
   },
   "demo": {
     "open": "Panel demo",
@@ -448,7 +452,7 @@
       "about": {
         "repayment": "Dihitung dari seberapa sering kamu bayar tepat waktu: sewa, laporan SLIK, dan tagihan pulsa.",
         "stability": "Dihitung dari seberapa stabil penghasilan bersih di 6 periode terakhir (per 30 hari).",
-        "verifiedIncome": "Dihitung dari kecocokan penghasilan di layar setoran dengan mutasi yang benar-benar masuk.",
+        "verifiedIncome": "Dihitung dari kecocokan penghasilan di layar setoran dengan mutasi yang benar-benar masuk. Setoran masuk keesokan harinya, jadi mutasi dibandingkan dengan periode yang digeser satu hari.",
         "incomeLevel": "Dihitung dari rata-rata penghasilan bersih 3 bulan terakhir (per 30 hari).",
         "continuity": "Dihitung dari berapa bulan kamu bekerja tanpa jeda panjang sejak catatan setoran pertama."
       },
@@ -470,8 +474,8 @@
       "appCapture": "Layar setoran {app}",
       "settlementResult": "Bersih {net} · {n} order",
       "settlementBlurry": "Buram, tidak terbaca · perlu foto ulang",
-      "settled": "Penghasilan bersih 30 hari",
-      "deposited": "Mutasi masuk periode sama",
+      "settled": "Penghasilan bersih ({from}~{to})",
+      "deposited": "Mutasi masuk ({from}~{to})",
       "matchRate": "Kecocokan mutasi",
       "deposit": "Mutasi masuk",
       "depositMeta": "{source} · {n} transaksi",
@@ -710,7 +714,8 @@
       "reason": {
         "title": "Alasan skor kredit"
       }
-    }
+    },
+    "issueNo": "No. terbit"
   },
   "history": {
     "header": "Riwayat kirim",
@@ -805,6 +810,10 @@
       "approvedBody": "{partner} menyetujui pengajuanmu.",
       "toHistory": "Lihat riwayat kirim",
       "notFound": "Produk tidak ditemukan. Pilih lagi di halaman rekomendasi."
+    },
+    "badgeInfo": {
+      "body1": "Untuk menghubungkan produk keuangan, selain izin PKA juga perlu izin perantara produk keuangan atau kemitraan dengan tiap lembaga.",
+      "body2": "Semua produk dan bunga di layar ini adalah contoh fiktif. Aplikasi ini tidak menyalurkan pinjaman langsung; hanya mengirim data ke tempat yang kamu pilih."
     }
   },
   "products": {

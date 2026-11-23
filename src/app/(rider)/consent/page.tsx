@@ -39,7 +39,7 @@ const SHARE_DAYS = 30; // mockRepository.createShareGrant와 같은 기간
 export default function ConsentPage() {
   const t = useT();
   const router = useRouter();
-  const { riderId, partnerId, lang } = useDemo();
+  const { riderId, partnerId, lang, stage } = useDemo();
   const [partner, setPartner] = useState<Partner | null>(null);
   // 항목마다 자료가 있는지. 없는 항목은 잠그고 「이 시연 인물은 해당 자료가 없습니다」 (2026-11-23)
   const [data, setData] = useState<ShareData | null>(null);
@@ -122,6 +122,8 @@ export default function ConsentPage() {
               );
             })}
           </ul>
+          {/* 심사위원·기사 모두 "점수도 같이 간다"를 여기서 처음 알 수 있게 (2026-11-23). 숫자는 제출 화면에서 보여 준다 */}
+          {stage === "C" ? <p className="mt-3 text-sm leading-relaxed text-muted">{t("consent.creditNote")}</p> : null}
         </section>
 
         {/* 약속 세 줄: 이 화면의 유일한 강조 블록. "거절해도 렌털 신청은 그대로 진행됩니다"가 반드시 들어간다 (3절) */}

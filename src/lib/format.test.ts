@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatDate, formatMonth, formatRupiah, formatRupiahCompact, formatShortDate } from "./format";
+import { formatDate, formatMonth, formatRupiah, formatRupiah100, formatRupiahCompact, formatShortDate } from "./format";
 
 describe("formatRupiah", () => {
   it.each([
@@ -68,5 +68,12 @@ describe("formatRupiahCompact", () => {
   it("인니어는 juta(백만) 단위, 소수점은 쉼표", () => {
     expect(formatRupiahCompact(5_503_000, "id")).toBe("5,5 jt");
     expect(formatRupiahCompact(2_800_000, "id")).toBe("2,8 jt");
+  });
+});
+
+describe("formatRupiah100", () => {
+  it("100루피아 단위로 반올림", () => {
+    expect(formatRupiah100(5_190_567)).toBe("Rp 5.190.600");
+    expect(formatRupiah100(5_190_549)).toBe("Rp 5.190.500");
   });
 });

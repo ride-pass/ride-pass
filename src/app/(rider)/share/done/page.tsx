@@ -18,7 +18,7 @@ import { formatDate } from "@/lib/format";
 
 export default function ShareDonePage() {
   const t = useT();
-  const { riderId, lang, dataVersion } = useDemo();
+  const { riderId, lang, stage, dataVersion } = useDemo();
   const [partners, setPartners] = useState<Partner[]>([]);
   const [grants, setGrants] = useState<ShareGrant[]>([]);
   const [apps, setApps] = useState<Application[]>([]);
@@ -65,15 +65,10 @@ export default function ShareDonePage() {
 
         {shown.map((g) => (
           <Card key={g.id} className="flex w-full flex-col gap-3">
-            <div className="flex items-start justify-between gap-2">
-              <div>
-                <p className="text-xs text-muted">{t("done.to")}</p>
-                <p className="text-lg font-bold">{name(g.partnerId)}</p>
-              </div>
-              <div className="text-right">
-                <p className="text-xs text-muted">{t("done.shareId")}</p>
-                <p className="font-mono text-xs font-semibold text-brand-purple">{g.id}</p>
-              </div>
+            {/* 내부 공유 번호(sg-…)는 보는 사람에게 뜻이 없어 뺐다 (2026-11-23) */}
+            <div>
+              <p className="text-xs text-muted">{t("done.to")}</p>
+              <p className="text-lg font-bold">{name(g.partnerId)}</p>
             </div>
             <dl className="grid grid-cols-2 gap-2 text-sm">
               <div className="rounded-2xl bg-canvas p-3">
@@ -93,6 +88,12 @@ export default function ShareDonePage() {
                     <Badge tone="neutral">{t(`consent.items.${item}.title`)}</Badge>
                   </li>
                 ))}
+                {/* C단계에서는 이 자료로 계산한 신용도와 이유도 함께 간다 (제출 화면 「함께 보내는 내용」과 같은 내용, 숫자는 그 화면에서) */}
+                {stage === "C" ? (
+                  <li>
+                    <Badge tone="neutral">{t("done.creditItem")}</Badge>
+                  </li>
+                ) : null}
               </ul>
             </div>
             <NextSteps

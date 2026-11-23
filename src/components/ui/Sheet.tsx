@@ -10,10 +10,13 @@
 // - 뒤로 가기: 창을 열 때 같은 주소로 방문 기록을 하나 더한다. 뒤로 가기는 그 기록만 빼며 창을 닫고 화면은 그대로다.
 //   X·바깥·Esc로 닫을 때도 더한 기록을 지운다(history.back → popstate → onClose). Next.js 16은 history.pushState를 지원한다.
 // - 창 안 링크는 useSheetNavigate()로 이동한다: 창을 먼저 닫아 기록을 지운 뒤 이동해, 돌아왔을 때 빈 기록이 남지 않는다.
+// - 그리는 곳: 휴대폰 화면(#phone-screen) 맨 위층에 portal로 붙인다. 배지처럼 sticky 머리글(z-10) 안에서 열어도
+//   하단 탭 아래로 깔리지 않는다 (2026-11-23). 휴대폰 틀이 없는 화면이면 body에 붙인다.
 
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { createContext, useCallback, useContext, useEffect, useId, useRef, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { useT } from "@/components/demo/DemoProvider";
 
 interface Props {
@@ -100,7 +103,7 @@ export function Sheet({ open, onClose, title, children }: Props) {
 
   if (!open) return null;
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-40 flex items-end justify-center">
       <button
         type="button"
@@ -129,6 +132,7 @@ export function Sheet({ open, onClose, title, children }: Props) {
           <SheetNavigate.Provider value={navigate}>{children}</SheetNavigate.Provider>
         </div>
       </div>
-    </div>
+    </div>,
+    document.getElementById("phone-screen") ?? document.body,
   );
 }
