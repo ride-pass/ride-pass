@@ -20,7 +20,7 @@ export function TabBar() {
   const t = useT();
   const pathname = usePathname();
   return (
-    <nav className="sticky bottom-0 z-20 mt-auto grid grid-cols-5 border-t border-line bg-surface pb-2" aria-label={t("tabs.label")}>
+    <nav data-bottom-dock className="sticky bottom-0 z-20 mt-auto grid grid-cols-5 border-t border-line bg-surface pb-2" aria-label={t("tabs.label")}>
       {TABS.map(({ href, key, icon: Icon, also }) => {
         const active = pathname === href || Boolean(also?.includes(pathname));
         return (

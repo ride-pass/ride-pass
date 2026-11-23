@@ -93,7 +93,7 @@ export default function PartnerApplyPage() {
           </p>
         </section>
 
-        <div className="mt-auto flex flex-col gap-3">
+        <div data-bottom-dock className="mt-auto flex flex-col gap-3">
           {submitted ? (
             <ButtonLink href="/history" variant="secondary">
               {t("apply.openHistory", { app: APP_NAME })}
