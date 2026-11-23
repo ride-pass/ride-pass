@@ -404,7 +404,8 @@ export function generateFixtures(today: IsoDate = DEMO_TODAY): FixtureSet {
         items: [
           "income",
           "activity",
-          "rental_history",
+          // 자료가 있는 항목만 동의 기록에 넣는다 (2026-11-23: 렌털 기록이 없는 Agus·Rizky에 렌털 납부 기록이 들어가 있었다)
+          ...(p.rental ? (["rental_history"] as const) : []),
           ...(p.rider.hasBankAccount ? (["bank_account"] as const) : []),
           ...(p.slik ? (["slik_report"] as const) : []),
           ...(p.telecom ? (["telecom_bills"] as const) : []),
