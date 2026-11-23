@@ -273,7 +273,7 @@
     "netLabel": "Penghasilan bersih terbaca",
     "dateLabel": "Tanggal setoran",
     "tripsLabel": "Order selesai",
-    "matchNote": "Dicocokkan dengan mutasi rekening. Jika berbeda, akan terlihat di layar mitra rental.",
+    "matchNote": "Dicocokkan dengan mutasi rekening. Jika berbeda, juga akan terlihat oleh tempat yang kamu kirimi.",
     "optionalTitle": "Dokumen tambahan (masuk ke riwayat pembayaran)",
     "optional": "Opsional",
     "slikTitle": "Unggah laporan SLIK (PDF)",

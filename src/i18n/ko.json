@@ -272,7 +272,7 @@
     "netLabel": "인식된 순수입",
     "dateLabel": "정산 날짜",
     "tripsLabel": "완료 건수",
-    "matchNote": "입금 내역과 대조합니다. 금액이 다르면 렌털사 화면에 표시됩니다.",
+    "matchNote": "입금 내역과 대조합니다. 금액이 다르면 제출한 곳에도 표시됩니다.",
     "optionalTitle": "선택 자료 (올리면 상환 이력에 반영됩니다)",
     "optional": "선택",
     "slikTitle": "SLIK 확인서 (PDF) 올리기",
