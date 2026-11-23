@@ -594,6 +594,8 @@
   "home": {
     "hello": "안녕하세요, {name} 님",
     "monthlyNet": "최근 30일 순수입",
+    "verifiedIncome": "검증된 소득",
+    "unverifiedIncome": "검증 전",
     "depositMatched": "입금 내역과 일치",
     "depositMismatch": "입금 내역과 차이 큼",
     "viewStatement": "수입 명세서 보기",
