@@ -298,7 +298,7 @@ function CreditCard({ view, onReason }: { view: Exclude<RiderCreditView, { statu
             </span>
           ) : null}
         </span>
-        <Ring ratio={ratio} />
+        <Ring ratio={ratio} label={view.status === "scored" ? view.grade : undefined} />
       </Link>
       {/* 2026-11-23: 홈에서는 「가장 큰 이유」 문장을 빼고 「평가 기준 보기 ›」만 둔다 (팀 의견: 홈에선 군더더기).
           누르면 이유 3개·요인·등급표 창이 열려 "설명 없는 점수는 만들지 않는다"(4-5)는 지킨다. 이유 문장은 내 신용 화면에 그대로 */}
@@ -318,14 +318,18 @@ function CreditCard({ view, onReason }: { view: Exclude<RiderCreditView, { statu
 }
 
 /** 작은 원형 표시. 채운 만큼만 보라 (데이터 한 곳), 나머지는 무채색 */
-function Ring({ ratio }: { ratio: number }) {
+// 2026-11-23: 원 가운데에 등급 글자(A~E)를 둔다. 점수는 왼쪽 40px 숫자에 이미 있어 겹치지 않게 등급만. 읽기 도구에는 왼쪽 등급 줄이 같은 뜻을 전한다
+function Ring({ ratio, label }: { ratio: number; label?: string }) {
   const r = 24;
   const c = 2 * Math.PI * r;
   const v = Math.min(1, Math.max(0, ratio));
   return (
-    <svg viewBox="0 0 56 56" className="size-14 shrink-0 -rotate-90" aria-hidden>
-      <circle cx="28" cy="28" r={r} fill="none" strokeWidth="6" className="stroke-line" />
-      <circle cx="28" cy="28" r={r} fill="none" strokeWidth="6" strokeLinecap="round" strokeDasharray={`${c * v} ${c}`} className="stroke-brand-purple" />
-    </svg>
+    <span className="relative grid size-14 shrink-0 place-items-center" aria-hidden>
+      <svg viewBox="0 0 56 56" className="absolute inset-0 size-14 -rotate-90">
+        <circle cx="28" cy="28" r={r} fill="none" strokeWidth="6" className="stroke-line" />
+        <circle cx="28" cy="28" r={r} fill="none" strokeWidth="6" strokeLinecap="round" strokeDasharray={`${c * v} ${c}`} className="stroke-brand-purple" />
+      </svg>
+      {label ? <span className="relative text-lg leading-none font-bold text-brand-navy">{label}</span> : null}
+    </span>
   );
 }
