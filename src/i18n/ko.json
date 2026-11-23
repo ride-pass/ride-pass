@@ -238,7 +238,16 @@
     "idebFacilities": "남은 대출·할부",
     "idebWorst": "최악 콜렉터빌리티",
     "telecomTitle": "{provider} 요금 납부 내역",
-    "unpaid": "미납"
+    "unpaid": "미납",
+    "watermark": "SAMPLE · CONTOH",
+    "telecomProvider": "통신사 F",
+    "rentalTitle": "{partner} 납부 내역",
+    "rentalDaily": "하루 {amount}",
+    "rentalMonthValue": "{total}회 중 {onTime}회 제때",
+    "rentalLateTitle": "제때 내지 못한 날",
+    "rentalDue": "납부일 {date}",
+    "rentalPaidOn": "{date} 납부",
+    "rentalAllOnTime": "모두 제때 납부"
   },
   "capture": {
     "header": "수입 증빙 촬영",
@@ -420,7 +429,21 @@
     "improveTitle": "이렇게 하면 좋아집니다",
     "reasonsTitle": "이 점수가 나온 이유",
     "goRetake": "다시 찍으러 가기",
-    "toKur": "KUR 신청 조건 확인"
+    "toKur": "KUR 신청 조건 확인",
+    "docsHint": "제출한 서류 보기",
+    "docs": {
+      "title": "제출한 상환 자료",
+      "intro": "내가 올린 자료 {n}개가 상환 이력에 반영됐습니다. 눌러서 서류를 볼 수 있습니다.",
+      "rental": "렌털 납부 내역",
+      "rentalMeta": "{partner} · 하루 단위 {n}회",
+      "slik": "SLIK 확인서 (iDeb)",
+      "slikMeta": "발급 {issued} · 올린 날 {uploaded}",
+      "telecom": "통신요금 납부 내역",
+      "telecomMeta": "{provider} · {from} ~ {to}",
+      "empty": "아직 올린 상환 자료가 없어 상환 이력을 중립으로 반영했습니다.",
+      "goUpload": "자료 올리러 가기",
+      "note": "내가 올린 자료만 여기에 보입니다. SLIK 확인서는 내가 OJK에서 직접 받아 올린 파일이고, 이 앱이 조회한 것이 아닙니다. 시연용 가상 서류이며 내려받거나 다른 곳으로 보낼 수 없습니다."
+    }
   },
   "warnings": {
     "amount_mismatch": "정산·입금 불일치",
