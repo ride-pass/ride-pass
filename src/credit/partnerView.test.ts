@@ -66,8 +66,8 @@ describe("partnerView (CLAUDE.md 2-4)", () => {
     expect((await getApplicantReport(PARTNER, "r-budi", "A"))?.status).toBe("no_consent");
   });
 
-  it("공유했지만 자료가 없으면 none (Siti 렌털 이력)", async () => {
-    const report = await getApplicantReport(PARTNER, "r-siti", "A");
+  it("공유했지만 자료가 없으면 none (Agus 렌털 이력)", async () => {
+    const report = await getApplicantReport(PARTNER, "r-agus", "A");
     expect(report?.status === "shared" && report.facts.rental).toBe("none");
   });
 });
@@ -86,7 +86,7 @@ describe("partnerView C단계 신용도는 동의한 항목만으로 계산한�
         report.status === "shared" ? report.credit : null,
       ]),
     );
-    expect(byId["r-siti"]).toMatchObject({ status: "scored", score: 755, grade: "B" });
+    expect(byId["r-siti"]).toMatchObject({ status: "scored", score: 766, grade: "B" });
     expect(byId["r-agus"]).toMatchObject({ status: "scored", score: 549, grade: "D" });
     expect(byId["r-dewi"]).toMatchObject({ status: "scored", score: 877, grade: "A" });
     expect(byId["r-rizky"]).toEqual({ status: "hold", holds: ["NEED_RETAKE"] });
@@ -113,8 +113,13 @@ describe("partnerView C단계 신용도는 동의한 항목만으로 계산한�
     expect(codes).not.toContain("REPAY_NO_HISTORY");
   });
 
-  it("정말 상환 이력이 없으면 원래 문구 그대로 (Siti)", async () => {
-    const codes = scored(await getApplicantReport(PARTNER, "r-siti", "C")).reasons.map((r) => r.code);
+  // 2026-11-23부터 시연 기사 5명 모두 상환 자료가 있어, 상환 기록을 비운 지표로 확인한다
+  it("정말 상환 이력이 없으면 원래 문구 그대로", async () => {
+    const metrics = (await getRiderMetrics("r-siti"))!;
+    const empty = { ...metrics, rentalOnTimeRate: null, rentalPaymentCount: 0, telecomOnTimeRate: null, telecomBillCount: 0 };
+    const credit = partnerCredit(empty, ["income", "activity", "rental_history", "slik_report", "telecom_bills"]);
+    if (credit.status !== "scored") throw new Error("점수가 있어야 한다");
+    const codes = credit.reasons.map((r) => r.code);
     expect(codes).toContain("REPAY_NO_HISTORY");
     expect(codes).not.toContain("REPAY_NOT_SHARED");
   });

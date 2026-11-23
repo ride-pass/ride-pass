@@ -165,13 +165,14 @@ describe("시연 페르소나 (CLAUDE.md 4-2) — 커밋된 fixture 기준", () 
     expect(c.repaymentSources).toEqual(["rental", "slik"]);
   });
 
-  it("r-siti: 720~790 B, 상환 이력 없음(중립)과 자료 올리기 개선 방법", async () => {
+  // 2026-11-23: 기사 5명 모두 상환 자료가 있게 바꿨다. Siti는 통신요금 한 번 늦음 + 렌털 2회 늦음
+  it("r-siti: 720~790 B, 통신요금 한 번 늦음 → 납부일 지키기 개선 방법", async () => {
     const c = scored(await credit("r-siti"));
     expect(c.score).toBeGreaterThanOrEqual(720);
     expect(c.score).toBeLessThanOrEqual(790);
     expect(c.grade).toBe("B");
-    expect(c.reasons.map((r) => r.code)).toContain("REPAY_NO_HISTORY");
-    expect(c.improvement).toBe("ADD_REPAYMENT_RECORDS");
+    expect(c.repaymentSources).toEqual(["rental", "telecom"]);
+    expect(c.improvement).toBe("PAY_ON_TIME");
   });
 
   it("r-agus: 549 이하 D, 이유 1번 소득 검증 필요", async () => {
@@ -179,6 +180,9 @@ describe("시연 페르소나 (CLAUDE.md 4-2) — 커밋된 fixture 기준", () 
     expect(c.score).toBeLessThanOrEqual(549);
     expect(c.grade).toBe("D");
     expect(c.reasons[0].code).toBe("INCOME_VERIFICATION_NEEDED");
+    // 통신요금은 모두 제때 냈지만 소득 검증이 안 돼 549점 상한
+    expect(c.repaymentSources).toEqual(["telecom"]);
+    expect(c.reasons.map((r) => r.code)).toContain("REPAY_ON_TIME");
   });
 
   it("r-dewi: 840~900 A, 가장 많이 올린 이유는 렌털·통신요금 정시 납부", async () => {
@@ -199,5 +203,6 @@ describe("시연 페르소나 (CLAUDE.md 4-2) — 커밋된 fixture 기준", () 
     expect(after.score).toBeGreaterThanOrEqual(700);
     expect(after.score).toBeLessThanOrEqual(790);
     expect(after.grade).toBe("B");
+    expect(after.repaymentSources).toEqual(["telecom"]);
   });
 });
