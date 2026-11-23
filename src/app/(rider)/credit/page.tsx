@@ -4,6 +4,7 @@
 // 카드 없이 크림 바탕 위에 점수 → 400~900 등급 눈금 → 이유 → 요인 표(구분선) → 개선 방법(유일한 강조 블록) → KUR 줄.
 // 신용 정보는 getRiderCreditView()에서만 받는다. 엔진을 직접 import하지 않는다 (eslint로 막음).
 // A단계: 신용 준비도(✓/△/✗)와 개선 방법만, 숫자 점수 없음. C단계: 신용도·등급·이유 + 「PKA 인가 후 제공 기능」 배지.
+// 요인 표의 「상환 이력」 줄을 누르면 기사가 올린 상환 자료(가상 서류)를 보는 창이 열린다 (2026-11-23, RepaymentDocsSheet).
 
 import { CameraOff, ChevronRight, CircleCheck, CircleX, Info, Lightbulb, TriangleAlert } from "lucide-react";
 import Link from "next/link";
@@ -13,6 +14,7 @@ import { AppHeader } from "@/components/ui/AppHeader";
 import { ButtonLink } from "@/components/ui/Button";
 import { TabBar } from "@/components/ui/TabBar";
 import { CreditCriteria } from "@/components/credit/CreditCriteria";
+import { RepaymentDocsSheet } from "@/components/credit/RepaymentDocsSheet";
 import { PkaBadge } from "@/components/credit/PkaBadge";
 import { getRiderCreditView, type ReadinessFactor, type ReadinessMark, type RiderCreditView } from "@/credit/riderView";
 
@@ -20,6 +22,7 @@ export default function CreditPage() {
   const t = useT();
   const { riderId, stage, dataVersion } = useDemo();
   const [view, setView] = useState<RiderCreditView | null>(null);
+  const [docsOpen, setDocsOpen] = useState(false);
 
   useEffect(() => {
     getRiderCreditView(riderId, stage).then(setView);
@@ -51,7 +54,7 @@ export default function CreditPage() {
               </span>
               <p className="mt-3 text-xs leading-relaxed text-muted">{t("creditPage.aNote")}</p>
             </section>
-            <FactorList factors={view.factors} />
+            <FactorList factors={view.factors} onRepayment={() => setDocsOpen(true)} />
             <Improvement action={view.improvement} />
           </>
         ) : null}
@@ -80,7 +83,7 @@ export default function CreditPage() {
                 <CreditCriteria reasons={view.reasons} criteria={view.criteria} grade={view.grade} />
               </div>
             </section>
-            <FactorList factors={view.factors} />
+            <FactorList factors={view.factors} onRepayment={() => setDocsOpen(true)} />
             <Improvement action={view.improvement} />
           </>
         ) : null}
@@ -94,6 +97,7 @@ export default function CreditPage() {
           </Link>
         ) : null}
       </main>
+      <RepaymentDocsSheet open={docsOpen} onClose={() => setDocsOpen(false)} />
       <TabBar />
     </div>
   );
@@ -139,7 +143,7 @@ const MARK: Record<ReadinessMark, { bars: number; icon: typeof CircleCheck; text
   unmet: { bars: 1, icon: CircleX, text: "text-danger", bar: "bg-danger" },
 };
 
-function FactorList({ factors }: { factors: ReadinessFactor[] }) {
+function FactorList({ factors, onRepayment }: { factors: ReadinessFactor[]; onRepayment(): void }) {
   const t = useT();
   return (
     <section aria-labelledby="credit-factors" className="mt-8 border-t border-line pt-6">
@@ -150,9 +154,12 @@ function FactorList({ factors }: { factors: ReadinessFactor[] }) {
         {factors.map((f) => {
           const m = MARK[f.mark];
           const Icon = m.icon;
-          return (
-            <li key={f.id} className="flex min-h-12 items-center gap-3 py-2 text-sm">
-              <span className="min-w-0 flex-1 font-medium">{t(`credit.factors.${f.id}`)}</span>
+          const row = (
+            <>
+              <span className="min-w-0 flex-1">
+                <span className="block font-medium">{t(`credit.factors.${f.id}`)}</span>
+                {f.id === "repayment" ? <span className="block text-xs text-muted">{t("creditPage.docsHint")}</span> : null}
+              </span>
               <span className="grid w-14 shrink-0 grid-cols-3 gap-0.5" aria-hidden>
                 {[0, 1, 2].map((i) => (
                   <span key={i} className={`h-1 rounded-full ${i < m.bars ? m.bar : "bg-line-strong"}`} />
@@ -162,6 +169,19 @@ function FactorList({ factors }: { factors: ReadinessFactor[] }) {
                 <Icon className="size-3.5" aria-hidden />
                 {t(`credit.marks.${f.mark}`)}
               </span>
+              {/* 누르는 줄(상환 이력)만 › 를 두고, 나머지 줄은 같은 폭을 비워 칸을 맞춘다 */}
+              {f.id === "repayment" ? <ChevronRight className="size-4 shrink-0 text-muted" aria-hidden /> : <span className="w-4 shrink-0" aria-hidden />}
+            </>
+          );
+          return (
+            <li key={f.id}>
+              {f.id === "repayment" ? (
+                <button type="button" onClick={onRepayment} className="flex min-h-12 w-full items-center gap-3 py-2 text-left text-sm active:opacity-70">
+                  {row}
+                </button>
+              ) : (
+                <div className="flex min-h-12 items-center gap-3 py-2 text-sm">{row}</div>
+              )}
             </li>
           );
         })}

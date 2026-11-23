@@ -239,7 +239,16 @@
     "idebFacilities": "Pinjaman/cicilan aktif",
     "idebWorst": "Kolektibilitas terburuk",
     "telecomTitle": "Riwayat bayar {provider}",
-    "unpaid": "Belum dibayar"
+    "unpaid": "Belum dibayar",
+    "watermark": "SAMPLE · CONTOH",
+    "telecomProvider": "Operator F",
+    "rentalTitle": "Riwayat bayar {partner}",
+    "rentalDaily": "harian {amount}",
+    "rentalMonthValue": "{onTime}/{total} tepat waktu",
+    "rentalLateTitle": "Tidak tepat waktu",
+    "rentalDue": "Jatuh tempo {date}",
+    "rentalPaidOn": "Dibayar {date}",
+    "rentalAllOnTime": "Semua dibayar tepat waktu"
   },
   "capture": {
     "header": "Foto bukti penghasilan",
@@ -421,7 +430,21 @@
     "improveTitle": "Cara memperbaikinya",
     "reasonsTitle": "Alasan skor ini",
     "goRetake": "Foto ulang sekarang",
-    "toKur": "Cek syarat KUR"
+    "toKur": "Cek syarat KUR",
+    "docsHint": "Lihat dokumen yang dikirim",
+    "docs": {
+      "title": "Dokumen riwayat pembayaran",
+      "intro": "{n} dokumen yang kamu unggah ikut dihitung di riwayat pembayaran. Ketuk untuk melihat dokumennya.",
+      "rental": "Riwayat bayar sewa",
+      "rentalMeta": "{partner} · {n} kali bayar harian",
+      "slik": "Laporan SLIK (iDeb)",
+      "slikMeta": "Terbit {issued} · Diunggah {uploaded}",
+      "telecom": "Riwayat bayar pulsa",
+      "telecomMeta": "{provider} · {from} ~ {to}",
+      "empty": "Belum ada dokumen pembayaran, jadi riwayat pembayaran dihitung netral.",
+      "goUpload": "Unggah dokumen",
+      "note": "Hanya dokumen yang kamu unggah yang tampil di sini. Laporan SLIK kamu ambil sendiri dari OJK dan unggah, bukan dicek oleh aplikasi ini. Dokumen contoh untuk demo, tidak bisa diunduh atau dikirim ke pihak lain."
+    }
   },
   "warnings": {
     "amount_mismatch": "Setoran & mutasi tidak cocok",

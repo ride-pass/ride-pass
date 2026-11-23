@@ -1,21 +1,24 @@
 "use client";
 
-// 가상 통신요금 납부 내역 (CLAUDE.md 4-7). 실제 통신사 로고·서식을 쓰지 않는다.
+// 가상 통신요금 납부 내역 (CLAUDE.md 4-7). 실제 통신사 로고·서식을 쓰지 않는다. 위쪽 「가상 예시」 띠 + 워터마크.
+// 통신사 이름은 데이터의 providerLabel(한국어 "통신사 F") 대신 언어별 문구 samples.telecomProvider로 보여 준다.
 
 import { Check, X } from "lucide-react";
 import { useDemo, useT } from "@/components/demo/DemoProvider";
 import type { TelecomBill } from "@/data/types";
 import { formatDate, formatRupiah } from "@/lib/format";
+import { SampleWatermark } from "./SampleWatermark";
 
 export function FakeTelecomBill({ bills }: { bills: TelecomBill[] }) {
   const t = useT();
   const { lang } = useDemo();
   return (
-    <div className="rounded-2xl bg-surface p-4 text-xs text-brand-navy shadow">
+    <div className="relative overflow-hidden rounded-2xl bg-surface p-4 text-xs text-brand-navy shadow">
+      <SampleWatermark />
       <p className="mb-2 rounded bg-danger-soft px-2 py-1 text-center font-semibold text-danger">
         {t("samples.fakeLabel")}
       </p>
-      <p className="text-sm font-bold">{t("samples.telecomTitle", { provider: bills[0]?.providerLabel ?? "" })}</p>
+      <p className="text-sm font-bold">{t("samples.telecomTitle", { provider: t("samples.telecomProvider") })}</p>
       <ul className="mt-2 divide-y divide-line">
         {bills.map((b) => {
           const onTime = b.paidDate !== null && b.paidDate <= b.dueDate;
