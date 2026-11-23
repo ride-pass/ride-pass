@@ -248,7 +248,14 @@
     "rentalLateTitle": "Tidak tepat waktu",
     "rentalDue": "Jatuh tempo {date}",
     "rentalPaidOn": "Dibayar {date}",
-    "rentalAllOnTime": "Semua dibayar tepat waktu"
+    "rentalAllOnTime": "Semua dibayar tepat waktu",
+    "depositTitle": "Mutasi {source}",
+    "depositSource": {
+      "bank_c": "rekening bank saya",
+      "wallet_x": "dompet digital saya"
+    },
+    "depositRecent": "{n} transaksi terakhir",
+    "depositFrom": "Pencairan setoran aplikasi"
   },
   "capture": {
     "header": "Foto bukti penghasilan",
@@ -427,23 +434,59 @@
     "header": "Status kreditku",
     "aNote": "Skor angka tidak ditampilkan. Kami hanya memberi tahu faktor mana yang sudah cukup dan apa yang bisa dilengkapi.",
     "factorsTitle": "Status per faktor",
-    "improveTitle": "Cara memperbaikinya",
     "reasonsTitle": "Alasan skor ini",
     "goRetake": "Foto ulang sekarang",
     "toKur": "Cek syarat KUR",
-    "docsHint": "Lihat dokumen yang dikirim",
     "docs": {
-      "title": "Dokumen riwayat pembayaran",
-      "intro": "{n} dokumen yang kamu unggah ikut dihitung di riwayat pembayaran. Ketuk untuk melihat dokumennya.",
+      "titles": {
+        "repayment": "Bukti riwayat pembayaran",
+        "stability": "Bukti stabilitas penghasilan",
+        "verifiedIncome": "Bukti penghasilan terverifikasi",
+        "incomeLevel": "Bukti tingkat penghasilan",
+        "continuity": "Bukti kontinuitas kerja"
+      },
+      "about": {
+        "repayment": "Dihitung dari seberapa sering kamu bayar tepat waktu: sewa, laporan SLIK, dan tagihan pulsa.",
+        "stability": "Dihitung dari seberapa stabil penghasilan bersih di 6 periode terakhir (per 30 hari).",
+        "verifiedIncome": "Dihitung dari kecocokan penghasilan di layar setoran dengan mutasi yang benar-benar masuk.",
+        "incomeLevel": "Dihitung dari rata-rata penghasilan bersih 3 bulan terakhir (per 30 hari).",
+        "continuity": "Dihitung dari berapa bulan kamu bekerja tanpa jeda panjang sejak catatan setoran pertama."
+      },
+      "factsTitle": "Yang dihitung",
+      "docsTitle": "Dokumen bukti",
+      "tipTitle": "Cara menaikkan faktor ini",
+      "tipMet": "Faktor ini sudah cukup. Pertahankan seperti sekarang.",
       "rental": "Riwayat bayar sewa",
       "rentalMeta": "{partner} · {n} kali bayar harian",
       "slik": "Laporan SLIK (iDeb)",
       "slikMeta": "Terbit {issued} · Diunggah {uploaded}",
+      "slikValue": "Kolektibilitas {kol} ({label})",
       "telecom": "Riwayat bayar pulsa",
       "telecomMeta": "{provider} · {from} ~ {to}",
-      "empty": "Belum ada dokumen pembayaran, jadi riwayat pembayaran dihitung netral.",
-      "note": "Hanya dokumen yang kamu unggah yang tampil di sini. Laporan SLIK kamu ambil sendiri dari OJK dan unggah, bukan dicek oleh aplikasi ini. Dokumen contoh untuk demo, tidak bisa diunduh atau dikirim ke pihak lain."
-    }
+      "period": "{from} ~ {to}",
+      "periodPartial": "{from} ~ {to} (sebelum mulai kerja, tidak dihitung)",
+      "latestCapture": "Layar setoran terbaru",
+      "firstCapture": "Layar setoran pertama",
+      "appCapture": "Layar setoran {app}",
+      "settlementResult": "Bersih {net} · {n} order",
+      "settlementBlurry": "Buram, tidak terbaca · perlu foto ulang",
+      "settled": "Penghasilan bersih 30 hari",
+      "deposited": "Mutasi masuk periode sama",
+      "matchRate": "Kecocokan mutasi",
+      "deposit": "Mutasi masuk",
+      "depositMeta": "{source} · {n} transaksi",
+      "avg3m": "Rata-rata 3 bulan",
+      "appNet": "Bersih {app} (30 hari)",
+      "firstRecord": "Catatan setoran pertama",
+      "streak": "Aktif berturut-turut",
+      "streakValue": "{m} bulan",
+      "monthDays": "{n} hari kerja",
+      "empty": "Belum ada dokumen yang diunggah.",
+      "note": "Hanya dokumen yang kamu unggah yang tampil di sini. Dokumen contoh untuk demo, tidak bisa diunduh atau dikirim ke pihak lain.",
+      "slikNote": "Laporan SLIK kamu ambil sendiri dari OJK dan unggah, bukan dicek oleh aplikasi ini."
+    },
+    "factorsHint": "Ketuk faktor untuk melihat dokumen buktinya.",
+    "focus": "Isi ini dulu"
   },
   "warnings": {
     "amount_mismatch": "Setoran & mutasi tidak cocok",

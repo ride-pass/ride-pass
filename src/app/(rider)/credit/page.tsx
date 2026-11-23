@@ -1,28 +1,39 @@
 "use client";
 
 // 시연 6단계: 내 신용 상태 (CLAUDE.md 3절, 2-4). 2026-11-21 새 디자인 기준(6절)으로 다시 짰다:
-// 카드 없이 크림 바탕 위에 점수 → 400~900 등급 눈금 → 이유 → 요인 표(구분선) → 개선 방법(유일한 강조 블록) → KUR 줄.
+// 카드 없이 크림 바탕 위에 점수 → 400~900 등급 눈금 → 이유 → 요인 표(구분선) → KUR 줄.
 // 신용 정보는 getRiderCreditView()에서만 받는다. 엔진을 직접 import하지 않는다 (eslint로 막음).
 // A단계: 신용 준비도(✓/△/✗)와 개선 방법만, 숫자 점수 없음. C단계: 신용도·등급·이유 + 「PKA 인가 후 제공 기능」 배지.
-// 요인 표의 「상환 이력」 줄을 누르면 기사가 올린 상환 자료(가상 서류)를 보는 창이 열린다 (2026-11-23, RepaymentDocsSheet).
+// 2026-11-23: 요인 표의 다섯 줄 모두 누르면 그 요인의 근거 자료(가상 서류) 창이 열린다 (FactorDocsSheet).
+// 「이렇게 하면 좋아집니다」 블록은 없앴다. 개선 방법은 요인 창 맨 아래 「이 요인을 올리려면」으로 옮기고,
+// 가장 많이 깎인 요인 줄에 「먼저 채우면 좋아요」 표시를 둔다 (이 화면의 유일한 강조, 6-3). 평가 보류 화면에도 자료 목록을 둔다.
 
-import { CameraOff, ChevronRight, CircleCheck, CircleX, Info, Lightbulb, TriangleAlert } from "lucide-react";
+import { CameraOff, ChevronRight, CircleCheck, CircleX, Info, TriangleAlert } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDemo, useT } from "@/components/demo/DemoProvider";
 import { AppHeader } from "@/components/ui/AppHeader";
+import { Badge } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { TabBar } from "@/components/ui/TabBar";
 import { CreditCriteria } from "@/components/credit/CreditCriteria";
-import { RepaymentDocsSheet } from "@/components/credit/RepaymentDocsSheet";
+import { FactorDocsSheet } from "@/components/credit/FactorDocsSheet";
 import { PkaBadge } from "@/components/credit/PkaBadge";
-import { getRiderCreditView, type ReadinessFactor, type ReadinessMark, type RiderCreditView } from "@/credit/riderView";
+import {
+  getRiderCreditView,
+  READINESS_FACTORS,
+  type ReadinessFactor,
+  type ReadinessFactorId,
+  type ReadinessMark,
+  type RiderCreditView,
+} from "@/credit/riderView";
 
 export default function CreditPage() {
   const t = useT();
   const { riderId, stage, dataVersion } = useDemo();
   const [view, setView] = useState<RiderCreditView | null>(null);
-  const [docsOpen, setDocsOpen] = useState(false);
+  // 근거 자료 창을 연 요인. null = 닫힘
+  const [openFactor, setOpenFactor] = useState<ReadinessFactorId | null>(null);
 
   useEffect(() => {
     getRiderCreditView(riderId, stage).then(setView);
@@ -33,7 +44,7 @@ export default function CreditPage() {
     <div className="flex flex-1 flex-col">
       <AppHeader title={t("creditPage.header")} back="/home" large />
       <main className="flex flex-col px-4 pt-3 pb-10">
-        {view?.status === "hold" ? <HoldView view={view} /> : null}
+        {view?.status === "hold" ? <HoldView view={view} onOpen={setOpenFactor} /> : null}
         {view?.status === "readiness" ? (
           <>
             {/* 숫자 점수 대신 충족한 요인 수. 칸 하나 = 요인 하나 (✓ 보라, △ 연보라, ✗ 회색) */}
@@ -54,8 +65,7 @@ export default function CreditPage() {
               </span>
               <p className="mt-3 text-xs leading-relaxed text-muted">{t("creditPage.aNote")}</p>
             </section>
-            <FactorList factors={view.factors} onRepayment={() => setDocsOpen(true)} />
-            <Improvement action={view.improvement} />
+            <FactorList factors={view.factors} onOpen={setOpenFactor} />
           </>
         ) : null}
         {view?.status === "scored" ? (
@@ -83,8 +93,7 @@ export default function CreditPage() {
                 <CreditCriteria reasons={view.reasons} criteria={view.criteria} grade={view.grade} />
               </div>
             </section>
-            <FactorList factors={view.factors} onRepayment={() => setDocsOpen(true)} />
-            <Improvement action={view.improvement} />
+            <FactorList factors={view.factors} onOpen={setOpenFactor} />
           </>
         ) : null}
         {view ? (
@@ -97,7 +106,12 @@ export default function CreditPage() {
           </Link>
         ) : null}
       </main>
-      <RepaymentDocsSheet open={docsOpen} onClose={() => setDocsOpen(false)} />
+      {/* 평가 보류면 요인 상태가 없어 개선 방법 칸을 그리지 않는다 (tip = undefined) */}
+      <FactorDocsSheet
+        factor={openFactor}
+        tip={view && view.status !== "hold" ? view.factors.find((f) => f.id === openFactor)?.tip : undefined}
+        onClose={() => setOpenFactor(null)}
+      />
       <TabBar />
     </div>
   );
@@ -143,45 +157,41 @@ const MARK: Record<ReadinessMark, { bars: number; icon: typeof CircleCheck; text
   unmet: { bars: 1, icon: CircleX, text: "text-danger", bar: "bg-danger" },
 };
 
-function FactorList({ factors, onRepayment }: { factors: ReadinessFactor[]; onRepayment(): void }) {
+function FactorList({ factors, onOpen }: { factors: ReadinessFactor[]; onOpen(id: ReadinessFactorId): void }) {
   const t = useT();
   return (
     <section aria-labelledby="credit-factors" className="mt-8 border-t border-line pt-6">
       <h2 id="credit-factors" className="text-base font-bold">
         {t("creditPage.factorsTitle")}
       </h2>
+      <p className="mt-0.5 text-sm text-muted">{t("creditPage.factorsHint")}</p>
       <ul className="mt-2 flex flex-col divide-y divide-line">
         {factors.map((f) => {
           const m = MARK[f.mark];
           const Icon = m.icon;
-          const row = (
-            <>
-              <span className="min-w-0 flex-1">
-                <span className="block font-medium">{t(`credit.factors.${f.id}`)}</span>
-                {f.id === "repayment" ? <span className="block text-xs text-muted">{t("creditPage.docsHint")}</span> : null}
-              </span>
-              <span className="grid w-14 shrink-0 grid-cols-3 gap-0.5" aria-hidden>
-                {[0, 1, 2].map((i) => (
-                  <span key={i} className={`h-1 rounded-full ${i < m.bars ? m.bar : "bg-line-strong"}`} />
-                ))}
-              </span>
-              <span className={`flex w-16 shrink-0 items-center justify-end gap-1 text-xs font-semibold ${m.text}`}>
-                <Icon className="size-3.5" aria-hidden />
-                {t(`credit.marks.${f.mark}`)}
-              </span>
-              {/* 누르는 줄(상환 이력)만 › 를 두고, 나머지 줄은 같은 폭을 비워 칸을 맞춘다 */}
-              {f.id === "repayment" ? <ChevronRight className="size-4 shrink-0 text-muted" aria-hidden /> : <span className="w-4 shrink-0" aria-hidden />}
-            </>
-          );
           return (
             <li key={f.id}>
-              {f.id === "repayment" ? (
-                <button type="button" onClick={onRepayment} className="flex min-h-12 w-full items-center gap-3 py-2 text-left text-sm active:opacity-70">
-                  {row}
-                </button>
-              ) : (
-                <div className="flex min-h-12 items-center gap-3 py-2 text-sm">{row}</div>
-              )}
+              <button type="button" onClick={() => onOpen(f.id)} className="flex min-h-14 w-full items-center gap-3 py-2 text-left text-sm active:opacity-70">
+                <span className="min-w-0 flex-1">
+                  <span className="block font-medium">{t(`credit.factors.${f.id}`)}</span>
+                  {/* 가장 많이 깎인 요인 하나: 이 화면의 유일한 강조 (예전 「이렇게 하면 좋아집니다」 블록 자리) */}
+                  {f.focus ? (
+                    <span className="mt-1 block">
+                      <Badge tone="lavender">{t("creditPage.focus")}</Badge>
+                    </span>
+                  ) : null}
+                </span>
+                <span className="grid w-14 shrink-0 grid-cols-3 gap-0.5" aria-hidden>
+                  {[0, 1, 2].map((i) => (
+                    <span key={i} className={`h-1 rounded-full ${i < m.bars ? m.bar : "bg-line-strong"}`} />
+                  ))}
+                </span>
+                <span className={`flex w-16 shrink-0 items-center justify-end gap-1 text-xs font-semibold ${m.text}`}>
+                  <Icon className="size-3.5" aria-hidden />
+                  {t(`credit.marks.${f.mark}`)}
+                </span>
+                <ChevronRight className="size-4 shrink-0 text-muted" aria-hidden />
+              </button>
             </li>
           );
         })}
@@ -190,21 +200,7 @@ function FactorList({ factors, onRepayment }: { factors: ReadinessFactor[]; onRe
   );
 }
 
-/** 이 화면에서 유일한 강조 블록: 지금 할 수 있는 한 가지 */
-function Improvement({ action }: { action: string }) {
-  const t = useT();
-  return (
-    <section className="mt-6 flex gap-3 rounded-3xl bg-lavender p-4">
-      <Lightbulb className="mt-0.5 size-5 shrink-0 text-brand-purple" aria-hidden />
-      <div>
-        <h2 className="text-sm font-semibold text-brand-purple">{t("creditPage.improveTitle")}</h2>
-        <p className="mt-1 text-base leading-snug font-medium">{t(`credit.actions.${action}`)}</p>
-      </div>
-    </section>
-  );
-}
-
-function HoldView({ view }: { view: Extract<RiderCreditView, { status: "hold" }> }) {
+function HoldView({ view, onOpen }: { view: Extract<RiderCreditView, { status: "hold" }>; onOpen(id: ReadinessFactorId): void }) {
   const t = useT();
   const retake = view.holds.includes("NEED_RETAKE");
   return (
@@ -228,6 +224,23 @@ function HoldView({ view }: { view: Extract<RiderCreditView, { status: "hold" }>
           {t("creditPage.goRetake")}
         </ButtonLink>
       ) : null}
+      {/* 평가 보류라 충족·부족 표시는 없지만, 올린 자료는 요인별로 볼 수 있다 (2026-11-23) */}
+      <section aria-labelledby="credit-hold-docs" className="mt-5 border-t border-line pt-6">
+        <h2 id="credit-hold-docs" className="text-base font-bold">
+          {t("creditPage.factorsTitle")}
+        </h2>
+        <p className="mt-0.5 text-sm text-muted">{t("creditPage.factorsHint")}</p>
+        <ul className="mt-2 flex flex-col divide-y divide-line">
+          {READINESS_FACTORS.map((id) => (
+            <li key={id}>
+              <button type="button" onClick={() => onOpen(id)} className="flex min-h-14 w-full items-center gap-3 py-2 text-left text-sm active:opacity-70">
+                <span className="min-w-0 flex-1 font-medium">{t(`credit.factors.${id}`)}</span>
+                <ChevronRight className="size-4 shrink-0 text-muted" aria-hidden />
+              </button>
+            </li>
+          ))}
+        </ul>
+      </section>
     </section>
   );
 }

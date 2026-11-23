@@ -277,6 +277,12 @@ const ACTION: Record<FactorId, ActionCode> = {
   dataQuality: "RETAKE_CLEAR_PHOTO",
 };
 
+/** 요인 하나를 올리는 행동. 상환 자료가 아예 없으면 자료 올리기 (2026-11-23: 내 신용 요인별 근거 자료 창에서 쓴다) */
+export function actionFor(id: FactorId, sources: RepaymentSource[]): ActionCode {
+  if (id === "repayment" && sources.length === 0) return "ADD_REPAYMENT_RECORDS";
+  return ACTION[id];
+}
+
 /** 가장 많은 점수를 잃은 요인(가중치 × (1 − 값)) 하나에 대한 행동 */
 export function pickImprovement(
   factors: FactorResult[],
@@ -285,8 +291,7 @@ export function pickImprovement(
   const worst = [...factors].sort(
     (a, b) => b.weight * (1 - b.value) - a.weight * (1 - a.value) || b.weight - a.weight,
   )[0];
-  if (worst.id === "repayment" && sources.length === 0) return "ADD_REPAYMENT_RECORDS";
-  return ACTION[worst.id];
+  return actionFor(worst.id, sources);
 }
 
 // ---- 계산 ----
