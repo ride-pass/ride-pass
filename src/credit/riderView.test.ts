@@ -53,6 +53,31 @@ describe("getRiderCreditView (CLAUDE.md 2-4)", () => {
     }
   });
 
+  // 2026-11-23: 요인별 근거 자료 창의 「이 요인을 올리려면」과 「먼저 채우면 좋아요」 표시
+  it("요인마다 개선 방법: 충분한 요인은 null, 아닌 요인에 하나씩", async () => {
+    for (const id of ["r-budi", "r-siti", "r-agus", "r-dewi"]) {
+      const view = await getRiderCreditView(id, "C");
+      if (view?.status !== "scored") throw new Error("점수가 있어야 한다");
+      for (const f of view.factors) expect(f.tip === null).toBe(f.mark === "met");
+    }
+  });
+
+  it("「먼저 채우면 좋아요」는 충분하지 않은 요인 중 하나에만, 모두 충분하면 없음", async () => {
+    const budi = await getRiderCreditView("r-budi", "C");
+    if (budi?.status !== "scored") throw new Error("점수가 있어야 한다");
+    expect(budi.factors.filter((f) => f.focus).map((f) => f.id)).toEqual(["continuity"]);
+
+    const agus = await getRiderCreditView("r-agus", "C");
+    if (agus?.status !== "scored") throw new Error("점수가 있어야 한다");
+    expect(agus.factors.filter((f) => f.focus).map((f) => f.id)).toEqual(["verifiedIncome"]);
+    expect(agus.factors.find((f) => f.id === "verifiedIncome")?.tip).toBe("UPLOAD_BANK_STATEMENT");
+
+    const dewi = await getRiderCreditView("r-dewi", "C");
+    if (dewi?.status !== "scored") throw new Error("점수가 있어야 한다");
+    if (dewi.factors.every((f) => f.mark === "met")) expect(dewi.factors.some((f) => f.focus)).toBe(false);
+    else expect(dewi.factors.filter((f) => f.focus)).toHaveLength(1);
+  });
+
   it("평가 보류는 두 단계 모두 같고 점수가 없다 (r-rizky)", async () => {
     for (const stage of ["A", "C"] as const) {
       const view = await getRiderCreditView("r-rizky", stage);

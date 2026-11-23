@@ -13,6 +13,7 @@ import { sharedCreditResult, type ShareItem, type SharedCredit, type SharedReaso
 export type { SharedCredit, SharedReason };
 export type { LockedProduct, OfferReason, ProductMatch, ProductOffer } from "./products";
 import {
+  actionFor,
   evaluateCredit,
   type ActionCode,
   type FactorId,
@@ -20,6 +21,7 @@ import {
   type Grade,
   type HoldCode,
   type Reason,
+  type RepaymentSource,
 } from "./engine";
 
 /** 신용 준비도에 보여 주는 요인 5개. 데이터 신뢰도는 재촬영 안내(평가 보류)로 따로 다룬다 */
@@ -39,6 +41,10 @@ export type ReadinessMark = "met" | "partial" | "unmet";
 export interface ReadinessFactor {
   id: ReadinessFactorId;
   mark: ReadinessMark;
+  /** 이 요인을 올리는 방법 (요인별 근거 자료 창 맨 아래). 이미 충분하면(✓) null */
+  tip: ActionCode | null;
+  /** 충분하지 않은 요인 중 가장 많이 깎인 요인 하나: 「먼저 채우면 좋아요」 표시 (2026-11-23) */
+  focus: boolean;
 }
 
 export interface RiderCreditHold {
@@ -95,11 +101,17 @@ function criteriaOf(factors: FactorResult[]): CriteriaFactor[] {
   return factors.map((f) => ({ id: f.id, weight: f.weight, mark: markOf(f.value) }));
 }
 
-function readiness(factors: FactorResult[]): ReadinessFactor[] {
-  return READINESS_FACTORS.map((id) => ({
-    id,
-    mark: markOf(factors.find((f) => f.id === id)!.value),
-  }));
+function readiness(factors: FactorResult[], sources: RepaymentSource[]): ReadinessFactor[] {
+  const rows = READINESS_FACTORS.map((id) => factors.find((f) => f.id === id)!);
+  const lost = (f: FactorResult) => f.weight * (1 - f.value);
+  // pickImprovement와 같은 기준(잃은 점수가 큰 순). 모두 충분하면 표시하지 않는다
+  const focus = rows
+    .filter((f) => markOf(f.value) !== "met")
+    .sort((a, b) => lost(b) - lost(a) || b.weight - a.weight)[0]?.id;
+  return rows.map((f) => {
+    const mark = markOf(f.value);
+    return { id: f.id as ReadinessFactorId, mark, tip: mark === "met" ? null : actionFor(f.id, sources), focus: f.id === focus };
+  });
 }
 
 /** 기사가 없으면 null */
@@ -115,7 +127,7 @@ export async function getRiderCreditView(
     return { stage, status: "hold", holds: credit.holds, actions: credit.actions };
   }
 
-  const factors = readiness(credit.factors);
+  const factors = readiness(credit.factors, credit.repaymentSources);
   if (stage === "A") {
     return {
       stage: "A",
