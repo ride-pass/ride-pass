@@ -6,6 +6,8 @@
 // - 내려받기·공유 버튼은 두지 않는다. 화면에 그리기만 한다.
 // - SLIK 확인서는 기사가 직접 받아 올린 파일이다. 앱이 OJK에서 조회했다고 쓰지 않는다 (2-2).
 // - 신용 계산은 하지 않는다. 원본 기록만 repository에서 읽는다.
+// - 자료가 없으면(Siti·Agus) 안내와 개선 방법만 둔다. 촬영 화면으로 보내는 버튼은 두지 않는다:
+//   이 인물들은 올릴 가상 샘플이 없어 막다른 길이 된다 (2026-11-23).
 
 import { Bike, ChevronDown, FileText, Smartphone } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
@@ -13,7 +15,6 @@ import { useDemo, useT } from "@/components/demo/DemoProvider";
 import { FakeIdebDocument } from "@/components/samples/FakeIdebDocument";
 import { FakeRentalStatement } from "@/components/samples/FakeRentalStatement";
 import { FakeTelecomBill } from "@/components/samples/FakeTelecomBill";
-import { ButtonLink } from "@/components/ui/Button";
 import { Sheet } from "@/components/ui/Sheet";
 import type { RiderRecords } from "@/data/derive";
 import { getRiderRecords, listPartners } from "@/data/repository";
@@ -52,7 +53,6 @@ export function RepaymentDocsSheet({ open, onClose }: { open: boolean; onClose()
         <div className="flex flex-col gap-3 pb-2">
           <p className="text-sm text-muted">{t("creditPage.docs.empty")}</p>
           <p className="rounded-3xl bg-lavender p-4 text-base font-medium">{t("credit.actions.ADD_REPAYMENT_RECORDS")}</p>
-          <ButtonLink href="/capture">{t("creditPage.docs.goUpload")}</ButtonLink>
         </div>
       ) : (
         <>

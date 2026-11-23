@@ -442,7 +442,6 @@
       "telecom": "Riwayat bayar pulsa",
       "telecomMeta": "{provider} · {from} ~ {to}",
       "empty": "Belum ada dokumen pembayaran, jadi riwayat pembayaran dihitung netral.",
-      "goUpload": "Unggah dokumen",
       "note": "Hanya dokumen yang kamu unggah yang tampil di sini. Laporan SLIK kamu ambil sendiri dari OJK dan unggah, bukan dicek oleh aplikasi ini. Dokumen contoh untuk demo, tidak bisa diunduh atau dikirim ke pihak lain."
     }
   },
