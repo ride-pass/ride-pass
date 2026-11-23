@@ -89,14 +89,14 @@ export interface PersonaSpec {
   /** 입금액 / 정산 순수입. r-agus만 0.45 */
   depositRatio: number;
   depositSource: Deposit["source"];
-  /** 렌털 납부 이력: 전부 정시 / 2회 하루 늦음 / 없음 */
-  rental: "all_on_time" | "two_late" | null;
+  /** 렌털 납부 이력 (최근 90일): 하루 늦은 횟수. null = 렌털 기록 없음 */
+  rental: { lateDays: number } | null;
   /** 최신 촬영 1장을 흐리게 (OCR 신뢰도 0.55) */
   blurLatest: boolean;
   /** SLIK 확인서 (r-budi만). 발급일은 기준일 며칠 전인지 */
   slik: { worstKolektibilitas: SlikReport["worstKolektibilitas"]; activeFacilities: number; daysAgo: number } | null;
-  /** 통신요금 최근 6개월 전부 정시 (r-dewi만) */
-  telecomOnTime: boolean;
+  /** 통신요금 최근 6개월: 늦게 낸 달 수. null = 통신요금 기록 없음 (2026-11-23: 기사 5명 모두 상환 자료가 있게 바꿈) */
+  telecom: { lateMonths: number } | null;
   /** 처음부터 렌털사 D에 들어 있는 신청의 제출일. null이면 시연 중 기사가 직접 제출한다 */
   applicationDate: IsoDate | null;
 }
@@ -118,10 +118,10 @@ export const PERSONAS: PersonaSpec[] = [
     restWeekday: 0,
     depositRatio: 1,
     depositSource: "bank_c",
-    rental: "two_late",
+    rental: { lateDays: 2 },
     blurLatest: false,
     slik: { worstKolektibilitas: 1, activeFacilities: 1, daysAgo: 7 },
-    telecomOnTime: false,
+    telecom: null,
     applicationDate: null,
   },
   {
@@ -140,10 +140,10 @@ export const PERSONAS: PersonaSpec[] = [
     restWeekday: 5,
     depositRatio: 1,
     depositSource: "wallet_x",
-    rental: null,
+    rental: { lateDays: 2 },
     blurLatest: false,
     slik: null,
-    telecomOnTime: false,
+    telecom: { lateMonths: 1 },
     applicationDate: "2026-11-15",
   },
   {
@@ -165,7 +165,7 @@ export const PERSONAS: PersonaSpec[] = [
     rental: null,
     blurLatest: false,
     slik: null,
-    telecomOnTime: false,
+    telecom: { lateMonths: 0 },
     applicationDate: "2026-11-16",
   },
   {
@@ -184,10 +184,10 @@ export const PERSONAS: PersonaSpec[] = [
     restWeekday: 3,
     depositRatio: 1,
     depositSource: "bank_c",
-    rental: "all_on_time",
+    rental: { lateDays: 0 },
     blurLatest: false,
     slik: null,
-    telecomOnTime: true,
+    telecom: { lateMonths: 0 },
     applicationDate: "2026-11-17",
   },
   {
@@ -209,7 +209,7 @@ export const PERSONAS: PersonaSpec[] = [
     rental: null,
     blurLatest: true,
     slik: null,
-    telecomOnTime: false,
+    telecom: { lateMonths: 1 },
     applicationDate: "2026-11-18",
   },
 ];
@@ -300,10 +300,8 @@ function generateRentalPayments(p: PersonaSpec, rng: Random, today: IsoDate): Re
     addDays(today, -(RENTAL_DAYS - 1) + i),
   );
   const late = new Set<number>();
-  if (p.rental === "two_late") {
-    // 오늘 납기분이 늦으면 납부일이 미래가 되므로 마지막 10일은 고르지 않는다
-    while (late.size < 2) late.add(rng.int(0, RENTAL_DAYS - 11));
-  }
+  // 오늘 납기분이 늦으면 납부일이 미래가 되므로 마지막 10일은 고르지 않는다
+  while (late.size < p.rental.lateDays) late.add(rng.int(0, RENTAL_DAYS - 11));
   return dueDates.map((dueDate, i) => ({
     id: `rp-${shortId(p.rider.id)}-${compact(dueDate)}`,
     riderId: p.rider.id,
@@ -332,11 +330,14 @@ function generateSlikReports(p: PersonaSpec, rng: Random, today: IsoDate): SlikR
 }
 
 function generateTelecomBills(p: PersonaSpec, rng: Random, today: IsoDate): TelecomBill[] {
-  if (!p.telecomOnTime) return [];
+  if (!p.telecom) return [];
   const { year, month } = parseIsoDate(today);
   const out: TelecomBill[] = [];
   // 이번 달 납기가 기준일 이후면 지난달까지 센다
   const latestOffset = TELECOM_DUE_DAY <= parseIsoDate(today).day ? 0 : 1;
+  // 늦게 낸 달: 가장 최근 달은 고르지 않는다 (납부일이 기준일을 넘지 않게). 0이면 난수를 쓰지 않아 r-dewi 기록은 그대로다
+  const lateIdx = new Set<number>();
+  while (lateIdx.size < p.telecom.lateMonths) lateIdx.add(rng.int(latestOffset + 1, TELECOM_MONTHS - 1 + latestOffset));
   for (let i = TELECOM_MONTHS - 1 + latestOffset; i >= latestOffset; i--) {
     const m0 = year * 12 + (month - 1) - i;
     const ym = `${Math.floor(m0 / 12)}-${String((m0 % 12) + 1).padStart(2, "0")}`;
@@ -347,7 +348,8 @@ function generateTelecomBills(p: PersonaSpec, rng: Random, today: IsoDate): Tele
       providerLabel: TELECOM_PROVIDER_LABEL,
       month: ym,
       dueDate,
-      paidDate: addDays(dueDate, -rng.int(0, 3)), // 납기일이나 그 며칠 전에 낸다
+      // 납기일이나 그 며칠 전에 낸다. 늦은 달은 납기일 5~12일 뒤
+      paidDate: lateIdx.has(i) ? addDays(dueDate, rng.int(5, 12)) : addDays(dueDate, -rng.int(0, 3)),
       amount: TELECOM_MONTHLY_AMOUNT,
     });
   }
@@ -405,7 +407,7 @@ export function generateFixtures(today: IsoDate = DEMO_TODAY): FixtureSet {
           "rental_history",
           ...(p.rider.hasBankAccount ? (["bank_account"] as const) : []),
           ...(p.slik ? (["slik_report"] as const) : []),
-          ...(p.telecomOnTime ? (["telecom_bills"] as const) : []),
+          ...(p.telecom ? (["telecom_bills"] as const) : []),
         ],
         grantedAt: p.applicationDate,
         expiresAt: addDays(p.applicationDate, 30),

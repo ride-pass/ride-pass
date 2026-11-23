@@ -38,10 +38,10 @@ interface Expectation {
 
 export const EXPECTATIONS: Record<string, Expectation> = {
   "r-budi": { monthlyNet: 5_200_000, activeMonths: 8, depositMismatch: false, rentalOnTimeRate: 88 / 90, blurredLatest: false, slikKolektibilitas: 1, telecom: null },
-  "r-siti": { monthlyNet: 3_400_000, activeMonths: 4, depositMismatch: false, rentalOnTimeRate: null, blurredLatest: false, slikKolektibilitas: null, telecom: null },
-  "r-agus": { monthlyNet: 6_800_000, monthlyDeposit: 3_100_000, activeMonths: 7, depositMismatch: true, rentalOnTimeRate: null, blurredLatest: false, slikKolektibilitas: null, telecom: null },
+  "r-siti": { monthlyNet: 3_400_000, activeMonths: 4, depositMismatch: false, rentalOnTimeRate: 88 / 90, blurredLatest: false, slikKolektibilitas: null, telecom: { onTimeRate: 5 / 6, count: 6 } },
+  "r-agus": { monthlyNet: 6_800_000, monthlyDeposit: 3_100_000, activeMonths: 7, depositMismatch: true, rentalOnTimeRate: null, blurredLatest: false, slikKolektibilitas: null, telecom: { onTimeRate: 1, count: 6 } },
   "r-dewi": { monthlyNet: 4_600_000, activeMonths: 11, depositMismatch: false, rentalOnTimeRate: 1, blurredLatest: false, slikKolektibilitas: null, telecom: { onTimeRate: 1, count: 6 } },
-  "r-rizky": { monthlyNet: 2_800_000, activeMonths: 6, depositMismatch: false, rentalOnTimeRate: null, blurredLatest: true, slikKolektibilitas: null, telecom: null },
+  "r-rizky": { monthlyNet: 2_800_000, activeMonths: 6, depositMismatch: false, rentalOnTimeRate: null, blurredLatest: true, slikKolektibilitas: null, telecom: { onTimeRate: 5 / 6, count: 6 } },
 };
 
 const within = (actual: number, target: number) =>
